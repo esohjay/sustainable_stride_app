@@ -1,0 +1,5 @@
+export const ADD_TRACK_REQUEST = "ADD_TRACK_REQUEST";
+export const ADD_TRACK_SUCCESS = "ADD_TRACK_SUCCESS";
+export const ADD_TRACK_FAIL = "ADD_TRACK_FAIL";
+export const ADD_TRACK_RESET = "ADD_TRACK_RESET";
+export const RESET_FORM = "RESET_FORM";
