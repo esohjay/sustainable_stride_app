@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import tw from "./lib/tailwind";
 import { useDeviceContext } from "twrnc";
 import Landing from "./screens/Landing";
+import Register from "./screens/Register";
 
 import { useSurveryActions } from "./context/actions/survey_actions";
 import { useTrackActions } from "./context/actions/track_actions";
@@ -25,6 +26,17 @@ export default function App() {
               name="Landing"
               component={Landing}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Register"
+              component={Register}
+              options={{
+                headerShown: true,
+                headerStyle: { backgroundColor: "#eae0d5" },
+                title: "",
+                headerTintColor: "#533e2d",
+                headerShadowVisible: false,
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

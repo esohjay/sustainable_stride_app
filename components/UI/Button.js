@@ -8,6 +8,7 @@ import tw from "../../lib/tailwind";
  */
 export const Button = ({
   text,
+  onPress,
   icon,
   variant = "default",
   style = "",
@@ -46,6 +47,7 @@ export const Button = ({
       {...props}
       onHoverIn={() => setHovered(true)}
       android_ripple={tw`text-secondaryColor`}
+      onPress={onPress}
       onHoverOut={() => setHovered(false)}
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
