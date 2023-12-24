@@ -66,7 +66,7 @@ function LandingCardList() {
           <View
             key={item.header}
             style={tw`h-2 w-2 rounded-full ${
-              activeImageIndex === index ? "bg-dark" : "bg-white"
+              activeImageIndex === index ? "bg-dark" : "bg-secondaryColor"
             }`}
           ></View>
         ))}

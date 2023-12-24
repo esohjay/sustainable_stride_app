@@ -1,15 +1,19 @@
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import tw from "../lib/tailwind";
 import LandingCardList from "../components/LandingCardList";
 import { Button } from "../components/UI/Button";
 
 function Landing({ navigation }) {
   return (
-    <View style={tw`bg-altColor h-full`}>
+    <View style={tw`bg-gray-100 h-full`}>
       <View style={tw`flex pt-20 justify-center items-center`}>
-        <Text style={tw`text-mainColor text-3xl font-extrabold`}>
-          Sustainability Stride
-        </Text>
+        <View style={tw`w-full h-20 mb-3 bg-transparent`}>
+          <Image
+            style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
+            resizeMode="contain"
+            source={require("../assets/logo.png")}
+          />
+        </View>
         <LandingCardList />
         <View style={tw`my-5`}>
           <Button

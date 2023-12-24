@@ -21,14 +21,14 @@ export const Button = ({
 
   const variants = {
     default: {
-      bg: tw`bg-mainColor dark:bg-mainColor`,
+      bg: tw`bg-mainColor dark:bg-mainColor shadow-sm shadow-mainColor`,
       hover: tw`bg-secondaryColor dark:bg-gray-200`,
       text: tw`text-altColor dark:text-gray-900`,
     },
     light: {
       text: tw`text-mainColor dark:bg-mainColor`,
       hover: tw`bg-secondaryColor dark:bg-gray-200`,
-      bg: tw`bg-altColor dark:text-gray-900`,
+      bg: tw`bg-altColor dark:text-gray-900 shadow-sm shadow-mainColor`,
     },
     success: {
       bg: tw`bg-green-700`,

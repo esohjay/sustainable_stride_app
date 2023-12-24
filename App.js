@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import tw from "./lib/tailwind";
@@ -30,13 +30,14 @@ export default function App() {
             <Stack.Screen
               name="Register"
               component={Register}
-              options={{
-                headerShown: true,
-                headerStyle: { backgroundColor: "#eae0d5" },
-                title: "",
-                headerTintColor: "#533e2d",
-                headerShadowVisible: false,
-              }}
+              options={{ headerShown: false }}
+              // options={{
+              //   headerShown: true,
+              //   headerStyle: { backgroundColor: "rgb(243 244 246)" },
+              //   title: "",
+              //   headerTintColor: "#533e2d",
+              //   headerShadowVisible: false,
+              // }}
             />
           </Stack.Navigator>
         </NavigationContainer>
