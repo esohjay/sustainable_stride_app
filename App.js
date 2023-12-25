@@ -6,6 +6,7 @@ import tw from "./lib/tailwind";
 import { useDeviceContext } from "twrnc";
 import Landing from "./screens/Landing";
 import Register from "./screens/Register";
+import Login from "./screens/Login";
 
 import { useSurveryActions } from "./context/actions/survey_actions";
 import { useTrackActions } from "./context/actions/track_actions";
@@ -25,6 +26,11 @@ export default function App() {
             <Stack.Screen
               name="Landing"
               component={Landing}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
               options={{ headerShown: false }}
             />
             <Stack.Screen

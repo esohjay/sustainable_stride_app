@@ -21,6 +21,12 @@ function Landing({ navigation }) {
             textStyle={tw`px-10 py-4`}
             onPress={() => navigation.navigate("Register")}
           />
+          <Text
+            onPress={() => navigation.navigate("Login")}
+            style={tw`text-mainColor underline text-center font-semibold py-3`}
+          >
+            Already have an account? Log in
+          </Text>
         </View>
       </View>
     </View>
