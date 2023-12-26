@@ -12,6 +12,7 @@ import { useSurveryActions } from "./context/actions/survey_actions";
 import { useTrackActions } from "./context/actions/track_actions";
 import { useAppContext } from "./context/store";
 import ExpensesContextProvider from "./context/store";
+import HomeStack from "./navigation/HomeStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,11 @@ export default function App() {
             <Stack.Screen
               name="Login"
               component={Login}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="HomeScreen"
+              component={HomeStack}
               options={{ headerShown: false }}
             />
             <Stack.Screen

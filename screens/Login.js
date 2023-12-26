@@ -49,7 +49,7 @@ function Login({ navigation }) {
               <Button
                 text={"Login"}
                 textStyle={tw`px-10 py-4`}
-                onPress={() => navigation.navigate("Register")}
+                onPress={() => navigation.navigate("HomeScreen")}
               />
               <Text
                 onPress={() => navigation.navigate("Register")}

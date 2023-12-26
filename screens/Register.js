@@ -57,7 +57,7 @@ function Register({ navigation }) {
                 <Button
                   text={"Sign up"}
                   textStyle={tw`px-10 py-4`}
-                  onPress={() => navigation.navigate("Register")}
+                  onPress={() => navigation.navigate("HomeScreen")}
                 />
                 <Text
                   onPress={() => navigation.navigate("Login")}
