@@ -1,14 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Image, Text } from "react-native";
 import tw from "../lib/tailwind";
 import { TextInput } from "../components/UI/TextInput";
 import AviodKeyBoardViewWrapper from "../components/AviodKeyBoardViewWrapper";
+// import { auth } from "../lib/firebaseConfig";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useForm, Controller } from "react-hook-form";
+import { useAuthActions } from "../context/actions/auth_actions";
+import { useAuthContext } from "../context/providers/AuthProvider";
 
 import { Button } from "../components/UI/Button";
 
 function Register({ navigation }) {
+  const { state } = useAuthContext();
+  const { isAuthenticated } = state;
+  const { signUp } = useAuthActions();
+  //   const auth = getAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      fullName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+  const onSubmit = (data) => {
+    if (data.password !== data.confirmPassword) {
+      setError("passwordMatch", { type: "required" });
+      return;
+    }
+    signUp({ email: data.email, password: data.password });
+  };
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.replace("HomeScreen");
+    }
+  }, [isAuthenticated]);
   return (
     <AviodKeyBoardViewWrapper>
       <View style={tw`bg-gray-100 h-full`}>
@@ -25,39 +59,122 @@ function Register({ navigation }) {
           </Text>
           <View style={tw`w-full py-3`}>
             <View style={tw`flex gap-3`}>
-              <TextInput
-                icon="person"
-                placeholder="Olusoji Daramola"
-                label={"Full name"}
-              />
-              <TextInput
-                icon="mail"
-                placeholder="example@email.com"
-                label={"Email"}
-              />
+              <View>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      icon="person"
+                      placeholder="Olusoji Daramola"
+                      label={"Full name"}
+                    />
+                  )}
+                  name="fullName"
+                />
+                {errors.fullName && (
+                  <Text style={tw`mt-1 text-sm text-red-500`}>
+                    Full name is required
+                  </Text>
+                )}
+              </View>
+              <View>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      icon="mail"
+                      keyboardType="email-address"
+                      placeholder="example@email.com"
+                      label={"Email"}
+                    />
+                  )}
+                  name="email"
+                />
+                {errors.email && (
+                  <Text style={tw`mt-1 text-sm text-red-500`}>
+                    Email is required
+                  </Text>
+                )}
+              </View>
+              <View>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      icon="lock-closed"
+                      placeholder="xxxxxxxx"
+                      label={"Password"}
+                      isPassowrd={true}
+                      isPassowrdField={true}
+                      showPassword={showPassword}
+                      setShowPassword={setShowPassword}
+                    />
+                  )}
+                  name="password"
+                />
+                {errors.password && (
+                  <Text style={tw`mt-1 text-sm text-red-500`}>
+                    Password is required
+                  </Text>
+                )}
+              </View>
+              <View>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({ field: { onChange, onBlur, value } }) => (
+                    <TextInput
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      icon="lock-closed"
+                      placeholder="xxxxxxxx"
+                      label={"Confirm password"}
+                      isPassowrdField={true}
+                      isPassowrd={true}
+                      showPassword={showConfirmPassword}
+                      setShowPassword={setShowConfirmPassword}
+                    />
+                  )}
+                  name="confirmPassword"
+                />
+                {errors.confirmPassword && (
+                  <Text style={tw`mt-1 text-sm text-red-500`}>
+                    Confirm assword is required
+                  </Text>
+                )}
+                {errors.passwordMatch && (
+                  <Text style={tw`mt-1 text-sm text-red-500`}>
+                    Password do not match
+                  </Text>
+                )}
+              </View>
 
-              <TextInput
-                icon="lock-closed"
-                placeholder="xxxxxxxx"
-                label={"Password"}
-                isPassowrd={true}
-                showPassword={showPassword}
-                setShowPassword={setShowPassword}
-              />
-
-              <TextInput
-                icon="lock-closed"
-                placeholder="xxxxxxxx"
-                label={"Confirm password"}
-                isPassowrd={true}
-                showPassword={showConfirmPassword}
-                setShowPassword={setShowConfirmPassword}
-              />
               <View style={tw`my-5`}>
                 <Button
                   text={"Sign up"}
                   textStyle={tw`px-10 py-4`}
-                  onPress={() => navigation.navigate("HomeScreen")}
+                  onPress={handleSubmit(onSubmit)}
                 />
                 <Text
                   onPress={() => navigation.navigate("Login")}

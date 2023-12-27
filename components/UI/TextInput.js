@@ -11,6 +11,7 @@ export const TextInput = ({
   icon,
   label,
   isPassowrd,
+  isPassowrdField = false,
   showPassword,
   setShowPassword,
   ...props
@@ -40,7 +41,7 @@ export const TextInput = ({
           <DefaultTextInput
             {...props}
             onFocus={handleFocus}
-            secureTextEntry={!showPassword}
+            secureTextEntry={isPassowrdField && !showPassword}
             onEndEditing={handleEndEditing}
             style={[
               tw`${icon ? "w-[92%]" : "w-full"} h-full text-dark`,

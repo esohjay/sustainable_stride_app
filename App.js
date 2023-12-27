@@ -7,11 +7,13 @@ import { useDeviceContext } from "twrnc";
 import Landing from "./screens/Landing";
 import Register from "./screens/Register";
 import Login from "./screens/Login";
+import SplashScreen from "./screens/SplashScreen";
 
 import { useSurveryActions } from "./context/actions/survey_actions";
 import { useTrackActions } from "./context/actions/track_actions";
 import { useAppContext } from "./context/store";
 import ExpensesContextProvider from "./context/store";
+import { AuthProvider } from "./context/providers/AuthProvider";
 import HomeStack from "./navigation/HomeStack";
 
 const Stack = createNativeStackNavigator();
@@ -21,9 +23,14 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <ExpensesContextProvider>
+      <AuthProvider>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName="SplashScreen">
+            <Stack.Screen
+              name="SplashScreen"
+              component={SplashScreen}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Landing"
               component={Landing}
@@ -53,7 +60,7 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </ExpensesContextProvider>
+      </AuthProvider>
     </>
   );
 }

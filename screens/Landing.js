@@ -2,8 +2,17 @@ import { View, Text, Image } from "react-native";
 import tw from "../lib/tailwind";
 import LandingCardList from "../components/LandingCardList";
 import { Button } from "../components/UI/Button";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { auth } from "../lib/firebaseConfig";
+import { useAuthContext } from "../context/providers/AuthProvider";
 
 function Landing({ navigation }) {
+  const { state } = useAuthContext();
+  console.log(state);
+  // const auth = getAuth();
+
+  // console.log(auth.currentUser);
+  // console.log(auth.currentUser);
   return (
     <View style={tw`bg-gray-100 h-full`}>
       <View style={tw`flex pt-20 justify-center items-center`}>
