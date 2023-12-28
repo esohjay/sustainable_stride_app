@@ -43,8 +43,8 @@ function LandingCardList() {
       <ScrollView
         onScroll={({ nativeEvent }) => onChange(nativeEvent)}
         showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={900}
-        pagingEnabled
+        scrollEventThrottle={100}
+        pagingEnabled={true}
         horizontal
         style={tw`w-full mb-5`}
       >

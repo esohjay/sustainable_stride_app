@@ -16,6 +16,7 @@ const initialState = {
   error: null,
   user: null,
   isAuthenticated: false,
+  isSignOut: false,
 };
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);

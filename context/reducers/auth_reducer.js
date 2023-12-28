@@ -3,6 +3,7 @@ import {
   SIGN_IN_REQUEST,
   SIGN_IN_SUCCESS,
   SIGN_OUT,
+  SIGN_OUT_FAIL,
   SIGN_UP_FAIL,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
@@ -16,6 +17,8 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         success: true,
+        loading: false,
+        isSignOut: false,
         isAuthenticated: true,
         user: action.payload,
       };
@@ -27,13 +30,23 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         success: true,
+        loading: false,
         isAuthenticated: true,
+        isSignOut: false,
         user: action.payload,
       };
     case SIGN_UP_FAIL:
       return { ...state, loading: false, error: action.payload };
     case SIGN_OUT:
-      return { ...state, success: true, isAuthenticated: false, user: null };
+      return {
+        ...state,
+        loading: false,
+        isSignOut: true,
+        isAuthenticated: false,
+        user: null,
+      };
+    case SIGN_OUT_FAIL:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

@@ -4,9 +4,30 @@ import tw from "../lib/tailwind";
 import { TextInput } from "../components/UI/TextInput";
 import { Button } from "../components/UI/Button";
 import AviodKeyBoardViewWrapper from "../components/AviodKeyBoardViewWrapper";
+import { useForm, Controller } from "react-hook-form";
+import { useAuthActions } from "../context/actions/auth_actions";
+import { useAuthContext } from "../context/providers/AuthProvider";
 
 function Login({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
+  const { state } = useAuthContext();
+  const { isAuthenticated } = state;
+  const { signIn } = useAuthActions();
+
+  const {
+    control,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  const onSubmit = (data) => {
+    signIn({ email: data.email, password: data.password });
+  };
 
   return (
     <AviodKeyBoardViewWrapper>
@@ -30,26 +51,67 @@ function Login({ navigation }) {
             Welcome back!
           </Text>
           <View style={tw`flex gap-3 w-full`}>
-            <TextInput
-              icon="mail"
-              placeholder="example@email.com"
-              label={"Email"}
-            />
+            <View>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    icon="mail"
+                    keyboardType="email-address"
+                    placeholder="example@email.com"
+                    label={"Email"}
+                  />
+                )}
+                name="email"
+              />
+              {errors.email && (
+                <Text style={tw`mt-1 text-sm text-red-500`}>
+                  Email is required
+                </Text>
+              )}
+            </View>
 
-            <TextInput
-              icon="lock-closed"
-              placeholder="xxxxxxxx"
-              label={"Password"}
-              isPassowrd={true}
-              showPassword={showPassword}
-              setShowPassword={setShowPassword}
-            />
+            <View>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <TextInput
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    icon="lock-closed"
+                    placeholder="xxxxxxxx"
+                    label={"Password"}
+                    isPassowrd={true}
+                    isPassowrdField={true}
+                    showPassword={showPassword}
+                    setShowPassword={setShowPassword}
+                  />
+                )}
+                name="password"
+              />
+              {errors.password && (
+                <Text style={tw`mt-1 text-sm text-red-500`}>
+                  Password is required
+                </Text>
+              )}
+            </View>
 
             <View style={tw`my-5`}>
               <Button
                 text={"Login"}
                 textStyle={tw`px-10 py-4`}
-                onPress={() => navigation.navigate("HomeScreen")}
+                isLoading={state.loading}
+                onPress={handleSubmit(onSubmit)}
               />
               <Text
                 onPress={() => navigation.navigate("Register")}

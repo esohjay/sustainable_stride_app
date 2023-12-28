@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pressable, Text, ViewStyle } from "react-native";
+import { Pressable, Text, ActivityIndicator } from "react-native";
 
 import tw from "../../lib/tailwind";
 
@@ -14,6 +14,7 @@ export const Button = ({
   style = "",
   textStyle = "",
   iconStyle = "",
+  isLoading = false,
   ...props
 }) => {
   const [hovered, setHovered] = useState(false);
@@ -60,18 +61,29 @@ export const Button = ({
       ]}
     >
       {icon ? icon([tw`text-lg`, variants[variant].text, iconStyle]) : null}
-      {text ? (
-        <Text
-          style={[
-            tw`font-bold`,
 
-            variants[variant].text,
-            textStyle,
-            { textTransform: "uppercase" },
-          ]}
-        >
-          {text}
-        </Text>
+      {text ? (
+        <>
+          <Text
+            style={[
+              tw`font-bold`,
+
+              variants[variant].text,
+              textStyle,
+              { textTransform: "uppercase" },
+            ]}
+          >
+            {text}
+          </Text>
+          {isLoading && (
+            <ActivityIndicator
+              animating={isLoading}
+              color="#FFFFFF"
+              size="small"
+              // style={styles.activityIndicator}
+            />
+          )}
+        </>
       ) : null}
     </Pressable>
   );

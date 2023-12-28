@@ -5,12 +5,15 @@ import {
   SIGN_UP_FAIL,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
+  SIGN_OUT,
+  SIGN_OUT_FAIL,
 } from "../constants/auth_constants";
 
 import { useAuthContext } from "../providers/AuthProvider";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { auth } from "../../lib/firebaseConfig";
 
@@ -49,6 +52,17 @@ export const useAuthActions = () => {
         const errorMessage = error.message;
         dispatch({ type: SIGN_IN_FAIL, payload: errorMessage });
         // ..
+      });
+  };
+  const logOut = () => {
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        dispatch({ type: SIGN_OUT });
+      })
+      .catch((error) => {
+        // An error happened.
+        dispatch({ type: SIGN_OUT_FAIL, payload: error });
       });
   };
   //   const createTrack = () => {
@@ -121,5 +135,6 @@ export const useAuthActions = () => {
     setUser,
     signIn,
     signUp,
+    logOut,
   };
 };

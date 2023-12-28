@@ -5,7 +5,7 @@ const WIDTH = Dimensions.get("screen").width;
 
 function LandingCard({ header, text, imgPath }) {
   return (
-    <View style={tw`bg-transparent flex w-[${WIDTH}px]`}>
+    <View style={tw`bg-transparent max-w-[${WIDTH}px]`}>
       <View style={tw`flex justify-center items-center px-12 pt-7`}>
         <View style={tw`w-full h-64 mb-5 bg-transparent`}>
           <Image

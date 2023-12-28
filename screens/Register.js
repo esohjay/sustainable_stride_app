@@ -38,11 +38,11 @@ function Register({ navigation }) {
     }
     signUp({ email: data.email, password: data.password });
   };
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigation.replace("HomeScreen");
-    }
-  }, [isAuthenticated]);
+  //   useEffect(() => {
+  //     if (isAuthenticated) {
+  //       navigation.replace("HomeScreen");
+  //     }
+  //   }, [isAuthenticated]);
   return (
     <AviodKeyBoardViewWrapper>
       <View style={tw`bg-gray-100 h-full`}>
@@ -174,6 +174,7 @@ function Register({ navigation }) {
                 <Button
                   text={"Sign up"}
                   textStyle={tw`px-10 py-4`}
+                  isLoading={state.loading}
                   onPress={handleSubmit(onSubmit)}
                 />
                 <Text
