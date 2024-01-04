@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import ScrollContextProvider from "./context/providers/ScrollContext";
 import tw from "./lib/tailwind";
 import { useDeviceContext } from "twrnc";
 import Landing from "./screens/Landing";
@@ -24,10 +25,11 @@ export default function App() {
   useDeviceContext(tw);
   return (
     <SafeAreaProvider>
-      <StatusBar style="auto" />
-      <AuthProvider>
-        <RootStack />
-        {/* <NavigationContainer>
+      <ScrollContextProvider>
+        <StatusBar style="auto" />
+        <AuthProvider>
+          <RootStack />
+          {/* <NavigationContainer>
           <Stack.Navigator initialRouteName="SplashScreen">
             <Stack.Screen
               name="SplashScreen"
@@ -63,7 +65,8 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer> */}
-      </AuthProvider>
+        </AuthProvider>
+      </ScrollContextProvider>
     </SafeAreaProvider>
   );
 }

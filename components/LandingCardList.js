@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Dimensions } from "react-native";
 import tw from "../lib/tailwind";
 import LandingCard from "../components/LandingCard";
 
+const { width } = Dimensions.get("screen");
 function LandingCardList() {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const sliderData = [
@@ -22,16 +23,16 @@ function LandingCardList() {
       imgPath: require("../assets/landing_banner.png"),
     },
     {
-      text: "Get tips and learn more about green lifestyle",
-      header: "Get tips",
-      imgPath: require("../assets/tips.png"),
+      text: "Start or join campaigns that reduces carbon emissions in your area.",
+      header: "Join campaigns",
+      imgPath: require("../assets/campaign.png"),
     },
   ];
   const onChange = (nativeEvent) => {
     if (nativeEvent) {
       // divide screen width by the number of x offset
-      const slide = Math.ceil(
-        nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
+      const slide = Math.floor(
+        Math.floor(nativeEvent.contentOffset.x) / Math.floor(width)
       );
       if (slide !== activeImageIndex) {
         setActiveImageIndex(slide);
@@ -43,10 +44,10 @@ function LandingCardList() {
       <ScrollView
         onScroll={({ nativeEvent }) => onChange(nativeEvent)}
         showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={100}
-        pagingEnabled={true}
+        scrollEventThrottle={900}
+        pagingEnabled
         horizontal
-        style={tw`w-full mb-5`}
+        style={tw`w-[${width}px]  mb-5`}
       >
         {[
           sliderData.map((cardData, index) => (

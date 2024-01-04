@@ -1,13 +1,16 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { setActiveRoute } from "../lib/setActiveRoute";
 import HomeScreen from "../screens/HomeScreen";
 import ActScreen from "../screens/ActScreen";
 import EstimateScreen from "../screens/EstimateScreen";
-import TipsScreen from "../screens/TipScreen";
+import CampaignScreen from "../screens/CampaignScreen";
 import TrackScreen from "../screens/TrackScreen";
 import { useAuthContext } from "../context/providers/AuthProvider";
+import Header from "../components/Header";
+import HomeHeader from "../components/HomeHeader";
 
 const Tab = createBottomTabNavigator();
 function AuthenticatedStack() {
@@ -31,12 +34,19 @@ function AuthenticatedStack() {
         <Tab.Screen
           name="Home"
           component={HomeScreen}
-          options={{ headerShown: false }}
+          options={{
+            headerShown: true,
+            header: () => (
+              <Header>
+                <HomeHeader />
+              </Header>
+            ),
+          }}
         />
         <Tab.Screen name="Estimate" component={EstimateScreen} />
         <Tab.Screen name="Track" component={TrackScreen} />
         <Tab.Screen name="Act" component={ActScreen} />
-        <Tab.Screen name="Tips" component={TipsScreen} />
+        <Tab.Screen name="Campaign" component={CampaignScreen} />
       </Tab.Navigator>
     </>
   );

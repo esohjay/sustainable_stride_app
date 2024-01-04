@@ -1,6 +1,16 @@
-import { View, Text, Image, Pressable } from "react-native";
+import { useEffect, useState, useRef } from "react";
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
+import Header from "../components/Header";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { CustomScrollView } from "../context/providers/ScrollContext";
 import tw from "../lib/tailwind";
 import { useAuthActions } from "../context/actions/auth_actions";
 
@@ -8,28 +18,157 @@ function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { logOut } = useAuthActions();
   const { state } = useAuthContext();
+
   // console.log(state);
   return (
-    <View
-      style={tw`pt-[${insets.top}] pb-[${insets.bottom}] px-4 bg-gray-100 h-full`}
-    >
-      <View style={tw`py-3 flex flex-row justify-between items-center`}>
-        <Text style={tw`font-bold text-2xl text-mainColor`}>
-          Hello {state && state.user.name ? state.user.name : "there"}!
-        </Text>
+    <CustomScrollView>
+      <View
+        style={tw`pt-[${insets.top}]  flex justify-between px-4 bg-gray-100 h-full overflow-scroll `}
+      >
+        <View></View>
 
-        <Pressable onPress={logOut}>
-          <View style={tw`w-12 h-12 rounded-full mb-3 bg-transparent`}>
-            <Image
-              style={tw`w-full h-full max-w-full rounded-full max-h-full bg-transparent`}
-              resizeMode="contain"
-              source={require("../assets/avatar.png")}
-            />
-          </View>
-        </Pressable>
+        <View>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+          <Text style={tw`text-2xl text-dark`}>
+            {" "}
+            at async DeltaCalculator._getChangedDependencies
+            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
+            at async DeltaCalculator.getDelta{" "}
+          </Text>
+        </View>
       </View>
-    </View>
+    </CustomScrollView>
   );
 }
 
+const styles = StyleSheet.create({
+  header: {
+    height: 60,
+    backgroundColor: "white",
+    padding: 15,
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  headerShadow: {
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+});
 export default HomeScreen;

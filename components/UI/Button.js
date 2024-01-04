@@ -24,12 +24,12 @@ export const Button = ({
     default: {
       bg: tw`bg-mainColor dark:bg-mainColor shadow-sm shadow-mainColor`,
       hover: tw`bg-secondaryColor dark:bg-gray-200`,
-      text: tw`text-altColor dark:text-gray-900`,
+      text: tw`text-altColor `,
     },
     light: {
-      text: tw`text-mainColor dark:bg-mainColor`,
-      hover: tw`bg-secondaryColor dark:bg-gray-200`,
-      bg: tw`bg-altColor dark:text-gray-900 shadow-sm shadow-mainColor`,
+      text: tw`text-mainColor `,
+      hover: tw`bg-secondaryColor`,
+      bg: tw`bg-altColor  shadow-sm shadow-mainColor`,
     },
     success: {
       bg: tw`bg-green-700`,
