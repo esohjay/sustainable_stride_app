@@ -17,7 +17,7 @@ function Landing({ navigation }) {
   // console.log(auth.currentUser);
   return (
     <View
-      style={tw`pt-[${insets.top}] pb-[${insets.bottom}] bg-gray-100 h-full`}
+      style={tw`pt-[${insets.top}] pb-[${insets.bottom}] bg-gray-50 h-full`}
     >
       <View style={tw`flex justify-center items-center`}>
         <View style={tw`w-full h-20 mb-3 bg-transparent`}>

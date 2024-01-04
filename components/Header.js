@@ -36,7 +36,7 @@ export const Header = ({ children }) => {
         // },
         tw`${
           opacity > 0 ? "shadow-lg" : "shadow-none"
-        } bg-gray-100 px-3 min-h-[80px] w-full `,
+        } bg-gray-50 px-3 min-h-[80px] w-full `,
         tw`pt-[${insets.top}]`,
       ]}
     >

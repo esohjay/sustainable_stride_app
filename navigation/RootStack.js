@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { useAuthContext } from "../context/providers/AuthProvider";
@@ -8,12 +8,46 @@ import AuthenticatedStack from "./AuthenticatedStack";
 import { useAuthActions } from "../context/actions/auth_actions";
 import { auth } from "../lib/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+// import * as SplashScreen from "expo-splash-screen";
+import {
+  useFonts,
+  MontserratAlternates_100Thin,
+  MontserratAlternates_200ExtraLight,
+  MontserratAlternates_300Light,
+  MontserratAlternates_400Regular,
+  MontserratAlternates_500Medium,
+  MontserratAlternates_600SemiBold,
+  MontserratAlternates_700Bold,
+  MontserratAlternates_800ExtraBold,
+  MontserratAlternates_900Black,
+} from "@expo-google-fonts/montserrat-alternates";
 
 const Stack = createNativeStackNavigator();
+// SplashScreen.preventAutoHideAsync();
 function RootStack() {
   const [isLoading, setIsLoading] = useState(true);
   const { state } = useAuthContext();
   const { setUser } = useAuthActions();
+  let [fontsLoaded, fontError] = useFonts({
+    MontserratAlternates_100Thin,
+
+    MontserratAlternates_200ExtraLight,
+
+    MontserratAlternates_300Light,
+
+    MontserratAlternates_400Regular,
+
+    MontserratAlternates_500Medium,
+
+    MontserratAlternates_600SemiBold,
+
+    MontserratAlternates_700Bold,
+
+    MontserratAlternates_800ExtraBold,
+
+    MontserratAlternates_900Black,
+  });
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -25,9 +59,13 @@ function RootStack() {
       }
     });
   }, []);
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
   if (isLoading) {
     return <SplashScreen />;
   }
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

@@ -13,6 +13,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import tw from "../lib/tailwind";
 import { useAuthActions } from "../context/actions/auth_actions";
+import { Button } from "../components/UI/Button";
 
 function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -21,127 +22,33 @@ function HomeScreen() {
 
   // console.log(state);
   return (
-    <CustomScrollView>
-      <View
-        style={tw`pt-[${insets.top}]  flex justify-between px-4 bg-gray-100 h-full overflow-scroll `}
-      >
-        <View></View>
-
-        <View>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
-          <Text style={tw`text-2xl text-dark`}>
-            {" "}
-            at async DeltaCalculator._getChangedDependencies
-            :\Users\user\sustainable_stride_app\node_modules\metro\src\DeltaBundler\DeltaCalculator.js:281:42
-            at async DeltaCalculator.getDelta{" "}
-          </Text>
+    <CustomScrollView style={tw`bg-gray-50 p-5`}>
+      <View style={tw`py-5`}>
+        <View
+          style={tw`flex flex-row gap-3 w-full p-5 items-center shadow bg-white rounded-lg`}
+        >
+          <View style={tw`h-20 mb-3 bg-transparent w-3/12`}>
+            <Image
+              style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
+              resizeMode="contain"
+              source={require("../assets/Analyze-amico.png")}
+            />
+          </View>
+          <View style={tw` w-9/12`}>
+            <Text style={tw`font-semibold text-lg text-mainColor mb-1`}>
+              Estimate footprint
+            </Text>
+            <Text style={tw`text-dark mb-1 font-normal`}>
+              Take a quick survey to estimate how much carbon you emit.
+            </Text>
+            <Text style={tw`font-bold text-lg text-mainColor`}>Start now</Text>
+          </View>
+        </View>
+      </View>
+      <View style={tw`py-5`}>
+        <View style={tw`flex flex-row items-center justify-between w-full`}>
+          <Text style={tw`text-mainColor font-bold text-xl`}>Tips</Text>
+          <Text style={[tw`text-secondaryAlt text-base`]}>See all</Text>
         </View>
       </View>
     </CustomScrollView>

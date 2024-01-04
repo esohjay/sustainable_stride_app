@@ -11,6 +11,7 @@ import TrackScreen from "../screens/TrackScreen";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import Header from "../components/Header";
 import HomeHeader from "../components/HomeHeader";
+import tw from "../lib/tailwind";
 
 const Tab = createBottomTabNavigator();
 function AuthenticatedStack() {

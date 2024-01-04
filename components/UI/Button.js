@@ -53,7 +53,7 @@ export const Button = ({
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
       style={[
-        tw` min-h-[40px] px-4 flex-row gap-2 items-center justify-center rounded-md`,
+        tw` min-h-[40px] px-4 flex flex-row gap-2 items-center justify-center rounded-md`,
         variants[variant].bg,
         hovered || pressed ? variants[variant].hover : null,
         // todo: fix ts error
