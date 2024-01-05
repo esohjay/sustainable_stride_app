@@ -1,19 +1,12 @@
-import { useEffect, useState, useRef } from "react";
-import {
-  View,
-  Text,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
-import Header from "../components/Header";
+import { View, Text, Image, StyleSheet } from "react-native";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import tw from "../lib/tailwind";
 import { useAuthActions } from "../context/actions/auth_actions";
-import { Button } from "../components/UI/Button";
+import CampignCard from "../components/CampignCard";
+import TipsList from "../components/TipsList";
+import CampaignList from "../components/CampaignList";
 
 function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -23,7 +16,7 @@ function HomeScreen() {
   // console.log(state);
   return (
     <CustomScrollView style={tw`bg-gray-50 p-5`}>
-      <View style={tw`py-5`}>
+      <View style={tw`py-3`}>
         <View
           style={tw`flex flex-row gap-3 w-full p-5 items-center shadow bg-white rounded-lg`}
         >
@@ -45,11 +38,46 @@ function HomeScreen() {
           </View>
         </View>
       </View>
-      <View style={tw`py-5`}>
-        <View style={tw`flex flex-row items-center justify-between w-full`}>
-          <Text style={tw`text-mainColor font-bold text-xl`}>Tips</Text>
-          <Text style={[tw`text-secondaryAlt text-base`]}>See all</Text>
+      <View style={tw`py-3`}>
+        <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>
+          Nearby campaigns
+        </Text>
+        <CampaignList />
+      </View>
+      <View style={tw`relative`}>
+        <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>
+          My achievements{" "}
+        </Text>
+        <View style={tw`relative p-3 shadow bg-white rounded-lg`}>
+          <View
+            style={tw`h-20 mb-3 bg-transparent w-20 absolute right-0 top-0`}
+          >
+            <Image
+              style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
+              resizeMode="contain"
+              source={require("../assets/achievement.png")}
+            />
+          </View>
+          <Text style={tw`text-dark font-semibold mb-1 text-base`}>
+            My impact
+          </Text>
+          <View style={tw`h-1 w-2/5 bg-altColor mb-2`}></View>
+          <Text style={tw`w-3/4 font-normal `}>
+            Yo {state.user.name}! This is what you have achieved 🏆 with
+            CarbonLog so far.
+          </Text>
         </View>
+      </View>
+      <View style={tw`py-2`}>
+        <View
+          style={tw`flex flex-row items-center justify-between mb-5 w-full`}
+        >
+          <Text style={tw`text-mainColor font-bold text-xl`}>Tips</Text>
+          <Text style={[tw`text-secondaryAlt text-base font-normal`]}>
+            See all
+          </Text>
+        </View>
+        <TipsList />
       </View>
     </CustomScrollView>
   );
