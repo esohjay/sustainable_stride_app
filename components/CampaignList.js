@@ -55,7 +55,7 @@ function CampaignList() {
         scrollEventThrottle={900}
         // pagingEnabled
         horizontal
-        style={tw` flex flex-row gap-x-5   mb-5`}
+        style={tw` flex flex-row gap-x-5 mb-2`}
       >
         <View style={tw`flex flex-row gap-x-3`}>
           {[

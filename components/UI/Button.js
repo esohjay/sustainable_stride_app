@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pressable, Text, ActivityIndicator } from "react-native";
-
+import { Ionicons } from "@expo/vector-icons";
 import tw from "../../lib/tailwind";
 
 /**
@@ -60,8 +60,6 @@ export const Button = ({
         style,
       ]}
     >
-      {icon ? icon([tw`text-lg`, variants[variant].text, iconStyle]) : null}
-
       {text ? (
         <>
           <Text
@@ -75,6 +73,13 @@ export const Button = ({
           >
             {text}
           </Text>
+          {icon && (
+            <Ionicons
+              name={icon}
+              size={18}
+              color={`${variant === "light" ? "#7d4f50" : "#eae0d5"}`}
+            />
+          )}
           {isLoading && (
             <ActivityIndicator
               animating={isLoading}

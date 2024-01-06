@@ -1,12 +1,13 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import tw from "../lib/tailwind";
 import { useAuthActions } from "../context/actions/auth_actions";
-import CampignCard from "../components/CampignCard";
+import AchievementStat from "../components/AchievementStat";
 import TipsList from "../components/TipsList";
 import CampaignList from "../components/CampaignList";
+import { Button } from "../components/UI/Button";
 
 function HomeScreen() {
   const insets = useSafeAreaInsets();
@@ -15,7 +16,7 @@ function HomeScreen() {
 
   // console.log(state);
   return (
-    <CustomScrollView style={tw`bg-gray-50 p-5`}>
+    <CustomScrollView style={tw`bg-gray-50 p-5 pb-[${insets.bottom}]`}>
       <View style={tw`py-3`}>
         <View
           style={tw`flex flex-row gap-3 w-full p-5 items-center shadow bg-white rounded-lg`}
@@ -43,12 +44,17 @@ function HomeScreen() {
           Nearby campaigns
         </Text>
         <CampaignList />
+        <View style={tw`h-[1px] bg-altColor w-full my-3`}></View>
+        <Text style={tw`text-dark font-medium mb-1`}>
+          Want to start a campaign?
+        </Text>
+        <Text style={tw`text-base font-semibold text-dark`}>Add campaign</Text>
       </View>
-      <View style={tw`relative`}>
+      <View style={tw`relative py-3`}>
         <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>
           My achievements{" "}
         </Text>
-        <View style={tw`relative p-3 shadow bg-white rounded-lg`}>
+        <View style={tw`relative px-3 py-5 shadow bg-white rounded-lg`}>
           <View
             style={tw`h-20 mb-3 bg-transparent w-20 absolute right-0 top-0`}
           >
@@ -62,10 +68,36 @@ function HomeScreen() {
             My impact
           </Text>
           <View style={tw`h-1 w-2/5 bg-altColor mb-2`}></View>
-          <Text style={tw`w-3/4 font-normal `}>
+          <Text style={tw`w-3/4 font-normal mb-5`}>
             Yo {state.user.name}! This is what you have achieved 🏆 with
             CarbonLog so far.
           </Text>
+          <Text style={tw`text-dark font-semibold mb-3 text-base`}>
+            Achievements
+          </Text>
+          <View style={tw`flex flex-row justify-between mb-5 w-full`}>
+            <AchievementStat stat={0} type={"KgCO2e"} icon={"cloudy"} />
+            <AchievementStat stat={0} type={"Actions"} icon={"medal"} />
+          </View>
+          <View style={tw`flex flex-row justify-between mb-5 w-full`}>
+            <AchievementStat stat={0} type={"Points"} icon={"aperture"} />
+            <AchievementStat stat={0} type={"Tracking"} icon={"speedometer"} />
+          </View>
+          <Text style={tw`text-dark font-semibold mb-2 text-base`}>Badges</Text>
+          <View style={tw`flex flex-row items-center gap-x-6`}>
+            <View
+              style={tw`h-12 bg-transparent w-12 rounded-full border-2 border-secondaryAlt`}
+            >
+              <Image
+                style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
+                resizeMode="contain"
+                source={require("../assets/quality.png")}
+              />
+            </View>
+            <Text style={tw`text-dark font-normal w-3/4`}>
+              Keep using the app to unlock badges!
+            </Text>
+          </View>
         </View>
       </View>
       <View style={tw`py-2`}>
@@ -78,6 +110,41 @@ function HomeScreen() {
           </Text>
         </View>
         <TipsList />
+      </View>
+      <View style={tw`mb-7`}>
+        <View style={tw`w-full h-44 rounded-lg relative bg-white shadow`}>
+          <Image
+            style={tw`h-full max-h-full absolute top-0 left-0 rounded-lg flex max-w-full w-full`}
+            resizeMode="cover"
+            source={{
+              uri: "https://cdn.pixabay.com/photo/2017/09/20/06/27/bridge-2767545_1280.jpg",
+            }}
+          />
+          <View
+            style={tw`h-full w-full flex items-center p-3 rounded-lg bg-dark bg-opacity-60`}
+          >
+            <Text style={tw`text-primaryLight font-bold text-2xl mb-3 `}>
+              Did you know?
+            </Text>
+            <Text
+              style={tw`text-altColor font-semibold mb-3 text-center w-3/4`}
+            >
+              Regular visits to greenspaces improves your mental health.
+            </Text>
+            <Button text={"Explore"} icon={"rocket"} variant="light" />
+          </View>
+        </View>
+      </View>
+      <View style={tw`pb-10`}>
+        <View style={tw`bg-white shadow rounded-lg p-5 `}>
+          <Text style={tw`text-xl font-bold mb-2 text-mainColor`}>
+            More is better
+          </Text>
+          <Text style={tw` font-medium mb-2 text-mainColor`}>
+            Make a big impact by helping others reduce their carbon emission.
+          </Text>
+          <Button text={"Invite friends"} />
+        </View>
       </View>
     </CustomScrollView>
   );
