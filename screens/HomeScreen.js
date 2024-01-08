@@ -2,6 +2,7 @@ import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
+// import { CustomScrollView } from "../components/CustomScrollView";
 import tw from "../lib/tailwind";
 import { useAuthActions } from "../context/actions/auth_actions";
 import AchievementStat from "../components/AchievementStat";
@@ -16,7 +17,10 @@ function HomeScreen() {
 
   // console.log(state);
   return (
-    <CustomScrollView style={tw`bg-gray-50 p-5 pb-[${insets.bottom}]`}>
+    <CustomScrollView
+      style={tw`bg-gray-50 p-5 pb-[${insets.bottom}]`}
+      screen="home"
+    >
       <View style={tw`py-3`}>
         <View
           style={tw`flex flex-row gap-3 w-full p-5 items-center shadow bg-white rounded-lg`}
@@ -33,7 +37,7 @@ function HomeScreen() {
               Estimate footprint
             </Text>
             <Text style={tw`text-dark mb-1 font-normal`}>
-              Take a quick survey to estimate how much carbon you emit.
+              Take a quick survey to estimate how much carbon you emit yearly.
             </Text>
             <Text style={tw`font-bold text-lg text-mainColor`}>Start now</Text>
           </View>

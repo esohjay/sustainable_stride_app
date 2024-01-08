@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text, Animated, Easing, StyleSheet } from "react-native";
 import { useScroller } from "../context/providers/ScrollContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+// import useScroller from "../lib/useScroller";
 import tw from "../lib/tailwind";
 
-export const Header = ({ children }) => {
+export const Header = ({ screen, children }) => {
   const { titleShowing, opacity } = useScroller();
   const insets = useSafeAreaInsets();
-  const [titleFade] = useState(new Animated.Value(0));
+  // const [titleFade] = useState(new Animated.Value(0));
 
-  useEffect(() => {
-    titleShowing === false &&
-      Animated.timing(titleFade, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-        easing: Easing.sin,
-      }).start();
+  // useEffect(() => {
+  //   titleShowing === false &&
+  //     Animated.timing(titleFade, {
+  //       toValue: 0,
+  //       duration: 200,
+  //       useNativeDriver: true,
+  //       easing: Easing.sin,
+  //     }).start();
 
-    titleShowing === true &&
-      Animated.timing(titleFade, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-        easing: Easing.sin,
-      }).start();
-  });
+  //   titleShowing === true &&
+  //     Animated.timing(titleFade, {
+  //       toValue: 1,
+  //       duration: 200,
+  //       useNativeDriver: true,
+  //       easing: Easing.sin,
+  //     }).start();
+  // });
 
   return (
     <View
@@ -35,7 +36,7 @@ export const Header = ({ children }) => {
         //   //   shadowOpacity: opacity,
         // },
         tw`${
-          opacity > 0 ? "shadow-lg" : "shadow-none"
+          opacity[screen] > 0 ? "shadow-lg" : "shadow-none"
         } bg-gray-50 px-3 min-h-[80px] w-full `,
         tw`pt-[${insets.top}]`,
       ]}

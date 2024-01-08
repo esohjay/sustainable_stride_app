@@ -26,7 +26,7 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <ScrollContextProvider>
-        <StatusBar style="auto" />
+        <StatusBar style="dark" />
         <AuthProvider>
           <RootStack />
           {/* <NavigationContainer>

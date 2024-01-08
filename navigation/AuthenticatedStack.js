@@ -11,7 +11,7 @@ import TrackScreen from "../screens/TrackScreen";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import Header from "../components/Header";
 import HomeHeader from "../components/HomeHeader";
-import tw from "../lib/tailwind";
+import TrackHeader from "../components/TrackHeader";
 
 const Tab = createBottomTabNavigator();
 function AuthenticatedStack() {
@@ -38,14 +38,24 @@ function AuthenticatedStack() {
           options={{
             headerShown: true,
             header: () => (
-              <Header>
+              <Header screen="home">
                 <HomeHeader />
               </Header>
             ),
           }}
         />
         <Tab.Screen name="Estimate" component={EstimateScreen} />
-        <Tab.Screen name="Track" component={TrackScreen} />
+        <Tab.Screen
+          name="Track"
+          component={TrackScreen}
+          options={{
+            header: () => (
+              <Header screen="track">
+                <TrackHeader />
+              </Header>
+            ),
+          }}
+        />
         <Tab.Screen name="Act" component={ActScreen} />
         <Tab.Screen name="Campaign" component={CampaignScreen} />
       </Tab.Navigator>
