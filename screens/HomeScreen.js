@@ -125,7 +125,7 @@ function HomeScreen() {
             }}
           />
           <View
-            style={tw`h-full w-full flex items-center p-3 rounded-lg bg-dark bg-opacity-60`}
+            style={tw`h-full w-full flex items-center p-3 rounded-lg bg-black bg-opacity-60`}
           >
             <Text style={tw`text-primaryLight font-bold text-2xl mb-3 `}>
               Did you know?
