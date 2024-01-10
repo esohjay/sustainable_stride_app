@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import tw from "../lib/tailwind";
+import tw from "../../lib/tailwind";
 import { Ionicons } from "@expo/vector-icons";
 
 function TrackHeader() {

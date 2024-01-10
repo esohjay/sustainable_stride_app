@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Pressable, Text, Image } from "react-native";
-import tw from "../lib/tailwind";
-import { useAuthActions } from "../context/actions/auth_actions";
-import { useAuthContext } from "../context/providers/AuthProvider";
+import tw from "../../lib/tailwind";
+import { useAuthActions } from "../../context/actions/auth_actions";
+import { useAuthContext } from "../../context/providers/AuthProvider";
 
 function HomeHeader() {
   const { logOut } = useAuthActions();
@@ -18,7 +18,7 @@ function HomeHeader() {
           <Image
             style={tw`w-full h-full max-w-full rounded-full max-h-full bg-transparent`}
             resizeMode="cover"
-            source={require("../assets/avatar.png")}
+            source={require("../../assets/avatar.png")}
           />
         </View>
       </Pressable>

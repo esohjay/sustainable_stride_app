@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 function TrackCategoryCard({ category, value, bgUrl }) {
   return (
-    <View style={tw`shadow h-40 w-[47%] rounded-xl relative`}>
+    <View style={tw`shadow bg-white h-40 w-[47%] rounded-xl relative`}>
       <Pressable style={tw`absolute right-3 top-3 z-10`}>
         <Ionicons name="add-circle-outline" size={24} color="#ffffff" />
       </Pressable>

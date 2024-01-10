@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet, ImageBackground } from "react-native";
+import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
@@ -10,7 +10,7 @@ import TipsList from "../components/TipsList";
 import CampaignList from "../components/CampaignList";
 import { Button } from "../components/UI/Button";
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   const insets = useSafeAreaInsets();
   const { logOut } = useAuthActions();
   const { state } = useAuthContext();
@@ -36,10 +36,16 @@ function HomeScreen() {
             <Text style={tw`font-semibold text-lg text-mainColor mb-1`}>
               Estimate footprint
             </Text>
-            <Text style={tw`text-dark mb-1 font-normal`}>
+            <Text style={tw`text-dark mb-3 font-normal`}>
               Take a quick survey to estimate how much carbon you emit yearly.
             </Text>
-            <Text style={tw`font-bold text-lg text-mainColor`}>Start now</Text>
+            <View style={tw`flex items-start`}>
+              <Button
+                text={"Start now"}
+                icon={"paw"}
+                onPress={() => navigation.navigate("Estimate")}
+              />
+            </View>
           </View>
         </View>
       </View>

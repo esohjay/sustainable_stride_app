@@ -5,13 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { setActiveRoute } from "../lib/setActiveRoute";
 import HomeScreen from "../screens/HomeScreen";
 import ActScreen from "../screens/ActScreen";
-import EstimateScreen from "../screens/EstimateScreen";
 import CampaignScreen from "../screens/CampaignScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 import TrackScreen from "../screens/TrackScreen";
 import { useAuthContext } from "../context/providers/AuthProvider";
-import Header from "../components/Header";
-import HomeHeader from "../components/HomeHeader";
-import TrackHeader from "../components/TrackHeader";
+import Header from "../components/Headers/Header";
+import HomeHeader from "../components/Headers/HomeHeader";
+import TrackHeader from "../components/Headers/TrackHeader";
 
 const Tab = createBottomTabNavigator();
 function AuthenticatedStack() {
@@ -44,7 +44,7 @@ function AuthenticatedStack() {
             ),
           }}
         />
-        <Tab.Screen name="Estimate" component={EstimateScreen} />
+
         <Tab.Screen
           name="Track"
           component={TrackScreen}
@@ -58,6 +58,7 @@ function AuthenticatedStack() {
         />
         <Tab.Screen name="Act" component={ActScreen} />
         <Tab.Screen name="Campaign" component={CampaignScreen} />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </>
   );

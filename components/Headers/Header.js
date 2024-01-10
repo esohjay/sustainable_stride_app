@@ -1,9 +1,9 @@
 import React from "react";
 import { View, Text, Animated, Easing, StyleSheet } from "react-native";
-import { useScroller } from "../context/providers/ScrollContext";
+import { useScroller } from "../../context/providers/ScrollContext";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 // import useScroller from "../lib/useScroller";
-import tw from "../lib/tailwind";
+import tw from "../../lib/tailwind";
 
 export const Header = ({ screen, children }) => {
   const { titleShowing, opacity } = useScroller();

@@ -4,10 +4,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import AuthStack from "./AuthStack";
 import SplashScreen from "../screens/SplashScreen";
+import EstimateScreen from "../screens/EstimateScreen";
 import AuthenticatedStack from "./AuthenticatedStack";
 import { useAuthActions } from "../context/actions/auth_actions";
 import { auth } from "../lib/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
+import Header from "../components/Headers/Header";
+import EstimateHeader from "../components/Headers/EstimateHeader";
 // import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -75,11 +78,24 @@ function RootStack() {
           options={{ headerShown: false }}
         /> */}
         {state.isAuthenticated ? (
-          <Stack.Screen
-            name="HomeScreen"
-            component={AuthenticatedStack}
-            options={{ headerShown: false }}
-          />
+          <Stack.Group>
+            <Stack.Screen
+              name="HomeScreen"
+              component={AuthenticatedStack}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="Estimate"
+              component={EstimateScreen}
+              options={{
+                header: () => (
+                  <Header screen="estimate">
+                    <EstimateHeader />
+                  </Header>
+                ),
+              }}
+            />
+          </Stack.Group>
         ) : (
           <Stack.Screen
             name="AuthScreen"

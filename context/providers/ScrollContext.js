@@ -6,7 +6,7 @@ const withinLimits = (val, min, max) =>
 
 export const ScrollContext = React.createContext({
   // opacity: 0,
-  opacity: { home: 0, track: 0, act: 0, estimate: 0, campaign: 0 },
+  opacity: { home: 0, track: 0, act: 0, estimate: 0, campaign: 0, settings: 0 },
   maxOffset: 0,
   offset: 0,
   titleShowing: false,
@@ -28,6 +28,7 @@ export const ScrollContextProvider = (props) => {
     act: 0,
     estimate: 0,
     campaign: 0,
+    settings: 0,
   });
 
   const updateOffset = (val, screen) => {
