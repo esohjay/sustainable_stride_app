@@ -12,6 +12,7 @@ import { useAuthContext } from "../context/providers/AuthProvider";
 import Header from "../components/Headers/Header";
 import HomeHeader from "../components/Headers/HomeHeader";
 import TrackHeader from "../components/Headers/TrackHeader";
+import CampaignHeader from "../components/Headers/CampaignHeader";
 
 const Tab = createBottomTabNavigator();
 function AuthenticatedStack() {
@@ -57,7 +58,17 @@ function AuthenticatedStack() {
           }}
         />
         <Tab.Screen name="Act" component={ActScreen} />
-        <Tab.Screen name="Campaign" component={CampaignScreen} />
+        <Tab.Screen
+          name="Campaign"
+          component={CampaignScreen}
+          options={{
+            header: () => (
+              <Header screen="campaign">
+                <CampaignHeader />
+              </Header>
+            ),
+          }}
+        />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </>

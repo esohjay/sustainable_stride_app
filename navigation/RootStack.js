@@ -11,6 +11,8 @@ import { auth } from "../lib/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import Header from "../components/Headers/Header";
 import EstimateHeader from "../components/Headers/EstimateHeader";
+import SearchCampaignHeader from "../components/Headers/SearchCampaignHeader";
+import SearchCampaignScreen from "../screens/SearchCampaignScreen";
 // import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -83,6 +85,17 @@ function RootStack() {
               name="HomeScreen"
               component={AuthenticatedStack}
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="SearchCampaign"
+              component={SearchCampaignScreen}
+              options={{
+                header: () => (
+                  <Header screen="searchCampaign">
+                    <SearchCampaignHeader />
+                  </Header>
+                ),
+              }}
             />
             <Stack.Screen
               name="Estimate"
