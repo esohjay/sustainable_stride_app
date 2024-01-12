@@ -29,6 +29,7 @@ function CampaignScreen() {
                 }
                 membersCount={180}
                 showBtn={false}
+                imgPath={require("../assets/login.png")}
               />
             ))}
           </View>
@@ -46,8 +47,9 @@ function CampaignScreen() {
                 description={
                   'On iOS this includes a label next to the button, which shows the title of the previous screen when the title fits in the available space, otherwise it says "Back".'
                 }
-                membersCount={180}
+                membersCount={Math.floor(Math.random() * 1000 + 1)}
                 showBtn={true}
+                imgPath={require("../assets/track_emmission.png")}
               />
             ))}
           </View>

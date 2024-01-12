@@ -15,6 +15,7 @@ export const Button = ({
   textStyle = "",
   iconStyle = "",
   isLoading = false,
+  height = "40",
   ...props
 }) => {
   const [hovered, setHovered] = useState(false);
@@ -53,7 +54,7 @@ export const Button = ({
       onPressIn={() => setPressed(true)}
       onPressOut={() => setPressed(false)}
       style={[
-        tw` min-h-[40px] px-4 flex flex-row gap-2 items-center justify-center rounded-md`,
+        tw` min-h-[${height}px] px-4 flex flex-row gap-2 items-center justify-center rounded-md`,
         variants[variant].bg,
         hovered || pressed ? variants[variant].hover : null,
         // todo: fix ts error

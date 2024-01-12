@@ -13,6 +13,7 @@ import Header from "../components/Headers/Header";
 import HomeHeader from "../components/Headers/HomeHeader";
 import TrackHeader from "../components/Headers/TrackHeader";
 import CampaignHeader from "../components/Headers/CampaignHeader";
+import SettingsHeader from "../components/Headers/SettingsHeader";
 
 const Tab = createBottomTabNavigator();
 function AuthenticatedStack() {
@@ -69,7 +70,17 @@ function AuthenticatedStack() {
             ),
           }}
         />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            header: () => (
+              <Header screen="settings">
+                <SettingsHeader />
+              </Header>
+            ),
+          }}
+        />
       </Tab.Navigator>
     </>
   );

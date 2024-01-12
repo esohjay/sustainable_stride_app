@@ -13,6 +13,8 @@ import Header from "../components/Headers/Header";
 import EstimateHeader from "../components/Headers/EstimateHeader";
 import SearchCampaignHeader from "../components/Headers/SearchCampaignHeader";
 import SearchCampaignScreen from "../screens/SearchCampaignScreen";
+import ProfileHeader from "../components/Headers/ProfileHeader";
+import ProfileScreen from "../screens/ProfileScreen";
 // import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -104,6 +106,17 @@ function RootStack() {
                 header: () => (
                   <Header screen="estimate">
                     <EstimateHeader />
+                  </Header>
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="Profile"
+              component={ProfileScreen}
+              options={{
+                header: () => (
+                  <Header screen="profile">
+                    <ProfileHeader />
                   </Header>
                 ),
               }}
