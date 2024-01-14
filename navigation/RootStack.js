@@ -14,6 +14,7 @@ import EstimateHeader from "../components/Headers/EstimateHeader";
 import SearchCampaignHeader from "../components/Headers/SearchCampaignHeader";
 import SearchCampaignScreen from "../screens/SearchCampaignScreen";
 import ProfileHeader from "../components/Headers/ProfileHeader";
+import BackButton from "../components/BackButton";
 import ProfileScreen from "../screens/ProfileScreen";
 // import * as SplashScreen from "expo-splash-screen";
 import {
@@ -114,11 +115,16 @@ function RootStack() {
               name="Profile"
               component={ProfileScreen}
               options={{
-                header: () => (
-                  <Header screen="profile">
-                    <ProfileHeader />
-                  </Header>
-                ),
+                // header: () => (
+                //   <Header screen="profile">
+                //     <ProfileHeader />
+                //   </Header>
+                // ),
+                headerTintColor: "#7d4f50",
+                headerTitleStyle: {
+                  fontWeight: "800",
+                },
+                headerLeft: () => <BackButton />,
               }}
             />
           </Stack.Group>

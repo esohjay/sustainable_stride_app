@@ -1,18 +1,48 @@
-import React, { useMemo, useRef } from "react";
-import { View, Text, Image } from "react-native";
-import BottomSheet, { BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import React, { useMemo, useRef, useEffect, useState } from "react";
+import { View, Text, Image, Pressable } from "react-native";
+import { BottomSheetModal, BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import tw from "../lib/tailwind";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import { Button } from "../components/UI/Button";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { Ionicons } from "@expo/vector-icons";
 import AchievementStat from "../components/AchievementStat";
+import UpdateEmail from "../components/UpdateEmail";
+import UpdatePassword from "../components/UpdatePassword";
+import UpdateName from "../components/UpdateName";
 
-export default function ProfileScreen() {
+export default function ProfileScreen({ navigation }) {
   const { state } = useAuthContext();
-  const snapPoints = useMemo(() => ["25%", "50%", "70%"], []);
+  const snapPoints = useMemo(() => ["65%"], []);
+  const nameSnapPoints = useMemo(() => ["35%"], []);
+  const [isOpen, setIsOpen] = useState(false);
+  const bottomSheetRef = useRef(null);
+  const bottomSheetNameRef = useRef(null);
+  function handlePresentModal() {
+    bottomSheetRef.current?.present();
+    setTimeout(() => {
+      setIsOpen(true);
+    }, 100);
+  }
+  function handlePresentNameModal() {
+    bottomSheetNameRef.current?.present();
+    // setTimeout(() => {
+    //   setIsOpen(true);
+    // }, 100);
+  }
 
-  const bottomSheetRef = useRef < BottomSheet > null;
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Text
+          onPress={handlePresentModal}
+          style={tw`text-base font-semibold text-mainColor`}
+        >
+          Edit profile
+        </Text>
+      ),
+    });
+  }, [navigation]);
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="profile">
       <View style={tw`p-5`}>
@@ -35,9 +65,15 @@ export default function ProfileScreen() {
             />
           </View>
           <View style={tw`w-[65%]`}>
-            <Text style={tw`text-lg text-mainColor font-bold mb-1`}>
-              Olusoji Daramola
-            </Text>
+            <Pressable
+              style={tw`flex items-center flex-row mb-1 gap-x-1`}
+              onPress={handlePresentNameModal}
+            >
+              <Text style={tw`text-lg text-mainColor font-bold `}>
+                Olusoji Daramola
+              </Text>
+              <Ionicons name={"create-outline"} size={20} color="#7d4f50" />
+            </Pressable>
             <View style={tw`flex flex-row gap-x-2`}>
               <Ionicons name={"mail"} size={20} color="#7d4f50" />
               <Text style={tw`text-sm text-dark font-medium mb-1`}>
@@ -80,6 +116,34 @@ export default function ProfileScreen() {
         <View style={tw`py-4`}>
           <Button text={"Delete account"} />
         </View>
+        <BottomSheetModal
+          ref={bottomSheetRef}
+          // index={1}
+          snapPoints={snapPoints}
+          backgroundStyle={{ borderRadius: 25 }}
+          onDismiss={() => setIsOpen(false)}
+          style={tw`shadow-lg bg-white rounded-3xl`}
+        >
+          <View style={tw`px-5`}>
+            {/* email */}
+            <UpdateEmail />
+
+            {/* password */}
+            <UpdatePassword />
+          </View>
+        </BottomSheetModal>
+        <BottomSheetModal
+          ref={bottomSheetNameRef}
+          // index={1}
+          snapPoints={nameSnapPoints}
+          backgroundStyle={{ borderRadius: 25 }}
+          onDismiss={() => setIsOpen(false)}
+          style={tw`shadow-lg bg-white rounded-3xl`}
+        >
+          <View style={tw`px-5`}>
+            <UpdateName />
+          </View>
+        </BottomSheetModal>
       </View>
     </CustomScrollView>
   );

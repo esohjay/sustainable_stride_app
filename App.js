@@ -18,6 +18,11 @@ import ExpensesContextProvider from "./context/store";
 import { AuthProvider } from "./context/providers/AuthProvider";
 import HomeStack from "./navigation/AuthenticatedStack";
 import RootStack from "./navigation/RootStack";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,10 +31,12 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <ScrollContextProvider>
-        <StatusBar style="dark" />
-        <AuthProvider>
-          <RootStack />
-          {/* <NavigationContainer>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <StatusBar style="dark" />
+            <AuthProvider>
+              <RootStack />
+              {/* <NavigationContainer>
           <Stack.Navigator initialRouteName="SplashScreen">
             <Stack.Screen
               name="SplashScreen"
@@ -65,7 +72,9 @@ export default function App() {
             />
           </Stack.Navigator>
         </NavigationContainer> */}
-        </AuthProvider>
+            </AuthProvider>
+          </BottomSheetModalProvider>
+        </GestureHandlerRootView>
       </ScrollContextProvider>
     </SafeAreaProvider>
   );
