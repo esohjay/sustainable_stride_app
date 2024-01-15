@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { View, Text, ScrollView, Dimensions } from "react-native";
 import tw from "../lib/tailwind";
-import TipsCard from "./TipsCard";
+import ActionCard from "./ActionCard";
 const { width } = Dimensions.get("screen");
-function TipsList() {
+function ActionList() {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const sliderData = [
     {
@@ -11,24 +11,28 @@ function TipsList() {
         "Calculate your houdehold carbon emission by answering few questions.",
       title: "Change to LED buld",
       category: "Electricity",
+      sdg: "SDG 6",
     },
     {
       description:
         "A splash screen, also known as a launch screen, is the first screen a user sees when they open your app.",
       title: "Switch to reusable razor",
       category: "Electricity",
+      sdg: "SDG 4",
     },
     {
       description:
         "Scrolls to the item at the specified index such that it is positioned in the viewable area",
       title: "Recycle waste",
       category: "Household",
+      sdg: "SDG 10",
     },
     {
       description:
         "Start or join campaigns that reduces carbon emissions in your area.",
       title: "Take bus",
       category: "Transport",
+      sdg: "SDG 8",
     },
   ];
 
@@ -45,10 +49,11 @@ function TipsList() {
         <View style={tw`flex flex-row gap-x-3`}>
           {[
             sliderData.map((cardData, index) => (
-              <TipsCard
+              <ActionCard
                 title={cardData.title}
                 category={cardData.category}
                 description={cardData.description}
+                sdg={cardData.sdg}
                 key={cardData.title}
               />
             )),
@@ -59,4 +64,4 @@ function TipsList() {
   );
 }
 
-export default TipsList;
+export default ActionList;

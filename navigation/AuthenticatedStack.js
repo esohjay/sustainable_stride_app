@@ -14,6 +14,7 @@ import HomeHeader from "../components/Headers/HomeHeader";
 import TrackHeader from "../components/Headers/TrackHeader";
 import CampaignHeader from "../components/Headers/CampaignHeader";
 import SettingsHeader from "../components/Headers/SettingsHeader";
+import ActHeader from "../components/Headers/ActHeader";
 
 const Tab = createBottomTabNavigator();
 function AuthenticatedStack() {
@@ -58,7 +59,17 @@ function AuthenticatedStack() {
             ),
           }}
         />
-        <Tab.Screen name="Act" component={ActScreen} />
+        <Tab.Screen
+          name="Act"
+          component={ActScreen}
+          options={{
+            header: () => (
+              <Header screen="act">
+                <ActHeader />
+              </Header>
+            ),
+          }}
+        />
         <Tab.Screen
           name="Campaign"
           component={CampaignScreen}

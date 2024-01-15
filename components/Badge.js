@@ -12,6 +12,10 @@ export const Badge = ({ variant = "default", text, style, ...props }) => {
       container: tw`bg-green-50`,
       text: tw`text-green-700`,
     },
+    blue: {
+      container: tw`bg-blue-50`,
+      text: tw`text-blue-700`,
+    },
     destructive: {
       container: tw`bg-red-700`,
       text: tw`text-red-50`,

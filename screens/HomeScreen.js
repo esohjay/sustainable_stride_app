@@ -6,7 +6,7 @@ import { CustomScrollView } from "../context/providers/ScrollContext";
 import tw from "../lib/tailwind";
 import { useAuthActions } from "../context/actions/auth_actions";
 import AchievementStat from "../components/AchievementStat";
-import TipsList from "../components/TipsList";
+import ActionList from "../components/ActionList";
 import CampaignList from "../components/CampaignList";
 import { Button } from "../components/UI/Button";
 
@@ -114,12 +114,12 @@ function HomeScreen({ navigation }) {
         <View
           style={tw`flex flex-row items-center justify-between mb-5 w-full`}
         >
-          <Text style={tw`text-mainColor font-bold text-xl`}>Tips</Text>
+          <Text style={tw`text-mainColor font-bold text-xl`}>Actions</Text>
           <Text style={[tw`text-secondaryAlt text-base font-normal`]}>
             See all
           </Text>
         </View>
-        <TipsList />
+        <ActionList />
       </View>
       <View style={tw`mb-7`}>
         <View style={tw`w-full h-44 rounded-lg relative bg-white shadow`}>

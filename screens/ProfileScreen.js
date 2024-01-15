@@ -1,6 +1,6 @@
 import React, { useMemo, useRef, useEffect, useState } from "react";
 import { View, Text, Image, Pressable } from "react-native";
-import { BottomSheetModal, BottomSheetTextInput } from "@gorhom/bottom-sheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import tw from "../lib/tailwind";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import { Button } from "../components/UI/Button";
