@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
+import { Text } from "react-native";
+import tw from "../lib/tailwind";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { useAuthContext } from "../context/providers/AuthProvider";
@@ -16,6 +18,8 @@ import SearchCampaignScreen from "../screens/SearchCampaignScreen";
 import ProfileHeader from "../components/Headers/ProfileHeader";
 import BackButton from "../components/BackButton";
 import ProfileScreen from "../screens/ProfileScreen";
+import AllActionsScreen from "../screens/AllActionsScreen";
+import AllActionsHeader from "../components/Headers/AllActionsHeader";
 // import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -125,6 +129,22 @@ function RootStack() {
                   fontWeight: "800",
                 },
                 headerLeft: () => <BackButton />,
+              }}
+            />
+            <Stack.Screen
+              name="AllActions"
+              component={AllActionsScreen}
+              options={{
+                headerTintColor: "#7d4f50",
+                headerTitleStyle: {
+                  fontWeight: "800",
+                },
+                headerLeft: () => <BackButton />,
+                headerTitle: () => (
+                  <Text style={tw`font-extrabold text-xl text-mainColor `}>
+                    All actions
+                  </Text>
+                ),
               }}
             />
           </Stack.Group>

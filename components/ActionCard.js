@@ -1,12 +1,20 @@
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import tw from "../lib/tailwind";
 import { Badge } from "./Badge";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-function ActionCard({ title, category, description, sdg }) {
+function ActionCard({ data, isFullWidth = false }) {
+  const navigation = useNavigation();
+  const { title, category, description, sdg, id } = data;
   const val = Math.random() * 100 + 1;
   return (
-    <View style={tw`shadow bg-white p-3 rounded-lg w-[300px]`}>
+    <Pressable
+      onPress={() => navigation.navigate("ActionDetails", { actionId: id })}
+      style={tw`shadow bg-white p-3 rounded-lg  ${
+        isFullWidth ? "w-full" : "w-[300px]"
+      }`}
+    >
       <Text style={tw`font-semibold text-lg mb-2 text-dark`}>{title}</Text>
       <View style={tw`flex flex-row justify-start gap-x-2 mb-3`}>
         <Badge text={category} variant="success" />
@@ -35,7 +43,7 @@ function ActionCard({ title, category, description, sdg }) {
           </Text> */}
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

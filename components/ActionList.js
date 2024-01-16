@@ -12,6 +12,7 @@ function ActionList() {
       title: "Change to LED buld",
       category: "Electricity",
       sdg: "SDG 6",
+      id: "2",
     },
     {
       description:
@@ -19,6 +20,7 @@ function ActionList() {
       title: "Switch to reusable razor",
       category: "Electricity",
       sdg: "SDG 4",
+      id: "3",
     },
     {
       description:
@@ -26,6 +28,7 @@ function ActionList() {
       title: "Recycle waste",
       category: "Household",
       sdg: "SDG 10",
+      id: "4",
     },
     {
       description:
@@ -33,6 +36,7 @@ function ActionList() {
       title: "Take bus",
       category: "Transport",
       sdg: "SDG 8",
+      id: "1",
     },
   ];
 
@@ -49,13 +53,7 @@ function ActionList() {
         <View style={tw`flex flex-row gap-x-3`}>
           {[
             sliderData.map((cardData, index) => (
-              <ActionCard
-                title={cardData.title}
-                category={cardData.category}
-                description={cardData.description}
-                sdg={cardData.sdg}
-                key={cardData.title}
-              />
+              <ActionCard data={cardData} key={cardData.id} />
             )),
           ]}
         </View>

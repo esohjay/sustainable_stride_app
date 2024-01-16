@@ -9,7 +9,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import MyActionCard from "../components/MyActionCard";
 import ActionCard from "../components/ActionCard";
 
-function ActScreen() {
+function ActScreen({ navigation }) {
   const snapPoints = useMemo(() => ["35%", "70%", "95%"], []);
   const bottomSheetRef = useRef(null);
   function handlePresentModal() {
@@ -98,11 +98,14 @@ function ActScreen() {
         <View style={tw`h-[1px] bg-gray-200 w-full`}></View>
         <View style={tw`py-5 flex justify-between flex-row items-center`}>
           <Text style={tw`text-lg font-bold text-mainColor`}>Actions</Text>
-          <Text style={[tw`text-secondaryAlt text-base font-normal`]}>
+          <Text
+            style={[tw`text-secondaryAlt text-base font-normal`]}
+            onPress={() => navigation.navigate("AllActions")}
+          >
             See all
           </Text>
         </View>
-        <View style={tw`flex flex-row gap-x-3`}>
+        <View style={tw`flex  items-center gap-y-3`}>
           <FlatList
             horizontal
             data={sliderData}
@@ -110,15 +113,12 @@ function ActScreen() {
               <View style={{ height: 10, width: 8 }}></View>
             )}
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => (
-              <ActionCard
-                title={item.title}
-                category={item.category}
-                description={item.description}
-                sdg={item.sdg}
-              />
-            )}
+            renderItem={({ item }) => <ActionCard data={item} />}
             keyExtractor={(item) => item.id}
+          />
+          <Button
+            text={"See all actions"}
+            onPress={() => navigation.navigate("AllActions")}
           />
         </View>
         <BottomSheetModal

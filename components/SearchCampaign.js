@@ -35,7 +35,6 @@ export default function SearchCampaign() {
             autoFocus={true}
             icon="search-circle-outline"
             placeholder="at least 3 letters"
-            style={tw`shadow-lg`}
             // label={"Email"}
           />
         )}
