@@ -36,7 +36,7 @@ function Register({ navigation }) {
       setError("passwordMatch", { type: "required" });
       return;
     }
-    signUp({ email: data.email, password: data.password });
+    signUp(data);
   };
   //   useEffect(() => {
   //     if (isAuthenticated) {

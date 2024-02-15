@@ -13,8 +13,12 @@ const AuthContext = createContext();
 const initialState = {
   loading: false,
   success: false,
+  profileCreated: false,
+  profileFetched: false,
   error: null,
+  profileError: null,
   user: null,
+  profile: null,
   isAuthenticated: false,
   isSignOut: false,
 };

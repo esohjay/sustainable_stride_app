@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import {
   ADD_DATA_FAIL,
   ADD_DATA_REQUEST,

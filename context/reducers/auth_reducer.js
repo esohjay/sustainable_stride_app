@@ -7,6 +7,12 @@ import {
   SIGN_UP_FAIL,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
+  CREATE_PROFILE_FAIL,
+  CREATE_PROFILE_REQUEST,
+  CREATE_PROFILE_SUCCESS,
+  GET_PROFILE_FAIL,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
 } from "../constants/auth_constants";
 
 export const authReducer = (state, action) => {
@@ -37,6 +43,28 @@ export const authReducer = (state, action) => {
       };
     case SIGN_UP_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case CREATE_PROFILE_REQUEST:
+      return { ...state, loading: true };
+    case CREATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        profileCreated: true,
+        loading: false,
+        profile: action.payload,
+      };
+    case CREATE_PROFILE_FAIL:
+      return { ...state, loading: false, profileError: action.payload };
+    case GET_PROFILE_REQUEST:
+      return { ...state, loading: true };
+    case GET_PROFILE_SUCCESS:
+      return {
+        ...state,
+        profileFetched: true,
+        loading: false,
+        profile: action.payload,
+      };
+    case GET_PROFILE_FAIL:
+      return { ...state, loading: false, profileError: action.payload };
     case SIGN_OUT:
       return {
         ...state,

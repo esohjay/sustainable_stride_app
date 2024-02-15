@@ -7,6 +7,12 @@ import {
   SIGN_UP_SUCCESS,
   SIGN_OUT,
   SIGN_OUT_FAIL,
+  CREATE_PROFILE_FAIL,
+  CREATE_PROFILE_REQUEST,
+  CREATE_PROFILE_SUCCESS,
+  GET_PROFILE_FAIL,
+  GET_PROFILE_REQUEST,
+  GET_PROFILE_SUCCESS,
 } from "../constants/auth_constants";
 
 import { useAuthContext } from "../providers/AuthProvider";
@@ -22,29 +28,108 @@ export const useAuthActions = () => {
   const setUser = (user) => {
     dispatch({ type: SIGN_IN_SUCCESS, payload: user });
   };
-  const signUp = async ({ email, password }) => {
-    dispatch({ type: SIGN_UP_REQUEST });
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        dispatch({ type: SIGN_UP_SUCCESS, payload: user });
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        dispatch({ type: SIGN_UP_FAIL, payload: errorMessage });
-        // ..
-      });
+
+  const handleError = (error) => {
+    console.log(error);
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    return message;
   };
+  const createProfile = async (fullName) => {
+    console.log(fullName);
+    try {
+      dispatch({ type: CREATE_PROFILE_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/user`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(fullName),
+        }
+      );
+      const data = await response.json();
+      // const data = await response;
+      dispatch({ type: CREATE_PROFILE_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      console.log(error);
+      dispatch({ type: CREATE_PROFILE_FAIL, payload: message });
+    }
+  };
+  const getProfile = async () => {
+    try {
+      dispatch({ type: GET_PROFILE_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/user`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      dispatch({ type: GET_PROFILE_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      dispatch({ type: GET_PROFILE_FAIL, payload: message });
+    }
+  };
+
+  const signUp = async ({ email, password, fullName }) => {
+    dispatch({ type: SIGN_UP_REQUEST });
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      dispatch({
+        type: SIGN_UP_SUCCESS,
+        payload: {
+          id: user.uid,
+          email: user.email,
+          name: user.displayName,
+          phone: user.phoneNumber,
+        },
+      });
+
+      await createProfile({ fullName });
+    } catch (error) {
+      const errorCode = error.code;
+      console.log(errorCode);
+      const errorMessage = handleError(error);
+      dispatch({ type: SIGN_UP_FAIL, payload: errorMessage });
+    }
+  };
+
   const signIn = async ({ email, password }) => {
     dispatch({ type: SIGN_IN_REQUEST });
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed up
         const user = userCredential.user;
-        dispatch({ type: SIGN_IN_SUCCESS, payload: user });
+        dispatch({
+          type: SIGN_IN_SUCCESS,
+          payload: {
+            id: user.uid,
+            email: user.email,
+            name: user.displayName,
+            phone: user.phoneNumber,
+          },
+        });
         // ...
       })
       .catch((error) => {
@@ -65,76 +150,13 @@ export const useAuthActions = () => {
         dispatch({ type: SIGN_OUT_FAIL, payload: error });
       });
   };
-  //   const createTrack = () => {
-  //     dispatch({ type: ADD_DATA_REQUEST });
-  //     dispatch({ type: ADD_DATA_SUCCESS, payload: { work: "Track" } });
-
-  //     // try {
-  //     //   const { data } = await axios.post(
-  //     //     `${publicRuntimeConfig.backendUrl}/v1/users`,
-  //     //     info,
-  //     //     {
-  //     //       headers: {
-  //     //         Authorization: `Bearer ${publicRuntimeConfig.token}`,
-  //     //         "Content-Type": "application/json",
-  //     //       },
-  //     //     }
-  //     //   );
-  //     //   dispatch({ type: CREATE_USER_SUCCESS, payload: data });
-  //     // } catch (error) {
-  //     //   const message =
-  //     //     error.response && error.response.data.message
-  //     //       ? error.response.data.message
-  //     //       : error.message;
-
-  //     //   dispatch({ type: CREATE_USER_FAIL, payload: message });
-  //     // }
-  //   };
-  //   const updateUser = async (userId, info) => {
-  //     dispatch({ type: UPDATE_USER_REQUEST });
-  //     try {
-  //       const { data } = await axios.put(
-  //         `${publicRuntimeConfig.backendUrl}/v1/users/${userId}`,
-  //         info,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${publicRuntimeConfig.token}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
-  //     } catch (error) {
-  //       const message =
-  //         error.response && error.response.data.message
-  //           ? error.response.data.message
-  //           : error.message;
-
-  //       dispatch({ type: UPDATE_USER_FAIL, payload: message });
-  //     }
-  //   };
-  //   const updateSurvey = async (id, info) => {
-  //     dispatch({ type: UPDATE_SURVEY_REQUEST });
-  //     try {
-  //       const { data } = await axios.put(`/api/${id}`, info);
-  //       dispatch({ type: UPDATE_SURVEY_SUCCESS, payload: data });
-  //     } catch (error) {
-  //       const message =
-  //         error.response && error.response.data.message
-  //           ? error.response.data.message
-  //           : error.message;
-
-  //       dispatch({ type: UPDATE_SURVEY_FAIL, payload: message });
-  //     }
-  //   };
 
   return {
-    // createTrack,
-    // updateSurvey,
-    // updateUser,
+    getProfile,
     setUser,
     signIn,
     signUp,
     logOut,
+    createProfile,
   };
 };

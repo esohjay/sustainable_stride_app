@@ -39,7 +39,7 @@ const Stack = createNativeStackNavigator();
 function RootStack() {
   const [isLoading, setIsLoading] = useState(true);
   const { state } = useAuthContext();
-  const { setUser } = useAuthActions();
+  const { setUser, getProfile } = useAuthActions();
   let [fontsLoaded, fontError] = useFonts({
     MontserratAlternates_100Thin,
 
@@ -61,10 +61,17 @@ function RootStack() {
   });
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUser(user);
+        setUser({
+          id: user.uid,
+          email: user.email,
+          name: user.displayName,
+          phone: user.phoneNumber,
+        });
         setIsLoading(false);
+        // getProfile()
+        // console.log(process.env.EXPO_PUBLIC_BACKEND_URL);
         // navigation.replace("HomeScreen");
       } else {
         setIsLoading(false);

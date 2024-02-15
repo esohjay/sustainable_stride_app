@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { View, Text, Image, StyleSheet, Pressable } from "react-native";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -12,10 +13,15 @@ import { Button } from "../components/UI/Button";
 
 function HomeScreen({ navigation }) {
   const insets = useSafeAreaInsets();
-  const { logOut } = useAuthActions();
+  const { getProfile } = useAuthActions();
   const { state } = useAuthContext();
-
-  // console.log(state);
+  const { profile } = state;
+  useEffect(() => {
+    if (!profile) {
+      getProfile();
+    }
+  }, [profile]);
+  console.log(state);
   return (
     <CustomScrollView
       style={tw`bg-gray-50 p-5 pb-[${insets.bottom}]`}
@@ -79,8 +85,8 @@ function HomeScreen({ navigation }) {
           </Text>
           <View style={tw`h-1 w-2/5 bg-altColor mb-2`}></View>
           <Text style={tw`w-3/4 font-normal mb-5`}>
-            Yo {state.user.name}! This is what you have achieved 🏆 with
-            CarbonLog so far.
+            Yo {state?.user?.name || profile?.firstName}! This is what you have
+            achieved 🏆 with CarbonLog so far.
           </Text>
           <Text style={tw`text-dark font-semibold mb-3 text-base`}>
             Achievements
