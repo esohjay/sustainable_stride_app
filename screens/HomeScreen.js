@@ -49,7 +49,7 @@ function HomeScreen({ navigation }) {
               <Button
                 text={"Start now"}
                 icon={"paw"}
-                onPress={() => navigation.navigate("Estimate")}
+                onPress={() => navigation.navigate("Survey")}
               />
             </View>
           </View>

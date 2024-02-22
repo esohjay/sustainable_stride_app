@@ -19,6 +19,8 @@ import ProfileHeader from "../components/Headers/ProfileHeader";
 import BackButton from "../components/BackButton";
 import ProfileScreen from "../screens/ProfileScreen";
 import AllActionsScreen from "../screens/AllActionsScreen";
+import SurveyScreen from "../screens/SurveryScreen";
+import SurveyHeader from "../components/Headers/SurveyHeader";
 import AllActionsHeader from "../components/Headers/AllActionsHeader";
 // import * as SplashScreen from "expo-splash-screen";
 import {
@@ -118,6 +120,17 @@ function RootStack() {
                 header: () => (
                   <Header screen="estimate">
                     <EstimateHeader />
+                  </Header>
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="Survey"
+              component={SurveyScreen}
+              options={{
+                header: () => (
+                  <Header screen="survey">
+                    <SurveyHeader />
                   </Header>
                 ),
               }}
