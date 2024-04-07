@@ -32,9 +32,19 @@ export const Button = ({
       hover: tw`bg-secondaryColor`,
       bg: tw`bg-altColor  shadow-sm shadow-mainColor`,
     },
+    disabled: {
+      text: tw`text-gray-300`,
+      hover: tw`bg-gray-200`,
+      bg: tw`bg-gray-100  shadow-sm shadow-gray-100`,
+    },
     success: {
       bg: tw`bg-green-700`,
       hover: tw`bg-green-800`,
+      text: tw`text-green-50`,
+    },
+    black: {
+      bg: tw`bg-black`,
+      hover: tw`bg-gray-600`,
       text: tw`text-green-50`,
     },
     destructive: {

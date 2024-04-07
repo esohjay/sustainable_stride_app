@@ -22,6 +22,7 @@ function HomeScreen({ navigation }) {
     }
   }, [profile]);
   console.log(state);
+  console.log(profile);
   return (
     <CustomScrollView
       style={tw`bg-gray-50 p-5 pb-[${insets.bottom}]`}
@@ -66,7 +67,7 @@ function HomeScreen({ navigation }) {
         </Text>
         <Text style={tw`text-base font-semibold text-dark`}>Add campaign</Text>
       </View>
-      <View style={tw`relative py-3`}>
+      {/* <View style={tw`relative py-3`}>
         <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>
           My achievements{" "}
         </Text>
@@ -115,7 +116,7 @@ function HomeScreen({ navigation }) {
             </Text>
           </View>
         </View>
-      </View>
+      </View> */}
       <View style={tw`py-2`}>
         <View
           style={tw`flex flex-row items-center justify-between mb-5 w-full`}

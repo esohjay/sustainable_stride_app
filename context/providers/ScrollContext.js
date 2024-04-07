@@ -16,6 +16,7 @@ export const ScrollContext = React.createContext({
     searchCampaign: 0,
     profile: 0,
     survey: 0,
+    household: 0,
   },
   maxOffset: 0,
   offset: 0,
@@ -42,6 +43,7 @@ export const ScrollContextProvider = (props) => {
     searchCampaign: 0,
     profile: 0,
     survey: 0,
+    household: 0,
   });
 
   const updateOffset = (val, screen) => {

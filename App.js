@@ -16,6 +16,7 @@ import { useTrackActions } from "./context/actions/track_actions";
 import { useAppContext } from "./context/store";
 import ExpensesContextProvider from "./context/store";
 import { AuthProvider } from "./context/providers/AuthProvider";
+import { SurveyProvider } from "./context/providers/SurveyProvider";
 import HomeStack from "./navigation/AuthenticatedStack";
 import RootStack from "./navigation/RootStack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -35,43 +36,9 @@ export default function App() {
           <BottomSheetModalProvider>
             <StatusBar style="dark" />
             <AuthProvider>
-              <RootStack />
-              {/* <NavigationContainer>
-          <Stack.Navigator initialRouteName="SplashScreen">
-            <Stack.Screen
-              name="SplashScreen"
-              component={SplashScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Landing"
-              component={Landing}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="HomeScreen"
-              component={HomeStack}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Register"
-              component={Register}
-              options={{ headerShown: false }}
-              // options={{
-              //   headerShown: true,
-              //   headerStyle: { backgroundColor: "rgb(243 244 246)" },
-              //   title: "",
-              //   headerTintColor: "#533e2d",
-              //   headerShadowVisible: false,
-              // }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer> */}
+              <SurveyProvider>
+                <RootStack />
+              </SurveyProvider>
             </AuthProvider>
           </BottomSheetModalProvider>
         </GestureHandlerRootView>
