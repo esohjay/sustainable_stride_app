@@ -17,6 +17,22 @@ const SurveyProvider = ({ children }) => {
         value: 0,
         unit: "",
       },
+      coal: {
+        value: 0,
+        unit: "",
+      },
+      lpg: {
+        value: 0,
+        unit: "",
+      },
+      propane: {
+        value: 0,
+        unit: "",
+      },
+      wood: {
+        value: 0,
+        unit: "",
+      },
     },
   });
   const addAnswer = (answer) => {

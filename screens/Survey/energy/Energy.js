@@ -1,4 +1,4 @@
-import Question from "./Question";
+import EnergyQuestion from "./Question";
 import QuestionLayout from "../../../components/QuestionLayout";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 
@@ -11,9 +11,12 @@ export default function Energy() {
       iconName={"flash-outline"}
       percentage={25}
       nextScreen={"N"}
-      disabled={surveyData && surveyData.energy.electricity.value === 0}
+      disabled={
+        (surveyData && surveyData.energy.electricity.value === 0) ||
+        (surveyData && surveyData.energy.electricity.unit === "")
+      }
     >
-      <Question />
+      <EnergyQuestion />
     </QuestionLayout>
   );
 }
