@@ -30,11 +30,13 @@ export const TextInput = ({
   return (
     <View style={tw`flex w-full shrink`}>
       {label && <Text style={tw`mb-2 text-dark font-semibold`}>{label}</Text>}
-      <View style={tw`flex flex-row items-center bg-white rounded-md pr-2 `}>
+      <View
+        style={tw`flex flex-row items-center ${
+          border && "border"
+        } border-gray-200 bg-white rounded-md pr-2 `}
+      >
         <View
-          style={tw`flex items-center ${
-            border && "border"
-          } flex-row gap-x-2 bg-white border-gray-200 rounded-md h-12 px-3 shrink`}
+          style={tw`flex items-center  flex-row gap-x-2 bg-white  rounded-md h-12 px-3 shrink`}
         >
           {icon && (
             <View style={tw`w-[8%]`}>

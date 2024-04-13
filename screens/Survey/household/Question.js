@@ -9,7 +9,7 @@ export default function QuestionOne() {
   console.log(surveyData);
   return (
     <View>
-      <Text style={tw`font-semibold text-lg mb-3`}>
+      <Text style={tw`font-semibold text-lg mb-3 text-mainColor`}>
         How many people are in your household?
       </Text>
       <View style={tw`flex gap-y-3`}>

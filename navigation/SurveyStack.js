@@ -2,6 +2,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Household from "../screens/Survey/household/Household";
 import Energy from "../screens/Survey/energy/Energy";
+import Flight from "../screens/Survey/flight/Flight";
 
 const Stack = createNativeStackNavigator();
 function SurveyStack() {
@@ -15,6 +16,11 @@ function SurveyStack() {
       <Stack.Screen
         name="Energy"
         component={Energy}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Flight"
+        component={Flight}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

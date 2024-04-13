@@ -34,6 +34,18 @@ const SurveyProvider = ({ children }) => {
         unit: "",
       },
     },
+    flight: {
+      withRf: {
+        domestic: 0,
+        shortHaul: 0,
+        longHaul: 0,
+      },
+      withoutRf: {
+        domestic: 0,
+        shortHaul: 0,
+        longHaul: 0,
+      },
+    },
   });
   const addAnswer = (answer) => {
     setSurveyData({ ...surveyData, ...answer });

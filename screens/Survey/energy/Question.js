@@ -97,7 +97,7 @@ export default function EnergyQuestion() {
   return (
     <AviodKeyBoardViewWrapper>
       <View>
-        <Text style={tw`font-semibold text-lg mb-3`}>
+        <Text style={tw`font-semibold text-lg mb-3 text-mainColor`}>
           Enter your consumption of each of the following
         </Text>
         <View style={tw`flex gap-y-3`}>
@@ -117,6 +117,7 @@ export default function EnergyQuestion() {
                     },
                   })
                 }
+                keyboardType="numeric"
                 placeholder="xxxxxxxx"
                 label={"Electricity"}
                 border={true}
@@ -147,6 +148,7 @@ export default function EnergyQuestion() {
                     },
                   })
                 }
+                keyboardType="numeric"
                 placeholder="110"
                 label={"Gas"}
                 border={true}
@@ -181,6 +183,7 @@ export default function EnergyQuestion() {
                     },
                   })
                 }
+                keyboardType="numeric"
                 placeholder="20"
                 label={"Coal"}
                 border={true}
@@ -214,6 +217,7 @@ export default function EnergyQuestion() {
                     },
                   })
                 }
+                keyboardType="numeric"
                 placeholder="20"
                 label={"LPG"}
                 border={true}
@@ -247,6 +251,7 @@ export default function EnergyQuestion() {
                     },
                   })
                 }
+                keyboardType="numeric"
                 placeholder="80"
                 label={"Propane"}
                 border={true}
@@ -281,6 +286,7 @@ export default function EnergyQuestion() {
                     },
                   })
                 }
+                keyboardType="numeric"
                 placeholder="80"
                 label={"Wood"}
                 border={true}
