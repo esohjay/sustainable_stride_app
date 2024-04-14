@@ -6,6 +6,21 @@ const SurveyContext = createContext();
 const SurveyProvider = ({ children }) => {
   const [surveyIndex, setSurveyIndex] = useState(0);
   const [surveySection, setSurveySection] = useState("household");
+  const [carList, setCarList] = useState([]);
+  const [carDetail, setCarDetail] = useState({
+    size: "",
+    fuelType: "",
+    value: "",
+    unit: "",
+    period: "",
+  });
+  const [bikeList, setBikeList] = useState([]);
+  const [bikeDetail, setBikeDetail] = useState({
+    size: "",
+    period: "",
+    value: "",
+    unit: "",
+  });
   const [surveyData, setSurveyData] = useState({
     householdSize: "",
     energy: {
@@ -46,6 +61,25 @@ const SurveyProvider = ({ children }) => {
         longHaul: 0,
       },
     },
+    car: [],
+    bike: [],
+    publicTransport: {
+      bus: {
+        value: 0,
+        unit: "",
+        period: "",
+      },
+      train: {
+        value: 0,
+        unit: "",
+        period: "",
+      },
+      coach: {
+        value: 0,
+        unit: "",
+        period: "",
+      },
+    },
   });
   const addAnswer = (answer) => {
     setSurveyData({ ...surveyData, ...answer });
@@ -54,12 +88,16 @@ const SurveyProvider = ({ children }) => {
   return (
     <SurveyContext.Provider
       value={{
-        surveyIndex,
-        setSurveyIndex,
-        setSurveySection,
-        surveySection,
         surveyData,
         addAnswer,
+        carDetail,
+        carList,
+        setCarDetail,
+        setCarList,
+        bikeList,
+        setBikeList,
+        setBikeDetail,
+        bikeDetail,
       }}
     >
       {children}

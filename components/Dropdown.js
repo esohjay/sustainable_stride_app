@@ -4,7 +4,12 @@ import { Dropdown } from "react-native-element-dropdown";
 
 import tw from "../lib/tailwind";
 
-export const DropdownSelect = ({ options, onSelect, value }) => {
+export const DropdownSelect = ({
+  options,
+  onSelect,
+  value,
+  placeholder = "Unit",
+}) => {
   //   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
 
@@ -33,7 +38,7 @@ export const DropdownSelect = ({ options, onSelect, value }) => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder={!isFocus ? "Unit" : "..."}
+        placeholder={!isFocus ? placeholder : "..."}
         value={value}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}

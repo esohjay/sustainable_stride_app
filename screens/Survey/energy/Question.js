@@ -118,7 +118,7 @@ export default function EnergyQuestion() {
                   })
                 }
                 keyboardType="numeric"
-                placeholder="xxxxxxxx"
+                placeholder="0"
                 label={"Electricity"}
                 border={true}
               />

@@ -51,7 +51,7 @@ export default function QuestionLayout({
               textStyle={tw`text-base`}
               text={"Next"}
               disabled={disabled}
-              onPress={() => navigate.navigate(nextScreen)}
+              onPress={nextScreen}
             />
             <Text
               style={tw`text-center font-bold py-2 underline text-mainColor`}
