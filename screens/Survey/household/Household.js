@@ -11,7 +11,7 @@ export default function Household() {
       color={"bg-blue-500"}
       section={"household"}
       iconName={"home-outline"}
-      percentage={12.5}
+      percentage={11.11}
       nextScreen={() => nextScreen("Energy")}
       disabled={surveyData && surveyData.householdSize === ""}
     >

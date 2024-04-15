@@ -7,7 +7,7 @@ import tw from "../../../lib/tailwind";
 import useSurveyNextPage from "../../../lib/useSurveyNextPage";
 
 export default function Bike() {
-  const { surveyData, bikeDetail, bikeList, setBikeDetail } =
+  const { surveyData, bikeDetail, bikeList, setBikeDetail, addAnswer } =
     useSurveyContext();
   const nextScreen = useSurveyNextPage();
   const submitBikeQuestion = () => {
@@ -42,7 +42,7 @@ export default function Bike() {
           color={"bg-violet-500"}
           section={"motorbike"}
           iconName={"bicycle-outline"}
-          percentage={50}
+          percentage={55.55}
           nextScreen={submitBikeQuestion}
           disabled={false}
         >

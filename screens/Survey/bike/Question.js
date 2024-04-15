@@ -91,8 +91,8 @@ export default function BikeQuestion() {
               <View style={tw`w-1/4`}>
                 <DropdownSelect
                   options={[
-                    { label: "km", value: "km" },
-                    { label: "mile", value: "mile" },
+                    { label: "Km", value: "km" },
+                    { label: "Mile", value: "mile" },
                   ]}
                   onSelect={setUnit}
                   value={bikeDetail.unit}
@@ -101,8 +101,8 @@ export default function BikeQuestion() {
               <View style={tw`w-1/3`}>
                 <DropdownSelect
                   options={[
-                    { label: "monthly", value: "monthly" },
-                    { label: "yearly", value: "yearly" },
+                    { label: "Monthly", value: "monthly" },
+                    { label: "Yearly", value: "yearly" },
                   ]}
                   onSelect={setPeriod}
                   value={bikeDetail.period}

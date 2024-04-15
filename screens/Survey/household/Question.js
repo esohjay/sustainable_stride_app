@@ -12,7 +12,7 @@ export default function QuestionOne() {
       <Text style={tw`font-semibold text-lg mb-3 text-mainColor`}>
         How many people are in your household?
       </Text>
-      <View style={tw`flex gap-y-3`}>
+      <View style={tw`flex gap-y-4 py-5`}>
         <Button
           variant={surveyData.householdSize === 1 ? "light" : "black"}
           height="45"

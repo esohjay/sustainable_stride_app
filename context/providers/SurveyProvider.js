@@ -4,7 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 const SurveyContext = createContext();
 
 const SurveyProvider = ({ children }) => {
-  const [surveyIndex, setSurveyIndex] = useState(0);
+  const [surveyIndex, setSurveyIndex] = useState("");
   const [surveySection, setSurveySection] = useState("household");
   const [carList, setCarList] = useState([]);
   const [carDetail, setCarDetail] = useState({
@@ -25,60 +25,80 @@ const SurveyProvider = ({ children }) => {
     householdSize: "",
     energy: {
       electricity: {
-        value: 0,
+        value: "",
         unit: "",
       },
       gas: {
-        value: 0,
+        value: "",
         unit: "",
       },
       coal: {
-        value: 0,
+        value: "",
         unit: "",
       },
       lpg: {
-        value: 0,
+        value: "",
         unit: "",
       },
       propane: {
-        value: 0,
+        value: "",
         unit: "",
       },
       wood: {
-        value: 0,
+        value: "",
         unit: "",
       },
     },
     flight: {
       withRf: {
-        domestic: 0,
-        shortHaul: 0,
-        longHaul: 0,
+        domestic: "",
+        shortHaul: "",
+        longHaul: "",
       },
       withoutRf: {
-        domestic: 0,
-        shortHaul: 0,
-        longHaul: 0,
+        domestic: "",
+        shortHaul: "",
+        longHaul: "",
       },
     },
     car: [],
     bike: [],
     publicTransport: {
       bus: {
-        value: 0,
+        value: "",
         unit: "",
         period: "",
       },
       train: {
-        value: 0,
+        value: "",
         unit: "",
         period: "",
       },
       coach: {
-        value: 0,
+        value: "",
         unit: "",
         period: "",
       },
+    },
+    diet: "",
+    goodsConsumption: {
+      clothingMaterials: { value: "", period: "" },
+      shoesAndFootwear: { value: "", period: "" },
+      furniture: { value: "", period: "" },
+      pharmaceuticalProducts: { value: "", period: "" },
+      booksAndNewspapers: { value: "", period: "" },
+      petFood: { value: "", period: "" },
+      tobacco: { value: "", period: "" },
+      alcohol: { value: "", period: "" },
+      gamesOrToyOrHobbies: { value: "", period: "" },
+      householdAppliances: { value: "", period: "" },
+    },
+    servicesConsumption: {
+      medicalServices: { value: "", period: "" },
+      education: { value: "", period: "" },
+      veterinaryServices: { value: "", period: "" },
+      financialServices: { value: "", period: "" },
+      saloonAndGrooming: { value: "", period: "" },
     },
   });
   const addAnswer = (answer) => {

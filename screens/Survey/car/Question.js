@@ -66,7 +66,7 @@ export default function CarQuestion() {
               {car.unit} {car.period}
             </Text>
           ))}
-          <View style={tw`flex flex-row gap-x-2`}>
+          <View style={tw`flex flex-row gap-x-3`}>
             <View style={tw`w-1/3`}>
               <Text style={tw`font-semibold mb-2 text-dark`}>Car size</Text>
               <DropdownSelect
@@ -119,8 +119,8 @@ export default function CarQuestion() {
               <View style={tw`w-1/4`}>
                 <DropdownSelect
                   options={[
-                    { label: "km", value: "km" },
-                    { label: "mile", value: "mile" },
+                    { label: "Km", value: "km" },
+                    { label: "Mile", value: "mile" },
                   ]}
                   onSelect={setUnit}
                   value={carDetail.unit}

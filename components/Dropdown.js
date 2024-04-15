@@ -9,6 +9,7 @@ export const DropdownSelect = ({
   onSelect,
   value,
   placeholder = "Unit",
+  onSelectArg = "",
 }) => {
   //   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
@@ -44,7 +45,11 @@ export const DropdownSelect = ({
         onBlur={() => setIsFocus(false)}
         onChange={(item) => {
           //   setValue(item.value);
-          onSelect(item.value);
+          if (onSelectArg) {
+            onSelect(onSelectArg, item.value);
+          } else {
+            onSelect(item.value);
+          }
           setIsFocus(false);
         }}
       />

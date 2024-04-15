@@ -10,22 +10,17 @@ export default function Energy() {
   const { surveyData } = useSurveyContext();
   const nextScreen = useSurveyNextPage();
   return (
-    <CustomScrollView style={tw`bg-gray-50`} screen="survey">
-      <AviodKeyBoardViewWrapper>
-        <QuestionLayout
-          color={"bg-yellow-500"}
-          section={"energy"}
-          iconName={"flash-outline"}
-          percentage={25}
-          nextScreen={() => nextScreen("Flight")}
-          disabled={
-            (surveyData && surveyData.energy.electricity.value === 0) ||
-            (surveyData && surveyData.energy.electricity.unit === "")
-          }
-        >
-          <EnergyQuestion />
-        </QuestionLayout>
-      </AviodKeyBoardViewWrapper>
-    </CustomScrollView>
+    <AviodKeyBoardViewWrapper>
+      <QuestionLayout
+        color={"bg-yellow-500"}
+        section={"energy"}
+        iconName={"flash-outline"}
+        percentage={22.22}
+        nextScreen={() => nextScreen("Flight")}
+        disabled={false}
+      >
+        <EnergyQuestion />
+      </QuestionLayout>
+    </AviodKeyBoardViewWrapper>
   );
 }

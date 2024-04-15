@@ -12,7 +12,7 @@ export default function Car() {
     carDetail,
     carList,
     setCarDetail,
-    setCarList,
+
     addAnswer,
   } = useSurveyContext();
   const nextScreen = useSurveyNextPage();
@@ -50,7 +50,7 @@ export default function Car() {
           color={"bg-cyan-500"}
           section={"car"}
           iconName={"car-sport-outline"}
-          percentage={50}
+          percentage={44.44}
           nextScreen={submitCarQuestion}
           disabled={false}
         >

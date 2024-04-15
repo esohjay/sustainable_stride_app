@@ -16,7 +16,7 @@ export default function QuestionLayout({
 }) {
   const navigate = useNavigation();
   return (
-    <CustomScrollView style={tw`bg-gray-50`} screen={section}>
+    <CustomScrollView style={tw`bg-gray-50`} screen={"survey"}>
       <View style={tw`p-5`}>
         {/* Heading */}
         <View style={tw`flex gap-y-2`}>
