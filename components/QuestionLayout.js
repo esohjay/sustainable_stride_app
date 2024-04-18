@@ -4,6 +4,7 @@ import tw from "../lib/tailwind";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import { Button } from "./UI/Button";
 import { useNavigation } from "@react-navigation/native";
+import { useSurveyContext } from "../context/providers/SurveyProvider";
 
 export default function QuestionLayout({
   section,
@@ -12,9 +13,11 @@ export default function QuestionLayout({
   percentage,
   disabled,
   nextScreen,
+  btnText = "Next",
   children,
 }) {
   const navigate = useNavigation();
+  const { state } = useSurveyContext();
   return (
     <CustomScrollView style={tw`bg-gray-50`} screen={"survey"}>
       <View style={tw`p-5`}>
@@ -49,9 +52,10 @@ export default function QuestionLayout({
               variant={disabled ? "disabled" : "black"}
               height="45"
               textStyle={tw`text-base`}
-              text={"Next"}
+              text={btnText}
               disabled={disabled}
               onPress={nextScreen}
+              isLoading={state?.loading}
             />
             <Text
               style={tw`text-center font-bold py-2 underline text-mainColor`}

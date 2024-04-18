@@ -1,25 +1,25 @@
 import {
-  ADD_DATA_FAIL,
-  ADD_DATA_REQUEST,
-  ADD_DATA_RESET,
-  ADD_DATA_SUCCESS,
+  CREATE_SURVEY_FAIL,
+  CREATE_SURVEY_REQUEST,
+  CREATE_SURVEY_RESET,
+  CREATE_SURVEY_SUCCESS,
 } from "../constants/survey_constant";
 
 export const SurveyReducer = (state, action) => {
   switch (action.type) {
-    case ADD_DATA_REQUEST:
+    case CREATE_SURVEY_REQUEST:
       return { ...state, loading: true };
-    case ADD_DATA_SUCCESS:
+    case CREATE_SURVEY_SUCCESS:
       return {
         ...state,
-        loadingSurvey: false,
-        surveySuccess: true,
-        data: action.payload,
+        loading: false,
+        surveySaved: true,
+        footprint: action.payload,
       };
-    case ADD_DATA_FAIL:
+    case CREATE_SURVEY_FAIL:
       return { ...state, loading: false, error: action.payload };
-    case ADD_DATA_RESET:
-      return { ...state, success: false };
+    case CREATE_SURVEY_RESET:
+      return { ...state, surveySaved: false };
     default:
       return state;
   }

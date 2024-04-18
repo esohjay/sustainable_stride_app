@@ -4,8 +4,10 @@ import tw from "../lib/tailwind";
 import ChartCenter from "../components/ChartCenter";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import { Button } from "../components/UI/Button";
+import { useSurveyContext } from "../context/providers/SurveyProvider";
 
 function EstimateScreen() {
+  const { state } = useSurveyContext();
   const data = [
     { value: 24, color: "#177AD5", text: "24%", name: "Home" },
     { value: 30, color: "#136f63", text: "30%", name: "Travel" },
@@ -13,6 +15,7 @@ function EstimateScreen() {
     { value: 26, color: "#ED6665", text: "26%", name: "Food & Drink" },
   ];
   const val = Math.random() * 100 + 1;
+  console.log(state);
   return (
     <CustomScrollView style={tw`bg-gray-50`} screen="estimate">
       <View style={tw`p-5 w-full flex items-center`}>

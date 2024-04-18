@@ -9,6 +9,7 @@ import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapp
 import { DropdownSelect } from "../../../components/Dropdown";
 
 export default function BikeQuestion() {
+  const [errMsg, setErrMsg] = useState("");
   const { surveyData, bikeDetail, bikeList, setBikeDetail, setBikeList } =
     useSurveyContext();
   console.log(surveyData);
@@ -38,6 +39,8 @@ export default function BikeQuestion() {
         value: "",
         unit: "",
       });
+    } else {
+      setErrMsg("All field must be filled");
     }
     return;
   };
@@ -122,6 +125,7 @@ export default function BikeQuestion() {
               />
             </View>
           </View>
+          <Text style={tw`text-red-500 py-2 `}>{errMsg}</Text>
         </View>
       </View>
     </AviodKeyBoardViewWrapper>

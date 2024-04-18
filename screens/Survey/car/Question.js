@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import tw from "../../../lib/tailwind";
 import { Button } from "../../../components/UI/Button";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
@@ -9,14 +9,9 @@ import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapp
 import { DropdownSelect } from "../../../components/Dropdown";
 
 export default function CarQuestion() {
-  const {
-    addAnswer,
-    surveyData,
-    carDetail,
-    carList,
-    setCarDetail,
-    setCarList,
-  } = useSurveyContext();
+  const [errMsg, setErrMsg] = useState("");
+  const { surveyData, carDetail, carList, setCarDetail, setCarList } =
+    useSurveyContext();
   console.log(surveyData);
   const setSize = (size) => {
     setCarDetail({ ...carDetail, size });
@@ -49,6 +44,8 @@ export default function CarQuestion() {
         value: "",
         unit: "",
       });
+    } else {
+      setErrMsg("All field must be filled");
     }
     return;
   };
@@ -86,7 +83,7 @@ export default function CarQuestion() {
               <DropdownSelect
                 options={[
                   { label: "Diesel", value: "diesel" },
-                  { label: "Petrol", value: "Petrol" },
+                  { label: "Petrol", value: "petrol" },
                   { label: "Hybrid", value: "hybrid" },
                   { label: "CNG", value: "cng" },
                   { label: "LPG", value: "lpg" },
@@ -150,6 +147,7 @@ export default function CarQuestion() {
               />
             </View>
           </View>
+          <Text style={tw`text-red-500 py-2 `}>{errMsg}</Text>
         </View>
       </View>
     </AviodKeyBoardViewWrapper>

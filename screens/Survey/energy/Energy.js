@@ -9,6 +9,10 @@ import useSurveyNextPage from "../../../lib/useSurveyNextPage";
 export default function Energy() {
   const { surveyData } = useSurveyContext();
   const nextScreen = useSurveyNextPage();
+  const handleNextPage = () => {
+    for (const key in surveyData.energy) {
+    }
+  };
   return (
     <AviodKeyBoardViewWrapper>
       <QuestionLayout

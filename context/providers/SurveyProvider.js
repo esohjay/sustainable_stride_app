@@ -1,11 +1,17 @@
-import React, { useContext, createContext, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import React, { useContext, createContext, useState, useReducer } from "react";
+import { SurveyReducer } from "../reducers/survey_reducer";
 
 const SurveyContext = createContext();
+const initialState = {
+  loading: false,
+  success: false,
+  surveySaved: false,
+  error: null,
+  footprint: null,
+};
 
 const SurveyProvider = ({ children }) => {
-  const [surveyIndex, setSurveyIndex] = useState("");
-  const [surveySection, setSurveySection] = useState("household");
+  const [state, dispatch] = useReducer(SurveyReducer, initialState);
   const [carList, setCarList] = useState([]);
   const [carDetail, setCarDetail] = useState({
     size: "",
@@ -22,7 +28,7 @@ const SurveyProvider = ({ children }) => {
     unit: "",
   });
   const [surveyData, setSurveyData] = useState({
-    householdSize: "",
+    householdSize: 0,
     energy: {
       electricity: {
         value: "",
@@ -118,6 +124,8 @@ const SurveyProvider = ({ children }) => {
         setBikeList,
         setBikeDetail,
         bikeDetail,
+        state,
+        dispatch,
       }}
     >
       {children}

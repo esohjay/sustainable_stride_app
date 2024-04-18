@@ -18,7 +18,7 @@ export default function Diet() {
           iconName={"fast-food-outline"}
           percentage={77.77}
           nextScreen={() => nextScreen("Goods")}
-          disabled={false}
+          disabled={surveyData && surveyData.diet === ""}
         >
           <Question />
         </QuestionLayout>
