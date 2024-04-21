@@ -1,17 +1,29 @@
+import { useState } from "react";
 import EnergyQuestion from "./Question";
+import { Text } from "react-native";
 import QuestionLayout from "../../../components/QuestionLayout";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapper";
-import { CustomScrollView } from "../../../context/providers/ScrollContext";
 import tw from "../../../lib/tailwind";
 import useSurveyNextPage from "../../../lib/useSurveyNextPage";
 
 export default function Energy() {
+  const [error, setError] = useState("");
   const { surveyData } = useSurveyContext();
   const nextScreen = useSurveyNextPage();
   const handleNextPage = () => {
     for (const key in surveyData.energy) {
+      if (
+        (surveyData.energy[key].value && !surveyData.energy[key].unit) ||
+        (!surveyData.energy[key].value && surveyData.energy[key].unit)
+      ) {
+        setError("Ensure both value and unit are filled.");
+        return;
+      } else {
+        setError("");
+      }
     }
+    nextScreen("Flight");
   };
   return (
     <AviodKeyBoardViewWrapper>
@@ -20,10 +32,11 @@ export default function Energy() {
         section={"energy"}
         iconName={"flash-outline"}
         percentage={22.22}
-        nextScreen={() => nextScreen("Flight")}
+        nextScreen={handleNextPage}
         disabled={false}
       >
         <EnergyQuestion />
+        <Text style={tw`text-red-500 py-2`}>{error}</Text>
       </QuestionLayout>
     </AviodKeyBoardViewWrapper>
   );

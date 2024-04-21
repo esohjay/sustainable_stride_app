@@ -10,9 +10,8 @@ import { DropdownSelect } from "../../../components/Dropdown";
 
 export default function BikeQuestion() {
   const [errMsg, setErrMsg] = useState("");
-  const { surveyData, bikeDetail, bikeList, setBikeDetail, setBikeList } =
+  const { bikeDetail, bikeList, setBikeDetail, setBikeList } =
     useSurveyContext();
-  console.log(surveyData);
   const setSize = (size) => {
     setBikeDetail({ ...bikeDetail, size });
   };
@@ -39,10 +38,11 @@ export default function BikeQuestion() {
         value: "",
         unit: "",
       });
+      setErrMsg("");
     } else {
       setErrMsg("All field must be filled");
+      return;
     }
-    return;
   };
   console.log(bikeDetail, bikeList);
   return (
@@ -53,10 +53,18 @@ export default function BikeQuestion() {
         </Text>
         <View style={tw`flex gap-y-3 py-4 mb-3`}>
           {bikeList.map((bike, i) => (
-            <Text key={i} style={tw`font-medium text-base capitalize`}>
-              {bike.size} size motorbike - {bike.value}
-              {bike.unit} {bike.period}
-            </Text>
+            <View key={i} style={tw`flex gap-x-1 flex-row items-center pb-2`}>
+              <Ionicons
+                name="chevron-forward-outline"
+                size={16}
+                color="#7d4f50"
+              />
+
+              <Text style={tw`font-medium text-sm capitalize`}>
+                {bike.size} size motorbike - {bike.value}
+                {bike.unit} {bike.period}
+              </Text>
+            </View>
           ))}
           <View style={tw`flex`}>
             <View style={tw`w-2/3`}>

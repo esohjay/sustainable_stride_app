@@ -9,7 +9,6 @@ import QuestionField from "./QuestionField";
 
 export default function GoodsQuestion() {
   const { addAnswer, surveyData } = useSurveyContext();
-  console.log(surveyData);
   const setPeriod = (field, period) => {
     addAnswer({
       goodsConsumption: {

@@ -1,12 +1,35 @@
+import { useState } from "react";
 import PublicTransportQuestion from "./Question";
 import QuestionLayout from "../../../components/QuestionLayout";
+import { Text } from "react-native";
 import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapper";
 import { CustomScrollView } from "../../../context/providers/ScrollContext";
 import tw from "../../../lib/tailwind";
 import useSurveyNextPage from "../../../lib/useSurveyNextPage";
+import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 
 export default function PublicTransport() {
+  const { surveyData } = useSurveyContext();
+  const [error, setError] = useState("");
   const nextScreen = useSurveyNextPage();
+  const handleNextPage = () => {
+    for (const key in surveyData.publicTransport) {
+      if (
+        (surveyData.publicTransport[key].value &&
+          (!surveyData.publicTransport[key].unit ||
+            !surveyData.publicTransport[key].period)) ||
+        ((surveyData.publicTransport[key].unit ||
+          surveyData.publicTransport[key].period) &&
+          !surveyData.publicTransport[key].value)
+      ) {
+        setError("Ensure distance, unit and period are filled.");
+        return;
+      } else {
+        setError("");
+      }
+    }
+    nextScreen("Diet");
+  };
   return (
     <CustomScrollView style={tw`bg-gray-50 `} screen="survey">
       <AviodKeyBoardViewWrapper>
@@ -15,10 +38,11 @@ export default function PublicTransport() {
           section={"Public Transport"}
           iconName={"train-outline"}
           percentage={66.66}
-          nextScreen={() => nextScreen("Diet")}
+          nextScreen={handleNextPage}
           disabled={false}
         >
           <PublicTransportQuestion />
+          <Text style={tw`text-red-500 py-2`}>{error}</Text>
         </QuestionLayout>
       </AviodKeyBoardViewWrapper>
     </CustomScrollView>

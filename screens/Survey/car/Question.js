@@ -12,7 +12,6 @@ export default function CarQuestion() {
   const [errMsg, setErrMsg] = useState("");
   const { surveyData, carDetail, carList, setCarDetail, setCarList } =
     useSurveyContext();
-  console.log(surveyData);
   const setSize = (size) => {
     setCarDetail({ ...carDetail, size });
   };
@@ -44,10 +43,11 @@ export default function CarQuestion() {
         value: "",
         unit: "",
       });
+      setErrMsg("");
     } else {
       setErrMsg("All field must be filled");
+      return;
     }
-    return;
   };
   console.log(carDetail, carList);
   return (
@@ -58,10 +58,17 @@ export default function CarQuestion() {
         </Text>
         <View style={tw`flex gap-y-3 py-4 mb-3`}>
           {carList.map((car, i) => (
-            <Text key={i} style={tw`font-medium text-base capitalize`}>
-              {car.size} size car - {car.fuelType} - {car.value}
-              {car.unit} {car.period}
-            </Text>
+            <View key={i} style={tw`flex gap-x-1 flex-row items-center pb-2`}>
+              <Ionicons
+                name="chevron-forward-outline"
+                size={16}
+                color="#7d4f50"
+              />
+              <Text style={tw`font-medium text-sm capitalize`}>
+                {car.size} size car - {car.fuelType} - {car.value}
+                {car.unit} {car.period}
+              </Text>
+            </View>
           ))}
           <View style={tw`flex flex-row gap-x-3`}>
             <View style={tw`w-1/3`}>

@@ -6,7 +6,6 @@ import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 
 export default function QuestionOne() {
   const { addAnswer, surveyData } = useSurveyContext();
-  console.log(surveyData);
   return (
     <View>
       <Text style={tw`font-semibold text-lg mb-3 text-mainColor`}>

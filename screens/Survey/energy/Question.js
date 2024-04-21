@@ -6,7 +6,6 @@ import QuestionField from "./QuestionField";
 
 export default function EnergyQuestion() {
   const { addAnswer, surveyData } = useSurveyContext();
-  console.log(surveyData);
   const setUnit = (field, unit) => {
     addAnswer({
       energy: {
