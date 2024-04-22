@@ -10,6 +10,7 @@ import AchievementStat from "../components/AchievementStat";
 import ActionList from "../components/ActionList";
 import CampaignList from "../components/CampaignList";
 import { Button } from "../components/UI/Button";
+import { Foundation } from "@expo/vector-icons";
 
 function HomeScreen({ navigation }) {
   const insets = useSafeAreaInsets();
@@ -29,32 +30,62 @@ function HomeScreen({ navigation }) {
       screen="home"
     >
       <View style={tw`py-3`}>
-        <View
-          style={tw`flex flex-row gap-3 w-full p-5 items-center shadow bg-white rounded-lg`}
-        >
-          <View style={tw`h-20 mb-3 bg-transparent w-3/12`}>
-            <Image
-              style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
-              resizeMode="contain"
-              source={require("../assets/Analyze-amico.png")}
-            />
-          </View>
-          <View style={tw` w-9/12`}>
-            <Text style={tw`font-semibold text-lg text-mainColor mb-1`}>
-              Estimate footprint
-            </Text>
-            <Text style={tw`text-dark mb-3 font-normal`}>
-              Take a quick survey to estimate how much carbon you emit yearly.
-            </Text>
-            <View style={tw`flex items-start`}>
-              <Button
-                text={"Start now"}
-                icon={"paw"}
-                onPress={() => navigation.navigate("Survey")}
+        {profile && profile.totalEmission ? (
+          <View style={tw`mb-7`}>
+            <View style={tw`w-full h-44 rounded-lg relative bg-white shadow`}>
+              <Image
+                style={tw`h-full max-h-full absolute top-0 left-0 rounded-lg flex max-w-full w-full`}
+                resizeMode="cover"
+                source={{
+                  uri: "https://cdn.pixabay.com/photo/2018/04/04/13/38/nature-3289812_1280.jpg",
+                }}
               />
+              <View
+                style={tw`h-full w-full flex items-center p-3 rounded-lg bg-black bg-opacity-60`}
+              >
+                <Text style={tw`text-primaryLight font-bold text-2xl  `}>
+                  {(profile.totalEmission / 1000).toFixed(2)} tonnes
+                </Text>
+                <Text style={tw`text-primaryLight font-bold text-sm mb-3 `}>
+                  (Estimated footprint)
+                </Text>
+                <Text
+                  style={tw`text-altColor font-semibold mb-3 text-center w-3/4`}
+                >
+                  Take action now to reduce your carbon footprint.
+                </Text>
+                <Button text={"Act now"} icon={"bonfire"} variant="light" />
+              </View>
             </View>
           </View>
-        </View>
+        ) : (
+          <View
+            style={tw`flex flex-row gap-3 w-full p-5 items-center shadow bg-white rounded-lg`}
+          >
+            <View style={tw`h-20 mb-3 bg-transparent w-3/12`}>
+              <Image
+                style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
+                resizeMode="contain"
+                source={require("../assets/Analyze-amico.png")}
+              />
+            </View>
+            <View style={tw` w-9/12`}>
+              <Text style={tw`font-semibold text-lg text-mainColor mb-1`}>
+                Estimate footprint
+              </Text>
+              <Text style={tw`text-dark mb-3 font-normal`}>
+                Take a quick survey to estimate how much carbon you emit yearly.
+              </Text>
+              <View style={tw`flex items-start`}>
+                <Button
+                  text={"Start now"}
+                  icon={"paw"}
+                  onPress={() => navigation.navigate("Survey")}
+                />
+              </View>
+            </View>
+          </View>
+        )}
       </View>
       <View style={tw`py-3`}>
         <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>

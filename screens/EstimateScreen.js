@@ -1,13 +1,69 @@
+import { useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
 import { PieChart } from "react-native-gifted-charts";
 import tw from "../lib/tailwind";
 import ChartCenter from "../components/ChartCenter";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import { Button } from "../components/UI/Button";
-import { useSurveyContext } from "../context/providers/SurveyProvider";
+import { useAuthContext } from "../context/providers/AuthProvider";
+import { useAuthActions } from "../context/actions/auth_actions";
+import { calculatePercentageDifference } from "../lib/footprintPercentDiff";
 
-function EstimateScreen() {
-  const { state } = useSurveyContext();
+function EstimateScreen({ navigation }) {
+  const { getProfile } = useAuthActions();
+  const [surveyCategory, setSurveyCategory] = useState([]);
+  const [percentageDifference, setPercentageDifference] = useState({
+    uk: "",
+    world: "",
+  });
+  const [colors, setColors] = useState([
+    "#177AD5",
+    "#136f63",
+    "#582f0e",
+    "#ED6665",
+  ]);
+  const ukAverageEmission = 10;
+  const worldAverageEmission = 4.76;
+  const { state } = useAuthContext();
+  const { profile } = state;
+  useEffect(() => {
+    if (!profile) {
+      getProfile();
+    }
+  }, [profile]);
+  useEffect(() => {
+    if (profile) {
+      let categoryData = [];
+      let index = 0;
+      for (const [category, categoryValue] of Object.entries(
+        profile.emissionCategory
+      )) {
+        const percent = ((categoryValue / profile.totalEmission) * 100).toFixed(
+          1
+        );
+        const value = (categoryValue / 1000).toFixed(2);
+        categoryData.push({
+          value: parseFloat(value),
+          name: category,
+          text: `${percent}%`,
+          color: colors[index],
+        });
+        index++;
+      }
+      setSurveyCategory(categoryData);
+      setPercentageDifference({
+        uk: calculatePercentageDifference(
+          ukAverageEmission,
+          profile.totalEmission / 1000
+        ),
+        world: calculatePercentageDifference(
+          worldAverageEmission,
+          profile.totalEmission / 1000
+        ),
+      });
+    }
+  }, [profile]);
+  console.log(surveyCategory);
   const data = [
     { value: 24, color: "#177AD5", text: "24%", name: "Home" },
     { value: 30, color: "#136f63", text: "30%", name: "Travel" },
@@ -22,7 +78,7 @@ function EstimateScreen() {
         <View>
           <PieChart
             donut
-            data={data}
+            data={surveyCategory}
             radius={120}
             // showText
             // textColor="black"
@@ -32,7 +88,11 @@ function EstimateScreen() {
             innerRadius={87}
             innerCircleColor={"#FFF7F2"}
             centerLabelComponent={() => {
-              return <ChartCenter value={val.toFixed(2)} />;
+              return (
+                <ChartCenter
+                  value={(profile?.totalEmission / 1000).toFixed(2)}
+                />
+              );
             }}
           />
         </View>
@@ -40,7 +100,9 @@ function EstimateScreen() {
           <View
             style={tw`flex items-center w-[45%] rounded-lg bg-[#EDE4F1] px-3 py-2`}
           >
-            <Text style={tw`text-[#51315E] text-xl font-bold`}>26% more</Text>
+            <Text style={tw`text-[#51315E] text-base font-bold`}>
+              {percentageDifference.uk}
+            </Text>
             <Text style={tw`text-[#51315E] font-semibold text-xs`}>
               than British average
             </Text>
@@ -48,34 +110,40 @@ function EstimateScreen() {
           <View
             style={tw`flex items-center w-[45%] rounded-lg bg-[#D6F8FF] px-3 py-2`}
           >
-            <Text style={tw`text-[#004452] text-xl font-bold`}>52% more</Text>
+            <Text style={tw`text-[#004452] text-base font-bold`}>
+              {percentageDifference.world}
+            </Text>
             <Text style={tw`text-[#004452] font-semibold text-xs`}>
               than Global average
             </Text>
           </View>
         </View>
         <View style={tw`flex flex-row gap-4 flex-wrap w-full`}>
-          {data.map((item) => (
-            <View
-              key={item.name}
-              style={tw`shadow bg-[${item.color}] h-40 w-[47%] flex px-5 justify-end py-3 rounded-xl relative`}
-            >
-              <View style={tw`flex gap-y-4`}>
+          {surveyCategory.length > 0 &&
+            surveyCategory.map((item, i) => (
+              <View
+                key={i}
+                style={tw`shadow bg-[${colors[i]}] h-40 w-[47%] flex px-5 justify-end py-3 rounded-xl relative`}
+              >
                 <Text style={tw`text-primaryLight font-extrabold text-lg`}>
                   {item.name}
                 </Text>
-                <View>
-                  <Text style={tw`text-xl font-bold text-primaryLight`}>
-                    {item.value}%
-                  </Text>
-                  <Text style={tw`text-primaryLight font-semibold`}>
-                    <Text style={tw`text-base `}>of overall C0</Text>
-                    <Text style={tw`text-xs leading-3`}>2</Text>
-                  </Text>
+                <Text style={tw`text-base font-bold text-primaryLight`}>
+                  {item.value} tonnes
+                </Text>
+                <View style={tw`flex gap-y-2 mt-4`}>
+                  <View>
+                    <Text style={tw`text-sm font-bold text-primaryLight`}>
+                      {item.text}
+                    </Text>
+                    <Text style={tw`text-primaryLight font-semibold`}>
+                      <Text style={tw`text-sm `}>of overall C0</Text>
+                      <Text style={tw`text-xs leading-3`}>2</Text>
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          ))}
+            ))}
         </View>
         <View style={tw`py-3 w-full`}>
           <View style={tw`w-full h-20 rounded-lg relative bg-white shadow`}>
@@ -93,7 +161,12 @@ function EstimateScreen() {
                 Update survey
               </Text>
 
-              <Button text={"Update"} icon={"create"} variant="light" />
+              <Button
+                text={"Update"}
+                icon={"create"}
+                variant="light"
+                onPress={() => navigation.navigate("Survey")}
+              />
             </View>
           </View>
         </View>
