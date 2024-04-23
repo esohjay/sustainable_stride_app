@@ -1,12 +1,29 @@
+import React, { useMemo, useRef, useEffect, useState } from "react";
 import { View, Text, Image } from "react-native";
 import tw from "../lib/tailwind";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import { Button } from "../components/UI/Button";
 import TrackCategoryCard from "../components/TrackCategoryCard";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import TrackHomeForm from "../components/TrackHomeForm";
+import TrackModal from "../components/TrackModal";
+import { useTrackActions } from "../context/actions/track_actions";
 
 function TrackScreen() {
   const insets = useSafeAreaInsets();
+  const { addActivity } = useTrackActions();
+  const snapPoints = useMemo(() => ["80%"], []);
+
+  const homeRef = useRef(null);
+  const shoppingRef = useRef(null);
+  const foodAndDrinkRef = useRef(null);
+  const travelRef = useRef(null);
+
+  function handleShowModal(ref) {
+    ref?.present();
+  }
+
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="track">
       <View style={tw`p-5`}>
@@ -75,6 +92,7 @@ function TrackScreen() {
             bgUrl={
               "https://cdn.pixabay.com/photo/2022/10/03/23/41/house-7497001_1280.png"
             }
+            handlePress={() => handleShowModal(homeRef.current)}
           />
           <TrackCategoryCard
             category={"Travel"}
@@ -82,6 +100,7 @@ function TrackScreen() {
             bgUrl={
               "https://cdn.pixabay.com/photo/2012/10/10/05/04/train-60539_1280.jpg"
             }
+            handlePress={() => handleShowModal(travelRef.current)}
           />
           <TrackCategoryCard
             category={"Food & Drink"}
@@ -89,6 +108,7 @@ function TrackScreen() {
             bgUrl={
               "https://cdn.pixabay.com/photo/2015/12/09/17/11/vegetables-1085063_1280.jpg"
             }
+            handlePress={() => handleShowModal(foodAndDrinkRef.current)}
           />
           <TrackCategoryCard
             category={"Shopping"}
@@ -96,8 +116,12 @@ function TrackScreen() {
             bgUrl={
               "https://cdn.pixabay.com/photo/2020/03/27/17/03/shopping-4974313_1280.jpg"
             }
+            handlePress={() => handleShowModal(shoppingRef.current)}
           />
         </View>
+        <TrackModal trackRef={homeRef} snapPoints={snapPoints}>
+          <TrackHomeForm addActivity={addActivity} />
+        </TrackModal>
       </View>
     </CustomScrollView>
   );

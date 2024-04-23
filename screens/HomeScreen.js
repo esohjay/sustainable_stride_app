@@ -52,9 +52,14 @@ function HomeScreen({ navigation }) {
                 <Text
                   style={tw`text-altColor font-semibold mb-3 text-center w-3/4`}
                 >
-                  Take action now to reduce your carbon footprint.
+                  View more details about your carbon footprint
                 </Text>
-                <Button text={"Act now"} icon={"bonfire"} variant="light" />
+                <Button
+                  text={"View"}
+                  icon={"paw"}
+                  variant="light"
+                  onPress={() => navigation.navigate("Estimate")}
+                />
               </View>
             </View>
           </View>

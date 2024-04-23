@@ -17,6 +17,7 @@ import { useAppContext } from "./context/store";
 import ExpensesContextProvider from "./context/store";
 import { AuthProvider } from "./context/providers/AuthProvider";
 import { SurveyProvider } from "./context/providers/SurveyProvider";
+import { TrackProvider } from "./context/providers/TrackProvider";
 import HomeStack from "./navigation/AuthenticatedStack";
 import RootStack from "./navigation/RootStack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -37,7 +38,9 @@ export default function App() {
             <StatusBar style="dark" />
             <AuthProvider>
               <SurveyProvider>
-                <RootStack />
+                <TrackProvider>
+                  <RootStack />
+                </TrackProvider>
               </SurveyProvider>
             </AuthProvider>
           </BottomSheetModalProvider>

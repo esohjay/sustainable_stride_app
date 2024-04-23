@@ -3,12 +3,15 @@ import { View, Text, Image, Pressable } from "react-native";
 import tw from "../lib/tailwind";
 import { Ionicons } from "@expo/vector-icons";
 
-function TrackCategoryCard({ category, value, bgUrl }) {
+function TrackCategoryCard({ category, value, bgUrl, handlePress }) {
   return (
-    <View style={tw`shadow bg-white h-40 w-[47%] rounded-xl relative`}>
-      <Pressable style={tw`absolute right-3 top-3 z-10`}>
+    <Pressable
+      onPress={handlePress}
+      style={tw`shadow bg-white h-40 w-[47%] rounded-xl relative`}
+    >
+      <View style={tw`absolute right-3 top-3 z-10`}>
         <Ionicons name="add-circle-outline" size={24} color="#ffffff" />
-      </Pressable>
+      </View>
       <Image
         style={tw`h-full max-h-full absolute top-0 left-0 rounded-xl flex max-w-full w-full`}
         resizeMode="cover"
@@ -34,7 +37,7 @@ function TrackCategoryCard({ category, value, bgUrl }) {
           </View>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

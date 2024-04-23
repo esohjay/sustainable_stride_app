@@ -10,21 +10,13 @@ export const DropdownSelect = ({
   value,
   placeholder = "Unit",
   onSelectArg = "",
+  onBlur,
 }) => {
-  //   const [value, setValue] = useState(null);
   const [isFocus, setIsFocus] = useState(false);
-
-  //   const renderLabel = () => {
-  //     if (value || isFocus) {
-  //       return (
-  //         <Text style={[styles.label, isFocus && { color: "blue" }]}>
-  //           Dropdown label
-  //         </Text>
-  //       );
-  //     }
-  //     return null;
-  //   };
-
+  const handleBlur = () => {
+    setIsFocus(false);
+    onBlur;
+  };
   return (
     <View>
       {/* {renderLabel()} */}
@@ -42,7 +34,7 @@ export const DropdownSelect = ({
         placeholder={!isFocus ? placeholder : "..."}
         value={value}
         onFocus={() => setIsFocus(true)}
-        onBlur={() => setIsFocus(false)}
+        onBlur={onBlur ? handleBlur : () => setIsFocus(false)}
         onChange={(item) => {
           //   setValue(item.value);
           if (onSelectArg) {

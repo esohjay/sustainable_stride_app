@@ -1,79 +1,48 @@
 import {
-  ADD_DATA_FAIL,
-  ADD_DATA_REQUEST,
-  ADD_DATA_SUCCESS,
-} from "../constants/survey_constant";
+  ADD_ACTIVITY_FAIL,
+  ADD_ACTIVITY_REQUEST,
+  CREATE_SURVEY_RESET,
+  ADD_ACTIVITY_SUCCESS,
+} from "../constants/track_constants";
 
-import { useAppContext } from "../store";
+import { useTrackContext } from "../providers/TrackProvider";
+import { auth } from "../../lib/firebaseConfig";
 
 export const useTrackActions = () => {
-  const { dispatch } = useAppContext();
-  const createTrack = () => {
-    dispatch({ type: ADD_DATA_REQUEST });
-    dispatch({ type: ADD_DATA_SUCCESS, payload: { work: "Track" } });
-
-    // try {
-    //   const { data } = await axios.post(
-    //     `${publicRuntimeConfig.backendUrl}/v1/users`,
-    //     info,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${publicRuntimeConfig.token}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   );
-    //   dispatch({ type: CREATE_USER_SUCCESS, payload: data });
-    // } catch (error) {
-    //   const message =
-    //     error.response && error.response.data.message
-    //       ? error.response.data.message
-    //       : error.message;
-
-    //   dispatch({ type: CREATE_USER_FAIL, payload: message });
-    // }
+  const { dispatch } = useTrackContext();
+  const handleError = (error) => {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    return message;
   };
-  //   const updateUser = async (userId, info) => {
-  //     dispatch({ type: UPDATE_USER_REQUEST });
-  //     try {
-  //       const { data } = await axios.put(
-  //         `${publicRuntimeConfig.backendUrl}/v1/users/${userId}`,
-  //         info,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${publicRuntimeConfig.token}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-  //       dispatch({ type: UPDATE_USER_SUCCESS, payload: data });
-  //     } catch (error) {
-  //       const message =
-  //         error.response && error.response.data.message
-  //           ? error.response.data.message
-  //           : error.message;
-
-  //       dispatch({ type: UPDATE_USER_FAIL, payload: message });
-  //     }
-  //   };
-  //   const updateSurvey = async (id, info) => {
-  //     dispatch({ type: UPDATE_SURVEY_REQUEST });
-  //     try {
-  //       const { data } = await axios.put(`/api/${id}`, info);
-  //       dispatch({ type: UPDATE_SURVEY_SUCCESS, payload: data });
-  //     } catch (error) {
-  //       const message =
-  //         error.response && error.response.data.message
-  //           ? error.response.data.message
-  //           : error.message;
-
-  //       dispatch({ type: UPDATE_SURVEY_FAIL, payload: message });
-  //     }
-  //   };
-
+  const addActivity = async (activityData) => {
+    try {
+      dispatch({ type: ADD_ACTIVITY_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/track`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(activityData),
+        }
+      );
+      const data = await response.json();
+      // const data = await response;
+      dispatch({ type: ADD_ACTIVITY_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      console.log(error);
+      dispatch({ type: ADD_ACTIVITY_FAIL, payload: message });
+    }
+  };
   return {
-    createTrack,
-    // updateSurvey,
-    // updateUser,
+    addActivity,
   };
 };
