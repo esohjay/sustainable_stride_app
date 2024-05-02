@@ -42,7 +42,33 @@ export const useTrackActions = () => {
       dispatch({ type: ADD_ACTIVITY_FAIL, payload: message });
     }
   };
+  const addTravelActivity = async (activityData) => {
+    try {
+      dispatch({ type: ADD_ACTIVITY_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/track/travel`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(activityData),
+        }
+      );
+      const data = await response.json();
+      // const data = await response;
+      dispatch({ type: ADD_ACTIVITY_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      console.log(error);
+      dispatch({ type: ADD_ACTIVITY_FAIL, payload: message });
+    }
+  };
   return {
     addActivity,
+    addTravelActivity,
   };
 };

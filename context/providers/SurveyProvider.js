@@ -56,16 +56,9 @@ const SurveyProvider = ({ children }) => {
       },
     },
     flight: {
-      withRf: {
-        domestic: "",
-        shortHaul: "",
-        longHaul: "",
-      },
-      withoutRf: {
-        domestic: "",
-        shortHaul: "",
-        longHaul: "",
-      },
+      domestic: "",
+      shortHaul: "",
+      longHaul: "",
     },
     car: [],
     bike: [],

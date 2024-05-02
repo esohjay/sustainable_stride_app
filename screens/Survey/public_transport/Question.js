@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import tw from "../../../lib/tailwind";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 import QuestionField from "./QuestionField";
+import QuestionContainer from "./QuestionContainer";
 
 export default function PublicTransportQuestion() {
   const { addAnswer, surveyData } = useSurveyContext();
@@ -44,43 +45,27 @@ export default function PublicTransportQuestion() {
       <Text style={tw`font-semibold text-lg mb-3 py-2 text-mainColor`}>
         Which public transport do you use?{" "}
       </Text>
-      <View style={tw`flex gap-y-3`}>
-        {/* Bus */}
-
-        <QuestionField
-          label={"Bus"}
-          field={"bus"}
-          value={surveyData?.publicTransport?.bus?.value}
-          setUnit={setUnit}
-          setValue={setValue}
-          setPeriod={setPeriod}
-          dropdownPeriodValue={surveyData?.publicTransport?.bus?.period}
-          dropdownUnitValue={surveyData?.publicTransport?.bus?.unit}
-        />
-        {/* Coach */}
-        <QuestionField
-          label={"Coach"}
-          field={"coach"}
-          value={surveyData?.publicTransport?.coach?.value}
-          setUnit={setUnit}
-          setValue={setValue}
-          setPeriod={setPeriod}
-          dropdownPeriodValue={surveyData?.publicTransport?.coach?.period}
-          dropdownUnitValue={surveyData?.publicTransport?.coach?.unit}
-        />
-
-        {/* Train */}
-        <QuestionField
-          label={"Train"}
-          field={"train"}
-          value={surveyData?.publicTransport?.train?.value}
-          setUnit={setUnit}
-          setValue={setValue}
-          setPeriod={setPeriod}
-          dropdownPeriodValue={surveyData?.publicTransport?.train?.period}
-          dropdownUnitValue={surveyData?.publicTransport?.train?.unit}
-        />
-      </View>
+      <QuestionContainer
+        value={{
+          bus: surveyData?.publicTransport?.bus?.value,
+          coach: surveyData?.publicTransport?.coach?.value,
+          train: surveyData?.publicTransport?.train?.value,
+        }}
+        setUnit={setUnit}
+        setValue={setValue}
+        setPeriod={setPeriod}
+        allowPeriod={true}
+        dropdownPeriodValue={{
+          bus: surveyData?.publicTransport?.bus?.period,
+          coach: surveyData?.publicTransport?.coach?.period,
+          train: surveyData?.publicTransport?.train?.period,
+        }}
+        dropdownUnitValue={{
+          bus: surveyData?.publicTransport?.bus?.unit,
+          coach: surveyData?.publicTransport?.coach?.unit,
+          train: surveyData?.publicTransport?.train?.unit,
+        }}
+      />
     </View>
   );
 }

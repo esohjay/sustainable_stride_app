@@ -72,8 +72,8 @@ function RootStack() {
           name: user.displayName,
           phone: user.phoneNumber,
         });
-        setIsLoading(false);
-        // getProfile()
+        getProfile();
+        // setIsLoading(false);
         // console.log(process.env.EXPO_PUBLIC_BACKEND_URL);
         // navigation.replace("HomeScreen");
       } else {
@@ -81,6 +81,11 @@ function RootStack() {
       }
     });
   }, []);
+  useEffect(() => {
+    if (state.user && state.profileFetched) {
+      setIsLoading(false);
+    }
+  }, [state.user, state.profileFetched]);
   if (!fontsLoaded && !fontError) {
     return null;
   }

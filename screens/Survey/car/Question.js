@@ -7,11 +7,13 @@ import { TextInput } from "../../../components/UI/TextInput";
 import { Ionicons } from "@expo/vector-icons";
 import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapper";
 import { DropdownSelect } from "../../../components/Dropdown";
+import CarQuestionForm from "../../../components/CarQuestionForm";
 
 export default function CarQuestion() {
   const [errMsg, setErrMsg] = useState("");
   const { surveyData, carDetail, carList, setCarDetail, setCarList } =
     useSurveyContext();
+  console.log(surveyData);
   const setSize = (size) => {
     setCarDetail({ ...carDetail, size });
   };
@@ -70,79 +72,20 @@ export default function CarQuestion() {
               </Text>
             </View>
           ))}
-          <View style={tw`flex flex-row gap-x-3`}>
-            <View style={tw`w-1/3`}>
-              <Text style={tw`font-semibold mb-2 text-dark`}>Car size</Text>
-              <DropdownSelect
-                options={[
-                  { label: "Small", value: "small" },
-                  { label: "Medium", value: "medium" },
-                  { label: "Large", value: "large" },
-                  { label: "Average", value: "average" },
-                ]}
-                onSelect={setSize}
-                value={carDetail.size}
-                placeholder="Select"
-              />
-            </View>
-            <View style={tw`w-1/2`}>
-              <Text style={tw`font-semibold mb-2 text-dark`}>Fuel type</Text>
-              <DropdownSelect
-                options={[
-                  { label: "Diesel", value: "diesel" },
-                  { label: "Petrol", value: "petrol" },
-                  { label: "Hybrid", value: "hybrid" },
-                  { label: "CNG", value: "cng" },
-                  { label: "LPG", value: "lpg" },
-                  { label: "Plugin Hybrid", value: "pluginHybrid" },
-                  { label: "Battery Hybrid", value: "batteryHybrid" },
-                  { label: "Unknown", value: "unknown" },
-                ]}
-                onSelect={setFuelType}
-                value={carDetail.fuelType}
-                placeholder="Select"
-              />
-            </View>
-          </View>
-          <View>
-            <Text style={tw`font-semibold mb-2 text-dark`}>
-              Distance travelled
-            </Text>
-            <View style={tw`flex flex-row items-end gap-x-3`}>
-              <View style={tw`w-1/3`}>
-                <TextInput
-                  onChangeText={(text) => setValue(text)}
-                  keyboardType="number-pad"
-                  placeholder="0"
-                  // label={"Distance travelled"}
-                  border={true}
-                  value={carDetail.value}
-                />
-              </View>
+          <CarQuestionForm
+            setFuelType={setFuelType}
+            setPeriod={setPeriod}
+            setSize={setSize}
+            setUnit={setUnit}
+            setValue={setValue}
+            value={carDetail.value}
+            period={carDetail.period}
+            unit={carDetail.unit}
+            fuelType={carDetail.fuelType}
+            size={carDetail.size}
+            allowPeriod={true}
+          />
 
-              <View style={tw`w-1/4`}>
-                <DropdownSelect
-                  options={[
-                    { label: "Km", value: "km" },
-                    { label: "Mile", value: "mile" },
-                  ]}
-                  onSelect={setUnit}
-                  value={carDetail.unit}
-                />
-              </View>
-              <View style={tw`w-1/3`}>
-                <DropdownSelect
-                  options={[
-                    { label: "Monthly", value: "monthly" },
-                    { label: "Yearly", value: "yearly" },
-                  ]}
-                  onSelect={setPeriod}
-                  value={carDetail.period}
-                  placeholder="Period"
-                />
-              </View>
-            </View>
-          </View>
           <View style={tw`w-full flex flex-row justify-end py-4`}>
             <View style={tw` w-1/2`}>
               <Button

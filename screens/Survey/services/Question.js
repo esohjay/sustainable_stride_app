@@ -75,10 +75,10 @@ export default function ServicesQuestion() {
             surveyData?.servicesConsumption?.financialServices?.period
           }
         />
-        {/* saloonAndGrooming */}
+        {/* salonAndGrooming */}
         <QuestionField
-          label={"Saloon and grooming (£)"}
-          field={"saloonAndGrooming"}
+          label={"Salon and grooming (£)"}
+          field={"salonAndGrooming"}
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={

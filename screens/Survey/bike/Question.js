@@ -7,11 +7,13 @@ import { TextInput } from "../../../components/UI/TextInput";
 import { Ionicons } from "@expo/vector-icons";
 import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapper";
 import { DropdownSelect } from "../../../components/Dropdown";
+import BikeQuestionForm from "../../../components/BikeQuestionForm";
 
 export default function BikeQuestion() {
   const [errMsg, setErrMsg] = useState("");
-  const { bikeDetail, bikeList, setBikeDetail, setBikeList } =
+  const { bikeDetail, bikeList, setBikeDetail, setBikeList, surveyData } =
     useSurveyContext();
+  console.log(surveyData);
   const setSize = (size) => {
     setBikeDetail({ ...bikeDetail, size });
   };
@@ -46,96 +48,50 @@ export default function BikeQuestion() {
   };
   console.log(bikeDetail, bikeList);
   return (
-    <AviodKeyBoardViewWrapper>
-      <View>
-        <Text style={tw`font-semibold text-lg mb-3 text-mainColor`}>
-          Describe your motorbike yealy usage
-        </Text>
-        <View style={tw`flex gap-y-3 py-4 mb-3`}>
-          {bikeList.map((bike, i) => (
-            <View key={i} style={tw`flex gap-x-1 flex-row items-center pb-2`}>
-              <Ionicons
-                name="chevron-forward-outline"
-                size={16}
-                color="#7d4f50"
-              />
+    <View>
+      <Text style={tw`font-semibold text-lg mb-3 text-mainColor`}>
+        Describe your motorbike yealy usage
+      </Text>
+      <View style={tw`flex gap-y-3 py-4 mb-3`}>
+        {bikeList.map((bike, i) => (
+          <View key={i} style={tw`flex gap-x-1 flex-row items-center pb-2`}>
+            <Ionicons
+              name="chevron-forward-outline"
+              size={16}
+              color="#7d4f50"
+            />
 
-              <Text style={tw`font-medium text-sm capitalize`}>
-                {bike.size} size motorbike - {bike.value}
-                {bike.unit} {bike.period}
-              </Text>
-            </View>
-          ))}
-          <View style={tw`flex`}>
-            <View style={tw`w-2/3`}>
-              <Text style={tw`font-semibold mb-2 text-dark`}>
-                Motorbike size
-              </Text>
-              <DropdownSelect
-                options={[
-                  { label: "Small", value: "small" },
-                  { label: "Medium", value: "medium" },
-                  { label: "Large", value: "large" },
-                  { label: "Average", value: "average" },
-                ]}
-                onSelect={setSize}
-                value={bikeDetail.size}
-                placeholder="Select"
-              />
-            </View>
-          </View>
-          <View>
-            <Text style={tw`font-semibold mb-2 text-dark`}>
-              Distance travelled
+            <Text style={tw`font-medium text-sm capitalize`}>
+              {bike.size} size motorbike - {bike.value}
+              {bike.unit} {bike.period}
             </Text>
-            <View style={tw`flex flex-row items-end gap-x-3`}>
-              <View style={tw`w-1/3`}>
-                <TextInput
-                  onChangeText={(text) => setValue(text)}
-                  keyboardType="number-pad"
-                  placeholder="0"
-                  // label={"Distance travelled"}
-                  border={true}
-                  value={bikeDetail.value}
-                />
-              </View>
-              <View style={tw`w-1/4`}>
-                <DropdownSelect
-                  options={[
-                    { label: "Km", value: "km" },
-                    { label: "Mile", value: "mile" },
-                  ]}
-                  onSelect={setUnit}
-                  value={bikeDetail.unit}
-                />
-              </View>
-              <View style={tw`w-1/3`}>
-                <DropdownSelect
-                  options={[
-                    { label: "Monthly", value: "monthly" },
-                    { label: "Yearly", value: "yearly" },
-                  ]}
-                  onSelect={setPeriod}
-                  value={bikeDetail.period}
-                  placeholder="Period"
-                />
-              </View>
-            </View>
           </View>
-          <View style={tw`w-full flex flex-row justify-end py-4`}>
-            <View style={tw` w-1/2`}>
-              <Button
-                onPress={addBikeList}
-                style={tw`text-[9px]`}
-                height="33"
-                text={"Add another"}
-                icon={"add-circle-outline"}
-              />
-            </View>
+        ))}
+
+        <BikeQuestionForm
+          setPeriod={setPeriod}
+          setSize={setSize}
+          setUnit={setUnit}
+          setValue={setValue}
+          value={bikeDetail.value}
+          period={bikeDetail.period}
+          unit={bikeDetail.unit}
+          size={bikeDetail.size}
+          allowPeriod={true}
+        />
+        <View style={tw`w-full flex flex-row justify-end py-4`}>
+          <View style={tw` w-1/2`}>
+            <Button
+              onPress={addBikeList}
+              style={tw`text-[9px]`}
+              height="33"
+              text={"Add another"}
+              icon={"add-circle-outline"}
+            />
           </View>
-          <Text style={tw`text-red-500 py-2 `}>{errMsg}</Text>
         </View>
+        <Text style={tw`text-red-500 py-2 `}>{errMsg}</Text>
       </View>
-    </AviodKeyBoardViewWrapper>
+    </View>
   );
 }

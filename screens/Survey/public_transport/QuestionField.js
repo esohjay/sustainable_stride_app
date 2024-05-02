@@ -12,6 +12,7 @@ export default function QuestionField({
   dropdownPeriodValue,
   setPeriod,
   dropdownUnitValue,
+  allowPeriod,
 }) {
   return (
     <View style={tw`flex flex-row items-end gap-x-3`}>
@@ -36,18 +37,20 @@ export default function QuestionField({
           onSelectArg={field}
         />
       </View>
-      <View style={tw`w-1/3`}>
-        <DropdownSelect
-          options={[
-            { label: "Monthly", value: "monthly" },
-            { label: "Yearly", value: "yearly" },
-          ]}
-          onSelect={setPeriod}
-          placeholder="Period"
-          value={dropdownPeriodValue}
-          onSelectArg={field}
-        />
-      </View>
+      {allowPeriod && (
+        <View style={tw`w-1/3`}>
+          <DropdownSelect
+            options={[
+              { label: "Monthly", value: "monthly" },
+              { label: "Yearly", value: "yearly" },
+            ]}
+            onSelect={setPeriod}
+            placeholder="Period"
+            value={dropdownPeriodValue}
+            onSelectArg={field}
+          />
+        </View>
+      )}
     </View>
   );
 }

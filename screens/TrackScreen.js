@@ -6,9 +6,15 @@ import { CustomScrollView } from "../context/providers/ScrollContext";
 import { Button } from "../components/UI/Button";
 import TrackCategoryCard from "../components/TrackCategoryCard";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import TrackHomeForm from "../components/TrackHomeForm";
 import TrackModal from "../components/TrackModal";
 import { useTrackActions } from "../context/actions/track_actions";
+import {
+  shoppingOptions,
+  homeOptions,
+  foodAndDrinkOptions,
+} from "../lib/trackOptions";
+import TrackForm from "../components/TrackForm";
+import TrackTravel from "../components/TrackTravel";
 
 function TrackScreen() {
   const insets = useSafeAreaInsets();
@@ -120,7 +126,28 @@ function TrackScreen() {
           />
         </View>
         <TrackModal trackRef={homeRef} snapPoints={snapPoints}>
-          <TrackHomeForm addActivity={addActivity} />
+          <TrackForm
+            category={"home"}
+            options={homeOptions}
+            heading={"Emissions from activities in your home"}
+          />
+        </TrackModal>
+        <TrackModal trackRef={shoppingRef} snapPoints={snapPoints}>
+          <TrackForm
+            category={"shopping"}
+            options={shoppingOptions}
+            heading={"Emissions from expenses on lifestyle"}
+          />
+        </TrackModal>
+        <TrackModal trackRef={foodAndDrinkRef} snapPoints={snapPoints}>
+          <TrackForm
+            category={"foodAndDrink"}
+            options={foodAndDrinkOptions}
+            heading={"Emissions from food and drink consumption"}
+          />
+        </TrackModal>
+        <TrackModal trackRef={travelRef} snapPoints={snapPoints}>
+          <TrackTravel />
         </TrackModal>
       </View>
     </CustomScrollView>

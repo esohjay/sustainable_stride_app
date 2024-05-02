@@ -32,20 +32,20 @@ export default function App() {
   useDeviceContext(tw);
   return (
     <SafeAreaProvider>
-      <ScrollContextProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <BottomSheetModalProvider>
-            <StatusBar style="dark" />
-            <AuthProvider>
-              <SurveyProvider>
-                <TrackProvider>
+      <AuthProvider>
+        <SurveyProvider>
+          <TrackProvider>
+            <ScrollContextProvider>
+              <GestureHandlerRootView style={{ flex: 1 }}>
+                <BottomSheetModalProvider>
+                  <StatusBar style="dark" />
                   <RootStack />
-                </TrackProvider>
-              </SurveyProvider>
-            </AuthProvider>
-          </BottomSheetModalProvider>
-        </GestureHandlerRootView>
-      </ScrollContextProvider>
+                </BottomSheetModalProvider>
+              </GestureHandlerRootView>
+            </ScrollContextProvider>
+          </TrackProvider>
+        </SurveyProvider>
+      </AuthProvider>
     </SafeAreaProvider>
   );
 }
