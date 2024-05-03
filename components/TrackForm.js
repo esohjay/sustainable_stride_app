@@ -33,6 +33,8 @@ export default function TrackForm({ options, category, heading }) {
       return () => clearTimeout(timeoutId);
     }
   }, [state.activityAdded]);
+  console.log(state?.activity);
+
   const onSubmit = (data) => {
     addActivity({ ...data, category });
     reset();

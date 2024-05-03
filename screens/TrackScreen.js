@@ -8,6 +8,7 @@ import TrackCategoryCard from "../components/TrackCategoryCard";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import TrackModal from "../components/TrackModal";
 import { useTrackActions } from "../context/actions/track_actions";
+import { useTrackContext } from "../context/providers/TrackProvider";
 import {
   shoppingOptions,
   homeOptions,
@@ -17,19 +18,63 @@ import TrackForm from "../components/TrackForm";
 import TrackTravel from "../components/TrackTravel";
 
 function TrackScreen() {
-  const insets = useSafeAreaInsets();
-  const { addActivity } = useTrackActions();
+  const { state } = useTrackContext();
+  const { activityList, fetchingActivity, activityFetched } = state;
+  const [totalEmission, setTotalEmission] = useState(0);
+  const [categories, setCategories] = useState({
+    home: { sum: 0, data: [] },
+    foodAndDrink: { sum: 0, data: [] },
+    travel: { sum: 0, data: [] },
+    shopping: { sum: 0, data: [] },
+  });
+  const { getActivity } = useTrackActions();
   const snapPoints = useMemo(() => ["80%"], []);
 
   const homeRef = useRef(null);
   const shoppingRef = useRef(null);
   const foodAndDrinkRef = useRef(null);
   const travelRef = useRef(null);
+  const homeListRef = useRef(null);
+  const shoppingListRef = useRef(null);
+  const foodAndDrinkListRef = useRef(null);
+  const travelListRef = useRef(null);
 
   function handleShowModal(ref) {
     ref?.present();
   }
 
+  useEffect(() => {
+    if (!activityFetched) {
+      getActivity();
+    }
+  }, [activityFetched]);
+  const sumEmission = (category) => {
+    return category.reduce(
+      (accumulator, categoryData) => accumulator + categoryData.emission,
+      0
+    );
+  };
+  useEffect(() => {
+    if (activityFetched && activityList) {
+      const { travel, home, foodAndDrink, shopping } = activityList;
+      setCategories({
+        home: { data: home, sum: sumEmission(home).toFixed(2) },
+        travel: { data: travel, sum: sumEmission(travel).toFixed(2) },
+        shopping: { data: shopping, sum: sumEmission(shopping).toFixed(2) },
+        foodAndDrink: {
+          data: foodAndDrink,
+          sum: sumEmission(foodAndDrink).toFixed(2),
+        },
+      });
+      setTotalEmission(
+        sumEmission(home) +
+          sumEmission(travel) +
+          sumEmission(foodAndDrink) +
+          sumEmission(shopping)
+      );
+    }
+  }, [activityFetched]);
+  console.log(categories);
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="track">
       <View style={tw`p-5`}>
@@ -56,7 +101,8 @@ function TrackScreen() {
                   style={tw`h-[130px] w-[130px] flex justify-center items-center rounded-full border-[3px] border-altColor`}
                 >
                   <Text style={tw`font-semibold text-lg text-primaryLight`}>
-                    2,0987kg
+                    {totalEmission.toFixed(2)}
+                    kg
                   </Text>
                   <Text style={tw`text-primaryLight font-medium`}>
                     <Text style={tw`text-base `}>of C0</Text>
@@ -94,35 +140,39 @@ function TrackScreen() {
         <View style={tw`flex flex-row gap-4 flex-wrap w-full`}>
           <TrackCategoryCard
             category={"Home"}
-            value={"22"}
+            value={categories.home.sum}
             bgUrl={
               "https://cdn.pixabay.com/photo/2022/10/03/23/41/house-7497001_1280.png"
             }
-            handlePress={() => handleShowModal(homeRef.current)}
+            handleAddBtn={() => handleShowModal(homeRef.current)}
+            handleListBtn={() => handleShowModal(homeListRef.current)}
           />
           <TrackCategoryCard
             category={"Travel"}
-            value={"489"}
+            value={categories.travel.sum}
             bgUrl={
               "https://cdn.pixabay.com/photo/2012/10/10/05/04/train-60539_1280.jpg"
             }
-            handlePress={() => handleShowModal(travelRef.current)}
+            handleAddBtn={() => handleShowModal(travelRef.current)}
+            handleListBtn={() => handleShowModal(travelListRef.current)}
           />
           <TrackCategoryCard
             category={"Food & Drink"}
-            value={"0.00"}
+            value={categories.foodAndDrink.sum}
             bgUrl={
               "https://cdn.pixabay.com/photo/2015/12/09/17/11/vegetables-1085063_1280.jpg"
             }
-            handlePress={() => handleShowModal(foodAndDrinkRef.current)}
+            handleAddBtn={() => handleShowModal(foodAndDrinkRef.current)}
+            handleListBtn={() => handleShowModal(foodAndDrinkListRef.current)}
           />
           <TrackCategoryCard
             category={"Shopping"}
-            value={"789"}
+            value={categories.shopping.sum}
             bgUrl={
               "https://cdn.pixabay.com/photo/2020/03/27/17/03/shopping-4974313_1280.jpg"
             }
-            handlePress={() => handleShowModal(shoppingRef.current)}
+            handleAddBtn={() => handleShowModal(shoppingRef.current)}
+            handleListBtn={() => handleShowModal(shoppingListRef.current)}
           />
         </View>
         <TrackModal trackRef={homeRef} snapPoints={snapPoints}>

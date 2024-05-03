@@ -6,9 +6,12 @@ const TrackContext = createContext();
 
 const initialState = {
   activityAdded: false,
+  activityFetched: false,
   activity: null,
+  activityList: null,
   activityError: null,
   addingActivity: false,
+  fetchingActivity: false,
 };
 const TrackProvider = ({ children }) => {
   const [state, dispatch] = useReducer(TrackReducer, initialState);

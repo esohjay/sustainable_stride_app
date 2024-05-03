@@ -1,8 +1,10 @@
 import {
   ADD_ACTIVITY_FAIL,
   ADD_ACTIVITY_REQUEST,
-  CREATE_SURVEY_RESET,
   ADD_ACTIVITY_SUCCESS,
+  GET_ACTIVITY_FAIL,
+  GET_ACTIVITY_REQUEST,
+  GET_ACTIVITY_SUCCESS,
 } from "../constants/track_constants";
 
 import { useTrackContext } from "../providers/TrackProvider";
@@ -67,8 +69,32 @@ export const useTrackActions = () => {
       dispatch({ type: ADD_ACTIVITY_FAIL, payload: message });
     }
   };
+  const getActivity = async () => {
+    try {
+      dispatch({ type: GET_ACTIVITY_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/track`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      dispatch({ type: GET_ACTIVITY_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      console.log(error);
+      dispatch({ type: GET_ACTIVITY_FAIL, payload: message });
+    }
+  };
   return {
     addActivity,
     addTravelActivity,
+    getActivity,
   };
 };
