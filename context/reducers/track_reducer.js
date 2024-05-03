@@ -40,7 +40,7 @@ export const TrackReducer = (state, action) => {
       return {
         ...state,
         activityAdded: false,
-        // activity: null,
+        activity: null,
         activityError: null,
         addingActivity: false,
       };

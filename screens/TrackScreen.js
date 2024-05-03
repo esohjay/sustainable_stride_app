@@ -16,10 +16,17 @@ import {
 } from "../lib/trackOptions";
 import TrackForm from "../components/TrackForm";
 import TrackTravel from "../components/TrackTravel";
+import ActivityList from "../components/ActivityList";
 
 function TrackScreen() {
   const { state } = useTrackContext();
-  const { activityList, fetchingActivity, activityFetched } = state;
+  const {
+    activityList,
+    fetchingActivity,
+    activityFetched,
+    activityAdded,
+    activity,
+  } = state;
   const [totalEmission, setTotalEmission] = useState(0);
   const [categories, setCategories] = useState({
     home: { sum: 0, data: [] },
@@ -29,6 +36,7 @@ function TrackScreen() {
   });
   const { getActivity } = useTrackActions();
   const snapPoints = useMemo(() => ["80%"], []);
+  const listSnapPoints = useMemo(() => ["65%", "80%", "95%"], []);
 
   const homeRef = useRef(null);
   const shoppingRef = useRef(null);
@@ -58,12 +66,15 @@ function TrackScreen() {
     if (activityFetched && activityList) {
       const { travel, home, foodAndDrink, shopping } = activityList;
       setCategories({
-        home: { data: home, sum: sumEmission(home).toFixed(2) },
-        travel: { data: travel, sum: sumEmission(travel).toFixed(2) },
-        shopping: { data: shopping, sum: sumEmission(shopping).toFixed(2) },
+        home: { data: home, sum: Number(sumEmission(home).toFixed(2)) },
+        travel: { data: travel, sum: Number(sumEmission(travel).toFixed(2)) },
+        shopping: {
+          data: shopping,
+          sum: Number(sumEmission(shopping).toFixed(2)),
+        },
         foodAndDrink: {
           data: foodAndDrink,
-          sum: sumEmission(foodAndDrink).toFixed(2),
+          sum: Number(sumEmission(foodAndDrink).toFixed(2)),
         },
       });
       setTotalEmission(
@@ -74,7 +85,30 @@ function TrackScreen() {
       );
     }
   }, [activityFetched]);
-  console.log(categories);
+
+  useEffect(() => {
+    if (activityAdded && activity) {
+      const { category } = activity.data;
+      const newArray = [activity.data, ...categories[category].data];
+      setCategories({
+        ...categories,
+        [category]: {
+          data: newArray,
+          sum: Number(sumEmission(newArray).toFixed(2)),
+        },
+      });
+    }
+  }, [activityAdded, activity]);
+  // update total emission
+  useEffect(() => {
+    setTotalEmission(
+      categories.foodAndDrink.sum +
+        categories.home.sum +
+        categories.shopping.sum +
+        categories.travel.sum
+    );
+  }, [categories]);
+  console.log(activity);
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="track">
       <View style={tw`p-5`}>
@@ -101,7 +135,7 @@ function TrackScreen() {
                   style={tw`h-[130px] w-[130px] flex justify-center items-center rounded-full border-[3px] border-altColor`}
                 >
                   <Text style={tw`font-semibold text-lg text-primaryLight`}>
-                    {totalEmission.toFixed(2)}
+                    {totalEmission}
                     kg
                   </Text>
                   <Text style={tw`text-primaryLight font-medium`}>
@@ -123,17 +157,11 @@ function TrackScreen() {
               }}
             />
             <View
-              style={tw`h-full w-full flex flex-row justify-between items-center p-3 rounded-lg bg-black bg-opacity-60`}
+              style={tw`h-full w-full flex flex-row justify-center items-center p-3 rounded-lg bg-black bg-opacity-60`}
             >
               <Text style={tw`text-primaryLight font-bold text-base `}>
-                View your activities
+                Record and view your activities under each category
               </Text>
-
-              <Button
-                text={"View"}
-                icon={"chevron-forward-outline"}
-                variant="light"
-              />
             </View>
           </View>
         </View>
@@ -198,6 +226,55 @@ function TrackScreen() {
         </TrackModal>
         <TrackModal trackRef={travelRef} snapPoints={snapPoints}>
           <TrackTravel />
+        </TrackModal>
+        {/* Activity Lists */}
+        <TrackModal
+          trackRef={homeListRef}
+          snapPoints={listSnapPoints}
+          bg="rgb(249, 250, 251)"
+          index={2}
+        >
+          <ActivityList
+            sliderData={categories.home.data}
+            heading={"Home activities"}
+            total={categories.home.sum}
+          />
+        </TrackModal>
+        <TrackModal
+          trackRef={shoppingListRef}
+          snapPoints={listSnapPoints}
+          bg="rgb(249, 250, 251)"
+          index={2}
+        >
+          <ActivityList
+            sliderData={categories.shopping.data}
+            heading={"Shopping activities"}
+            total={categories.shopping.sum}
+          />
+        </TrackModal>
+        <TrackModal
+          trackRef={travelListRef}
+          snapPoints={listSnapPoints}
+          bg="rgb(249, 250, 251)"
+          index={2}
+        >
+          <ActivityList
+            sliderData={categories.travel.data}
+            heading={"Travel activities"}
+            total={categories.travel.sum}
+          />
+        </TrackModal>
+        <TrackModal
+          trackRef={foodAndDrinkListRef}
+          snapPoints={listSnapPoints}
+          bg="rgb(249, 250, 251)"
+          index={2}
+        >
+          <ActivityList
+            sliderData={categories.foodAndDrink.data}
+            heading={"Activities related to food and drinks"}
+            total={categories.foodAndDrink.sum}
+          />
         </TrackModal>
       </View>
     </CustomScrollView>
