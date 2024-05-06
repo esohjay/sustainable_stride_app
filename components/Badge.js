@@ -1,8 +1,14 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import tw from "../lib/tailwind";
 
-export const Badge = ({ variant = "default", text, style, ...props }) => {
+export const Badge = ({
+  variant = "default",
+  text,
+  style,
+  textStyle,
+  ...props
+}) => {
   const variants = {
     default: {
       container: tw`bg-gray-100`,
@@ -20,10 +26,22 @@ export const Badge = ({ variant = "default", text, style, ...props }) => {
       container: tw`bg-red-700`,
       text: tw`text-red-50`,
     },
+    pink: {
+      container: tw`bg-pink-700`,
+      text: tw`text-pink-50`,
+    },
+    orange: {
+      container: tw`bg-orange-700`,
+      text: tw`text-orange-50`,
+    },
+    purple: {
+      container: tw`bg-purple-700`,
+      text: tw`text-purple-50`,
+    },
   };
 
   return (
-    <View
+    <Pressable
       {...props}
       style={[
         tw`h-6 px-3 justify-center rounded-lg`,
@@ -31,9 +49,9 @@ export const Badge = ({ variant = "default", text, style, ...props }) => {
         style,
       ]}
     >
-      <Text style={[tw`text-xs font-bold`, variants[variant].text]}>
+      <Text style={[tw`text-xs font-bold`, variants[variant].text, textStyle]}>
         {text}
       </Text>
-    </View>
+    </Pressable>
   );
 };

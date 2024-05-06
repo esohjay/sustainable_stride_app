@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo, useRef, useEffect, useState } from "react";
 import { View, Text, FlatList } from "react-native";
 import tw from "../lib/tailwind";
 import { CustomScrollView } from "../context/providers/ScrollContext";
@@ -8,47 +8,31 @@ import { Button } from "../components/UI/Button";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import MyActionCard from "../components/MyActionCard";
 import ActionCard from "../components/ActionCard";
+import ActionsList from "../components/ActionsList";
+import { onSnapshot, doc } from "firebase/firestore";
+import { useAuthContext } from "../context/providers/AuthProvider";
+import { db } from "../lib/firebaseConfig";
 
 function ActScreen({ navigation }) {
+  const { state } = useAuthContext();
+  const [actions, setActions] = useState(null);
   const snapPoints = useMemo(() => ["35%", "70%", "95%"], []);
   const bottomSheetRef = useRef(null);
   function handlePresentModal() {
     bottomSheetRef.current?.present();
   }
-  const sliderData = [
-    {
-      description:
-        "Calculate your houdehold carbon emission by answering few questions.",
-      title: "Change to LED buld",
-      category: "Electricity",
-      sdg: "SDG 6",
-      id: "2",
-    },
-    {
-      description:
-        "A splash screen, also known as a launch screen, is the first screen a user sees when they open your app.",
-      title: "Switch to reusable razor",
-      category: "Electricity",
-      sdg: "SDG 4",
-      id: "3",
-    },
-    {
-      description:
-        "Scrolls to the item at the specified index such that it is positioned in the viewable area",
-      title: "Recycle waste",
-      category: "Household",
-      sdg: "SDG 10",
-      id: "4",
-    },
-    {
-      description:
-        "Start or join campaigns that reduces carbon emissions in your area.",
-      title: "Take bus",
-      category: "Transport",
-      sdg: "SDG 8",
-      id: "1",
-    },
-  ];
+  console.log(state.user.id);
+  useEffect(() => {
+    const unsubscribe = onSnapshot(
+      doc(db, "actionLog", state.user.id),
+      (doc) => {
+        setActions(doc.data());
+        // console.log(doc.data(), "actionn");
+      }
+    );
+    return () => unsubscribe();
+  }, []);
+  // console.log(actions, "out");
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="act">
       <View style={tw`p-5`}>
@@ -59,19 +43,19 @@ function ActScreen({ navigation }) {
             text={"Actions taken"}
             icon={"earth"}
             bgColor={"#007200"}
-            value={12}
+            value={actions?.actions?.length}
           />
           <ActionStat
             text={"Points earned"}
             icon={"trophy"}
             bgColor={"#0d47a1"}
-            value={150}
+            value={actions?.pointsEarned}
           />
           <ActionStat
             text={"Carbon saved"}
             icon={"cloud"}
             bgColor={"#f5b700"}
-            value={"20kg"}
+            value={`${actions?.carbonSaved}kg`}
           />
         </View>
         <View>
@@ -96,7 +80,7 @@ function ActScreen({ navigation }) {
           />
         </View>
         <View style={tw`h-[1px] bg-gray-200 w-full`}></View>
-        <View style={tw`py-5 flex justify-between flex-row items-center`}>
+        <View style={tw`pt-5 pb-2 flex justify-between flex-row items-center`}>
           <Text style={tw`text-lg font-bold text-mainColor`}>Actions</Text>
           <Text
             style={[tw`text-secondaryAlt text-base font-normal`]}
@@ -105,19 +89,11 @@ function ActScreen({ navigation }) {
             See all
           </Text>
         </View>
-        <View style={tw`flex  items-center gap-y-3`}>
-          <FlatList
-            horizontal
-            data={sliderData}
-            ItemSeparatorComponent={() => (
-              <View style={{ height: 10, width: 8 }}></View>
-            )}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => <ActionCard data={item} />}
-            keyExtractor={(item) => item.id}
-          />
+        <ActionsList />
+        <View style={tw`py-3 flex items-center`}>
           <Button
             text={"See all actions"}
+            style={tw`w-2/3`}
             onPress={() => navigation.navigate("AllActions")}
           />
         </View>

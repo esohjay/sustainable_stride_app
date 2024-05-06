@@ -7,7 +7,7 @@ import { CustomScrollView } from "../context/providers/ScrollContext";
 import tw from "../lib/tailwind";
 import { useAuthActions } from "../context/actions/auth_actions";
 import AchievementStat from "../components/AchievementStat";
-import ActionList from "../components/ActionList";
+import ActionsList from "../components/ActionsList";
 import CampaignList from "../components/CampaignList";
 import { Button } from "../components/UI/Button";
 import { Foundation } from "@expo/vector-icons";
@@ -155,14 +155,14 @@ function HomeScreen({ navigation }) {
       </View> */}
       <View style={tw`py-2`}>
         <View
-          style={tw`flex flex-row items-center justify-between mb-5 w-full`}
+          style={tw`flex flex-row items-center justify-between mb-1 w-full`}
         >
           <Text style={tw`text-mainColor font-bold text-xl`}>Actions</Text>
           <Text style={[tw`text-secondaryAlt text-base font-normal`]}>
             See all
           </Text>
         </View>
-        <ActionList />
+        <ActionsList />
       </View>
       <View style={tw`mb-7`}>
         <View style={tw`w-full h-44 rounded-lg relative bg-white shadow`}>

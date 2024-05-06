@@ -1,15 +1,30 @@
-import React, { useMemo, useRef, useEffect } from "react";
-import { View, Text, FlatList, Pressable } from "react-native";
+import React, { useMemo, useRef, useEffect, useState } from "react";
+import { View, Text, ScrollView, Pressable } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import tw from "../lib/tailwind";
 import ActionCard from "../components/ActionCard";
 import SearchAction from "../components/SearchActions";
 import { Ionicons } from "@expo/vector-icons";
+import ActionsList from "../components/ActionsList";
+import { Button } from "../components/UI/Button";
+import { useActionActions } from "../context/actions/action_actions";
+import { useActionContext } from "../context/providers/ActionProvider";
+import AllActions from "../components/AllAction";
+import { Badge } from "../components/Badge";
 
+const categories = ["energy", "shopping", "food", "travel"];
 export default function AllActionsScreen({ navigation }) {
+  const { getActions } = useActionActions();
+  const { state } = useActionContext();
   const snapPoints = useMemo(() => ["90%"], []);
   const bottomSheetRef = useRef(null);
-
+  const [currentCategory, setCurrentCategory] = useState(categories[0]);
+  const [actionsCategories, setActionsCategories] = useState({
+    food: null,
+    energy: null,
+    travel: null,
+    shopping: null,
+  });
   function handlePresentModal() {
     bottomSheetRef.current?.present();
   }
@@ -22,51 +37,34 @@ export default function AllActionsScreen({ navigation }) {
       ),
     });
   }, [navigation]);
-  const sliderData = [
-    {
-      description:
-        "Calculate your houdehold carbon emission by answering few questions.",
-      title: "Change to LED buld",
-      category: "Electricity",
-      sdg: "SDG 6",
-      id: "2",
-    },
-    {
-      description:
-        "A splash screen, also known as a launch screen, is the first screen a user sees when they open your app.",
-      title: "Switch to reusable razor",
-      category: "Electricity",
-      sdg: "SDG 4",
-      id: "3",
-    },
-    {
-      description:
-        "Scrolls to the item at the specified index such that it is positioned in the viewable area",
-      title: "Recycle waste",
-      category: "Household",
-      sdg: "SDG 10",
-      id: "4",
-    },
-    {
-      description:
-        "Start or join campaigns that reduces carbon emissions in your area.",
-      title: "Take bus",
-      category: "Transport",
-      sdg: "SDG 8",
-      id: "1",
-    },
-  ];
+
+  useEffect(() => {
+    if (!state.actionList) {
+      getActions();
+    }
+  }, [state.actionList]);
+  useEffect(() => {
+    if (state.actionList) {
+      const actionData = {};
+      for (const category of categories) {
+        const filtered = state.actionList.filter(
+          (action) => action.category === category
+        );
+        actionData[category] = filtered;
+      }
+      setActionsCategories(actionData);
+    }
+  }, [state.actionList]);
+
   return (
-    <View style={tw`flex bg-gray-50  items-center gap-y-3 p-5`}>
-      <FlatList
-        data={sliderData}
-        ItemSeparatorComponent={() => (
-          <View style={{ height: 16, width: 8 }}></View>
-        )}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => <ActionCard data={item} isFullWidth={true} />}
-        keyExtractor={(item) => item.id}
+    <View style={tw`flex bg-gray-50  p-5 flex-1`}>
+      <AllActions
+        categories={categories}
+        currentCategory={currentCategory}
+        setCurrentCategory={setCurrentCategory}
+        filteredActions={actionsCategories[currentCategory]}
       />
+
       <BottomSheetModal
         ref={bottomSheetRef}
         // index={1}

@@ -23,6 +23,7 @@ import SurveyScreen from "../screens/SurveryScreen";
 import SurveyHeader from "../components/Headers/SurveyHeader";
 import SurveyStack from "./SurveyStack";
 import AllActionsHeader from "../components/Headers/AllActionsHeader";
+import ActDetails from "../screens/ActDetails";
 // import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -156,6 +157,11 @@ function RootStack() {
                 },
                 headerLeft: () => <BackButton />,
               }}
+            />
+            <Stack.Screen
+              name="ActionDetails"
+              component={ActDetails}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="AllActions"

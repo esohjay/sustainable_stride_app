@@ -18,6 +18,7 @@ import ExpensesContextProvider from "./context/store";
 import { AuthProvider } from "./context/providers/AuthProvider";
 import { SurveyProvider } from "./context/providers/SurveyProvider";
 import { TrackProvider } from "./context/providers/TrackProvider";
+import { ActionProvider } from "./context/providers/ActionProvider";
 import HomeStack from "./navigation/AuthenticatedStack";
 import RootStack from "./navigation/RootStack";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -35,14 +36,16 @@ export default function App() {
       <AuthProvider>
         <SurveyProvider>
           <TrackProvider>
-            <ScrollContextProvider>
-              <GestureHandlerRootView style={{ flex: 1 }}>
-                <BottomSheetModalProvider>
-                  <StatusBar style="dark" />
-                  <RootStack />
-                </BottomSheetModalProvider>
-              </GestureHandlerRootView>
-            </ScrollContextProvider>
+            <ActionProvider>
+              <ScrollContextProvider>
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                  <BottomSheetModalProvider>
+                    <StatusBar style="dark" />
+                    <RootStack />
+                  </BottomSheetModalProvider>
+                </GestureHandlerRootView>
+              </ScrollContextProvider>
+            </ActionProvider>
           </TrackProvider>
         </SurveyProvider>
       </AuthProvider>
