@@ -104,11 +104,18 @@ function ActScreen({ navigation }) {
           style={tw`shadow-lg bg-white rounded-3xl`}
         >
           <View style={tw`p-5`}>
-            <MyActionCard />
-            <MyActionCard />
-            <MyActionCard />
-            <MyActionCard />
-            <MyActionCard />
+            <FlatList
+              data={actions?.actions}
+              // extraData={refresh}
+              ItemSeparatorComponent={() => (
+                <View style={{ height: 10, width: 8 }}></View>
+              )}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => {
+                return <MyActionCard data={item} />;
+              }}
+              keyExtractor={(item) => item.id}
+            />
           </View>
         </BottomSheetModal>
       </View>

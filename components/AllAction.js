@@ -12,7 +12,6 @@ export default function AllActions({
   currentCategory,
   setCurrentCategory,
 }) {
-  console.log(filteredActions);
   return (
     <View style={tw`flex  `}>
       <ActionCategoryBtn

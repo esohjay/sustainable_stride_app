@@ -3,7 +3,7 @@ import { View, Text, ScrollView, Pressable } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import tw from "../lib/tailwind";
 import ActionCard from "../components/ActionCard";
-import SearchAction from "../components/SearchActions";
+import SearchAction from "./SearchActionsScreen";
 import { Ionicons } from "@expo/vector-icons";
 import ActionsList from "../components/ActionsList";
 import { Button } from "../components/UI/Button";
@@ -31,7 +31,7 @@ export default function AllActionsScreen({ navigation }) {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Pressable onPress={handlePresentModal}>
+        <Pressable onPress={() => navigation.navigate("SearchAction")}>
           <Ionicons name={"search"} size={24} color="#7d4f50" />
         </Pressable>
       ),
