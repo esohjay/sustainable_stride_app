@@ -6,15 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import ScrollContextProvider from "./context/providers/ScrollContext";
 import tw from "./lib/tailwind";
 import { useDeviceContext } from "twrnc";
-import Landing from "./screens/Landing";
-import Register from "./screens/Register";
-import Login from "./screens/Login";
-import SplashScreen from "./screens/SplashScreen";
-
-import { useSurveryActions } from "./context/actions/survey_actions";
-import { useTrackActions } from "./context/actions/track_actions";
-import { useAppContext } from "./context/store";
-import ExpensesContextProvider from "./context/store";
+import { CampaignProvider } from "./context/providers/CampaignProvider";
 import { AuthProvider } from "./context/providers/AuthProvider";
 import { SurveyProvider } from "./context/providers/SurveyProvider";
 import { TrackProvider } from "./context/providers/TrackProvider";
@@ -37,14 +29,16 @@ export default function App() {
         <SurveyProvider>
           <TrackProvider>
             <ActionProvider>
-              <ScrollContextProvider>
-                <GestureHandlerRootView style={{ flex: 1 }}>
-                  <BottomSheetModalProvider>
-                    <StatusBar style="dark" />
-                    <RootStack />
-                  </BottomSheetModalProvider>
-                </GestureHandlerRootView>
-              </ScrollContextProvider>
+              <CampaignProvider>
+                <ScrollContextProvider>
+                  <GestureHandlerRootView style={{ flex: 1 }}>
+                    <BottomSheetModalProvider>
+                      <StatusBar style="dark" />
+                      <RootStack />
+                    </BottomSheetModalProvider>
+                  </GestureHandlerRootView>
+                </ScrollContextProvider>
+              </CampaignProvider>
             </ActionProvider>
           </TrackProvider>
         </SurveyProvider>
