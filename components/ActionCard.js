@@ -5,7 +5,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 function ActionCard({ data, isFullWidth = false }) {
-  console.log(data, "iii");
   const navigation = useNavigation();
   const { title, category, description, sdg, id, emission, point } = data;
   return (

@@ -15,6 +15,9 @@ import Header from "../components/Headers/Header";
 import EstimateHeader from "../components/Headers/EstimateHeader";
 import SearchCampaignHeader from "../components/Headers/SearchCampaignHeader";
 import SearchCampaignScreen from "../screens/SearchCampaignScreen";
+import AllCampaignsScreen from "../screens/AllCampaignsScreen";
+import SearchCampaign from "../screens/SearchCampaignScreen";
+import CampaignDetails from "../screens/CampaignDetails";
 import ProfileHeader from "../components/Headers/ProfileHeader";
 import BackButton from "../components/BackButton";
 import ProfileScreen from "../screens/ProfileScreen";
@@ -110,7 +113,7 @@ function RootStack() {
               component={AuthenticatedStack}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="SearchCampaign"
               component={SearchCampaignScreen}
               options={{
@@ -120,7 +123,7 @@ function RootStack() {
                   </Header>
                 ),
               }}
-            />
+            /> */}
             <Stack.Screen
               name="Estimate"
               component={EstimateScreen}
@@ -165,6 +168,11 @@ function RootStack() {
               options={{ headerShown: false }}
             />
             <Stack.Screen
+              name="CampaignDetails"
+              component={CampaignDetails}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
               name="SearchAction"
               component={SearchAction}
               options={{ headerShown: false }}
@@ -181,6 +189,27 @@ function RootStack() {
                 headerTitle: () => (
                   <Text style={tw`font-extrabold text-xl text-mainColor `}>
                     All actions
+                  </Text>
+                ),
+              }}
+            />
+            <Stack.Screen
+              name="SearchCampaign"
+              component={SearchCampaign}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="AllCampaigns"
+              component={AllCampaignsScreen}
+              options={{
+                headerTintColor: "#7d4f50",
+                headerTitleStyle: {
+                  fontWeight: "800",
+                },
+                headerLeft: () => <BackButton />,
+                headerTitle: () => (
+                  <Text style={tw`font-extrabold text-xl text-mainColor `}>
+                    All campaigns
                   </Text>
                 ),
               }}

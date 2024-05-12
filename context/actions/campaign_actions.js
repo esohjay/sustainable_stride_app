@@ -14,6 +14,9 @@ import {
   GET_JOINED_CAMPAIGN_FAIL,
   GET_JOINED_CAMPAIGN_REQUEST,
   GET_JOINED_CAMPAIGN_SUCCESS,
+  GET_CAMPAIGN_DETAILS_FAIL,
+  GET_CAMPAIGN_DETAILS_REQUEST,
+  GET_CAMPAIGN_DETAILS_SUCCESS,
 } from "../constants/campaign_constant";
 
 import { useCampaignContext } from "../providers/CampaignProvider";
@@ -54,12 +57,12 @@ export const useCampaignActions = () => {
       dispatch({ type: CREATE_CAMPAIGN_FAIL, payload: message });
     }
   };
-  const joinCampaign = async (campaignData) => {
+  const joinCampaign = async (campaignId) => {
     try {
       dispatch({ type: JOIN_CAMPAIGN_REQUEST });
       const token = await auth?.currentUser?.getIdToken();
       const response = await fetch(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaignData.id}/join`,
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaignId}/join`,
         {
           method: "PUT",
           headers: {
@@ -67,7 +70,7 @@ export const useCampaignActions = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(campaignData),
+          body: JSON.stringify({ campaignId }),
         }
       );
       const data = await response.json();
@@ -79,12 +82,12 @@ export const useCampaignActions = () => {
       dispatch({ type: JOIN_CAMPAIGN_FAIL, payload: message });
     }
   };
-  const leaveCampaign = async (campaignData) => {
+  const leaveCampaign = async (campaignId) => {
     try {
       dispatch({ type: LEAVE_CAMPAIGN_REQUEST });
       const token = await auth?.currentUser?.getIdToken();
       const response = await fetch(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaignData.id}/LEAVE`,
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaignId}/LEAVE`,
         {
           method: "PUT",
           headers: {
@@ -92,7 +95,7 @@ export const useCampaignActions = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(campaignData),
+          body: JSON.stringify({ campaignId }),
         }
       );
       const data = await response.json();
@@ -127,6 +130,29 @@ export const useCampaignActions = () => {
       dispatch({ type: GET_CAMPAIGN_FAIL, payload: message });
     }
   };
+  const getCampaign = async (campaignId) => {
+    try {
+      dispatch({ type: GET_CAMPAIGN_DETAILS_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaignId}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+      dispatch({ type: GET_CAMPAIGN_DETAILS_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      console.log(error);
+      dispatch({ type: GET_CAMPAIGN_DETAILS_FAIL, payload: message });
+    }
+  };
   const getJoinedCampaigns = async () => {
     try {
       dispatch({ type: GET_JOINED_CAMPAIGN_REQUEST });
@@ -156,5 +182,6 @@ export const useCampaignActions = () => {
     leaveCampaign,
     joinCampaign,
     getJoinedCampaigns,
+    getCampaign,
   };
 };

@@ -16,6 +16,11 @@ import {
   GET_JOINED_CAMPAIGN_FAIL,
   GET_JOINED_CAMPAIGN_REQUEST,
   GET_JOINED_CAMPAIGN_SUCCESS,
+  JOIN_CAMPAIGN_RESET,
+  LEAVE_CAMPAIGN_RESET,
+  GET_CAMPAIGN_DETAILS_FAIL,
+  GET_CAMPAIGN_DETAILS_REQUEST,
+  GET_CAMPAIGN_DETAILS_SUCCESS,
 } from "../constants/campaign_constant";
 
 export const CampaignReducer = (state, action) => {
@@ -27,7 +32,7 @@ export const CampaignReducer = (state, action) => {
         ...state,
         addingCampaign: false,
         campaignAdded: true,
-        campaign: action.payload,
+        // campaign: action.payload,
       };
     case CREATE_CAMPAIGN_FAIL:
       return { ...state, addingCampaign: false, campaignError: action.payload };
@@ -41,6 +46,26 @@ export const CampaignReducer = (state, action) => {
         campaignList: action.payload,
       };
     case GET_CAMPAIGN_FAIL:
+      return {
+        ...state,
+        fetchingCampaign: false,
+        campaignError: action.payload,
+      };
+    case GET_CAMPAIGN_DETAILS_REQUEST:
+      return {
+        ...state,
+        fetchingCampaign: true,
+        campaign: null,
+        campaignFetched: false,
+      };
+    case GET_CAMPAIGN_DETAILS_SUCCESS:
+      return {
+        ...state,
+        fetchingCampaign: false,
+        campaignFetched: true,
+        campaign: action.payload,
+      };
+    case GET_CAMPAIGN_DETAILS_FAIL:
       return {
         ...state,
         fetchingCampaign: false,
@@ -69,6 +94,11 @@ export const CampaignReducer = (state, action) => {
         joining: false,
         joined: true,
       };
+    case JOIN_CAMPAIGN_RESET:
+      return {
+        ...state,
+        joined: false,
+      };
     case JOIN_CAMPAIGN_FAIL:
       return {
         ...state,
@@ -82,6 +112,11 @@ export const CampaignReducer = (state, action) => {
         ...state,
         leaving: false,
         left: true,
+      };
+    case LEAVE_CAMPAIGN_RESET:
+      return {
+        ...state,
+        left: false,
       };
     case LEAVE_CAMPAIGN_FAIL:
       return {

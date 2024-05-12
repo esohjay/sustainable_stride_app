@@ -60,7 +60,7 @@ function CampaignScreen({ navigation }) {
             </Text>
             <Text
               style={[tw`text-secondaryAlt text-base font-normal`]}
-              onPress={() => navigation.navigate("AllActions")}
+              onPress={() => navigation.navigate("AllCampaigns")}
             >
               See all
             </Text>

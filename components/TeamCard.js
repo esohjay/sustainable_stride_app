@@ -4,17 +4,20 @@ import tw from "../lib/tailwind";
 import { Ionicons } from "@expo/vector-icons";
 import { Button } from "./UI/Button";
 import { useAuthContext } from "../context/providers/AuthProvider";
+import { useNavigation } from "@react-navigation/native";
 
 export default function TeamCard({ data, isFullWidth = true }) {
   const { state } = useAuthContext();
-  const { title, description, users } = data;
+  const navigation = useNavigation();
+  const { title, description, users, id } = data;
   const splitTitle = title.split(" ");
   const abbrev =
     splitTitle.length > 2
       ? `${splitTitle[0].charAt(0)}${splitTitle[1].charAt(0)}`
       : `${splitTitle[0].charAt(0)}${splitTitle[0].charAt(1)}`;
   return (
-    <View
+    <Pressable
+      onPress={() => navigation.navigate("CampaignDetails", { campaignId: id })}
       style={tw`${
         isFullWidth ? "w-full" : "w-[300px]"
       } bg-white flex justify-between gap-y-5 shadow rounded-lg p-5`}
@@ -49,6 +52,6 @@ export default function TeamCard({ data, isFullWidth = true }) {
           <Button text={"join"} icon={"add-circle"} />
         )}
       </View>
-    </View>
+    </Pressable>
   );
 }
