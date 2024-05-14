@@ -86,7 +86,7 @@ export default function CampaignForm() {
                 style={tw`p-3 border rounded-lg mb-3`}
                 placeholder="Enter campaign description"
                 multiline={true}
-                numberOfLines={5}
+                // numberOfLines={5}
               />
             </View>
           )}

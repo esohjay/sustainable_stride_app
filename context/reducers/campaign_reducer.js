@@ -21,6 +21,9 @@ import {
   GET_CAMPAIGN_DETAILS_FAIL,
   GET_CAMPAIGN_DETAILS_REQUEST,
   GET_CAMPAIGN_DETAILS_SUCCESS,
+  SEND_MESSAGE_FAIL,
+  SEND_MESSAGE_REQUEST,
+  SEND_MESSAGE_SUCCESS,
 } from "../constants/campaign_constant";
 
 export const CampaignReducer = (state, action) => {
@@ -122,6 +125,21 @@ export const CampaignReducer = (state, action) => {
       return {
         ...state,
         leaving: false,
+        campaignError: action.payload,
+      };
+    case SEND_MESSAGE_REQUEST:
+      return { ...state, sendingMessage: true };
+    case SEND_MESSAGE_SUCCESS:
+      return {
+        ...state,
+        sendingMessage: false,
+        messageSent: true,
+        message: action.payload,
+      };
+    case SEND_MESSAGE_FAIL:
+      return {
+        ...state,
+        sendingMessage: false,
         campaignError: action.payload,
       };
     case CREATE_CAMPAIGN_RESET:

@@ -13,8 +13,7 @@ import { auth } from "../lib/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import Header from "../components/Headers/Header";
 import EstimateHeader from "../components/Headers/EstimateHeader";
-import SearchCampaignHeader from "../components/Headers/SearchCampaignHeader";
-import SearchCampaignScreen from "../screens/SearchCampaignScreen";
+import Chat from "../screens/Chat";
 import AllCampaignsScreen from "../screens/AllCampaignsScreen";
 import SearchCampaign from "../screens/SearchCampaignScreen";
 import CampaignDetails from "../screens/CampaignDetails";
@@ -191,6 +190,17 @@ function RootStack() {
                     All actions
                   </Text>
                 ),
+              }}
+            />
+            <Stack.Screen
+              name="Chat"
+              component={Chat}
+              options={{
+                headerTintColor: "#7d4f50",
+                headerTitleStyle: {
+                  fontWeight: "800",
+                },
+                headerLeft: () => <BackButton />,
               }}
             />
             <Stack.Screen

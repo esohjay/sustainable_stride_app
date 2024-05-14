@@ -80,7 +80,7 @@ export default function SearchCampaign() {
         <View style={tw`flex flex-1  py-3`}>
           <FlatList
             data={filteredCampaigns}
-            extraData={filteredCampaigns?.length}
+            // extraData={filteredCampaigns?.length}
             ItemSeparatorComponent={() => (
               <View style={{ height: 10, width: 8 }}></View>
             )}

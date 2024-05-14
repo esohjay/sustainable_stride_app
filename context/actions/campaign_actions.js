@@ -17,6 +17,9 @@ import {
   GET_CAMPAIGN_DETAILS_FAIL,
   GET_CAMPAIGN_DETAILS_REQUEST,
   GET_CAMPAIGN_DETAILS_SUCCESS,
+  SEND_MESSAGE_FAIL,
+  SEND_MESSAGE_REQUEST,
+  SEND_MESSAGE_SUCCESS,
 } from "../constants/campaign_constant";
 
 import { useCampaignContext } from "../providers/CampaignProvider";
@@ -55,6 +58,31 @@ export const useCampaignActions = () => {
       const message = handleError(error);
       console.log(error);
       dispatch({ type: CREATE_CAMPAIGN_FAIL, payload: message });
+    }
+  };
+  const sendMessage = async (message) => {
+    try {
+      dispatch({ type: SEND_MESSAGE_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${message.id}/conversation`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(message),
+        }
+      );
+      const data = await response.json();
+      // const data = await response;
+      dispatch({ type: SEND_MESSAGE_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      console.log(error);
+      dispatch({ type: SEND_MESSAGE_FAIL, payload: message });
     }
   };
   const joinCampaign = async (campaignId) => {
@@ -183,5 +211,6 @@ export const useCampaignActions = () => {
     joinCampaign,
     getJoinedCampaigns,
     getCampaign,
+    sendMessage,
   };
 };

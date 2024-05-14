@@ -19,6 +19,9 @@ const initialState = {
   joining: false,
   left: false,
   leaving: false,
+  message: null,
+  sendingMessage: false,
+  messageSent: false,
 };
 const CampaignProvider = ({ children }) => {
   const [state, dispatch] = useReducer(CampaignReducer, initialState);

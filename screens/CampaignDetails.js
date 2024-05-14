@@ -2,14 +2,9 @@ import React, { useEffect, useState } from "react";
 import { ScrollView, View, Text } from "react-native";
 import tw from "../lib/tailwind";
 import BackButton from "../components/BackButton";
-import { useActionActions } from "../context/actions/action_actions";
-import { useActionContext } from "../context/providers/ActionProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { Badge } from "../components/Badge";
 import { Button } from "../components/UI/Button";
-import { getGoal } from "../lib/getSdg";
-import SdgCard from "../components/SdgCard";
 import {
   JOIN_CAMPAIGN_RESET,
   LEAVE_CAMPAIGN_RESET,
@@ -34,7 +29,6 @@ export default function CampaignDetails({ route, navigation }) {
     //   getCampaign(campaignId);
     // }
   }, []);
-  console.log(fetchingCampaign);
   useEffect(() => {
     if (left) {
       const timeoutId = setTimeout(() => {
@@ -139,10 +133,15 @@ export default function CampaignDetails({ route, navigation }) {
               <Button
                 style={tw`text-[9px] px-4`}
                 height="38"
-                text={"go to vhat"}
+                text={"go to chat"}
                 icon={"chatbubbles"}
-                //   isLoading={state.leaving}
-                //   onPress={() => leaveCampaign(campaignId)}
+                // isLoading={state.leaving}
+                onPress={() =>
+                  navigation.navigate("Chat", {
+                    title: campaign?.title,
+                    campaignId,
+                  })
+                }
                 variant="light"
               />
             </View>

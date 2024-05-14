@@ -48,9 +48,9 @@ export default function TeamCard({ data, isFullWidth = true }) {
           </Text>
           <Ionicons name={"people"} size={24} color="#7d4f50" />
         </View>
-        {!users.includes(state?.user?.id) && (
+        {/* {!users.includes(state?.user?.id) && (
           <Button text={"join"} icon={"add-circle"} />
-        )}
+        )} */}
       </View>
     </Pressable>
   );
