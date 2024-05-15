@@ -7,32 +7,62 @@ import { ProgressBar } from "../components/ProgressBar";
 import { Button } from "../components/UI/Button";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import MyActionCard from "../components/MyActionCard";
-import ActionCard from "../components/ActionCard";
 import ActionsList from "../components/ActionsList";
-import { onSnapshot, doc } from "firebase/firestore";
+import { onSnapshot, collection, orderBy, query } from "firebase/firestore";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { db } from "../lib/firebaseConfig";
+import { getPointTarget } from "../lib/helperFn";
 
 function ActScreen({ navigation }) {
   const { state } = useAuthContext();
-  const [actions, setActions] = useState(null);
+  const [actions, setActions] = useState([]);
+  const [pointDetails, setPointDetails] = useState(null);
+  const [actionSummary, setActionSummary] = useState({
+    pointsEarned: 0,
+    carbonSaved: 0,
+    actionTaken: 0,
+  });
   const snapPoints = useMemo(() => ["35%", "70%", "95%"], []);
   const bottomSheetRef = useRef(null);
   function handlePresentModal() {
     bottomSheetRef.current?.present();
   }
-  console.log(state.user.id);
   useEffect(() => {
-    const unsubscribe = onSnapshot(
-      doc(db, "actionLog", state.user.id),
-      (doc) => {
-        setActions(doc.data());
-        // console.log(doc.data(), "actionn");
-      }
+    const q = query(
+      collection(db, "profile", state.user.id, "action-log"),
+      orderBy("timestamp")
     );
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const fetchedMessages = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setActions(fetchedMessages);
+    });
     return () => unsubscribe();
   }, []);
-  // console.log(actions, "out");
+  useEffect(() => {
+    if (actions) {
+      let carbonSaved = 0;
+      let pointsEarned = 0;
+      const actionTaken = actions.length;
+      for (let action of actions) {
+        pointsEarned += action.pointsEarned;
+        carbonSaved += action.carbonSaved;
+      }
+      setActionSummary({
+        carbonSaved,
+        pointsEarned,
+        actionTaken,
+      });
+    }
+  }, [actions]);
+  useEffect(() => {
+    if (actionSummary) {
+      setPointDetails(getPointTarget(actionSummary.pointsEarned));
+    }
+  }, [actionSummary]);
+
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="act">
       <View style={tw`p-5`}>
@@ -43,36 +73,40 @@ function ActScreen({ navigation }) {
             text={"Actions taken"}
             icon={"earth"}
             bgColor={"#007200"}
-            value={actions?.actions?.length}
+            value={actionSummary.actionTaken}
           />
           <ActionStat
             text={"Points earned"}
             icon={"trophy"}
             bgColor={"#0d47a1"}
-            value={actions?.pointsEarned}
+            value={actionSummary.pointsEarned}
           />
           <ActionStat
             text={"Carbon saved"}
             icon={"cloud"}
             bgColor={"#f5b700"}
-            value={`${actions?.carbonSaved}kg`}
+            value={`${actionSummary.carbonSaved}kg`}
           />
         </View>
-        <View>
-          <ProgressBar progress={30} />
-          <View style={tw`flex flex-row justify-between items-center`}>
-            <Text style={tw`text-xs font-medium text-dark`}>
-              Achieve 50 more points to leavel up!
-            </Text>
-            <Text style={tw`text-xs font-medium text-green-500`}>150/200</Text>
+        {pointDetails && (
+          <View>
+            <ProgressBar progress={pointDetails.percentage} />
+            <View style={tw`flex flex-row justify-between items-center`}>
+              <Text style={tw`text-xs font-medium text-dark`}>
+                Achieve {pointDetails.remainder} more points to leavel up!
+              </Text>
+              <Text style={tw`text-xs font-medium text-green-500`}>
+                {actionSummary.pointsEarned}/{pointDetails.target}
+              </Text>
+            </View>
           </View>
-        </View>
+        )}
 
         <View style={tw`flex items-start gap-y-3 py-5`}>
           <Text style={tw`text-lg font-bold text-mainColor`}>
             Recent action
           </Text>
-          <MyActionCard />
+          {actions.length > 0 && <MyActionCard data={actions[0]} />}
           <Button
             text={"See my actions"}
             variant="light"
@@ -105,7 +139,7 @@ function ActScreen({ navigation }) {
         >
           <View style={tw`p-5`}>
             <FlatList
-              data={actions?.actions}
+              data={actions.length && actions}
               // extraData={refresh}
               ItemSeparatorComponent={() => (
                 <View style={{ height: 10, width: 8 }}></View>

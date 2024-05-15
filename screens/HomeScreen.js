@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { View, Text, Image, StyleSheet, Pressable } from "react-native";
+import { useEffect, useCallback } from "react";
+import { View, Text, Image, StyleSheet, Linking, Alert } from "react-native";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
@@ -11,9 +11,11 @@ import ActionsList from "../components/ActionsList";
 import CampaignList from "../components/CampaignList";
 import { Button } from "../components/UI/Button";
 import { Foundation } from "@expo/vector-icons";
+import useShareHandler from "../lib/useShareHandler";
 
 function HomeScreen({ navigation }) {
   const insets = useSafeAreaInsets();
+  const onShare = useShareHandler();
   const { getProfile } = useAuthActions();
   const { state } = useAuthContext();
   const { profile } = state;
@@ -22,8 +24,23 @@ function HomeScreen({ navigation }) {
       getProfile();
     }
   }, [profile]);
-  console.log(state);
-  console.log(profile);
+  const handleOpenLink = useCallback(async () => {
+    // Checking if the link is supported for links with custom URL scheme.
+    const supported = await Linking.canOpenURL(
+      "https://greenspace-explorer.vercel.app/"
+    );
+
+    if (supported) {
+      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+      // by some browser in the mobile
+      await Linking.openURL("https://greenspace-explorer.vercel.app/");
+    } else {
+      Alert.alert(
+        `Don't know how to open this URL: https://greenspace-explorer.vercel.app/`
+      );
+    }
+  }, []);
+
   return (
     <CustomScrollView
       style={tw`bg-gray-50 p-5 pb-[${insets.bottom}]`}
@@ -93,15 +110,18 @@ function HomeScreen({ navigation }) {
         )}
       </View>
       <View style={tw`py-3`}>
-        <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>
-          Nearby campaigns
-        </Text>
+        <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>Campaigns</Text>
         <CampaignList />
         <View style={tw`h-[1px] bg-altColor w-full my-3`}></View>
         <Text style={tw`text-dark font-medium mb-1`}>
           Want to start a campaign?
         </Text>
-        <Text style={tw`text-base font-semibold text-dark`}>Add campaign</Text>
+        <Text
+          onPress={() => navigation.navigate("Campaign")}
+          style={tw`text-base font-semibold text-dark`}
+        >
+          Start campaign
+        </Text>
       </View>
       {/* <View style={tw`relative py-3`}>
         <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>
@@ -184,7 +204,12 @@ function HomeScreen({ navigation }) {
             >
               Regular visits to greenspaces improves your mental health.
             </Text>
-            <Button text={"Explore"} icon={"rocket"} variant="light" />
+            <Button
+              text={"Explore"}
+              icon={"rocket"}
+              variant="light"
+              onPress={handleOpenLink}
+            />
           </View>
         </View>
       </View>
@@ -196,7 +221,7 @@ function HomeScreen({ navigation }) {
           <Text style={tw` font-medium mb-2 text-mainColor`}>
             Make a big impact by helping others reduce their carbon emission.
           </Text>
-          <Button text={"Invite friends"} />
+          <Button text={"Invite friends"} onPress={onShare} />
         </View>
       </View>
     </CustomScrollView>

@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import tw from "../lib/tailwind";
 import CampignCard from "./CampignCard";
+import { useCampaignActions } from "../context/actions/campaign_actions";
+import { useCampaignContext } from "../context/providers/CampaignProvider";
 
 function CampaignList() {
+  const { getCampaigns } = useCampaignActions();
+  const { state } = useCampaignContext();
+  useEffect(() => {
+    if (!state.campaignList) {
+      getCampaigns();
+    }
+  }, [state.campaignList]);
   const sliderData = [
     {
       imgUrl:
@@ -59,13 +68,9 @@ function CampaignList() {
       >
         <View style={tw`flex flex-row gap-x-3`}>
           {[
-            sliderData.map((cardData, index) => (
-              <CampignCard
-                text={cardData.text}
-                imgUrl={cardData.imgUrl}
-                key={index}
-              />
-            )),
+            state?.campaignList?.map((data, i) => {
+              if (i < 5) return <CampignCard data={data} key={data.id} />;
+            }),
           ]}
         </View>
       </ScrollView>

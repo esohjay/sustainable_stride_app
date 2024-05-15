@@ -100,7 +100,7 @@ export default function SearchAction() {
         <View style={tw`flex flex-1  py-3`}>
           <FlatList
             data={filteredActions}
-            extraData={filteredActions?.length}
+            // extraData={filteredActions?.length}
             ItemSeparatorComponent={() => (
               <View style={{ height: 10, width: 8 }}></View>
             )}
