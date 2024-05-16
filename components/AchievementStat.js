@@ -12,8 +12,8 @@ function AchievementStat({ icon, stat, type }) {
         <Ionicons name={icon} size={24} color="#7d4f50" />
       </View>
       <View style={tw``}>
-        <Text style={tw`text-xl font-semibold text-dark`}>{stat}</Text>
-        <Text style={tw`font-medium text-dark`}>{type}</Text>
+        <Text style={tw`text-base font-semibold text-dark`}>{stat}</Text>
+        <Text style={tw`font-medium text-xs text-dark`}>{type}</Text>
       </View>
     </View>
   );

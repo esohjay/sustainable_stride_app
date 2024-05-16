@@ -5,16 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { Button } from "./UI/Button";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
+import TextAbbrevavtion from "./TextAbbrevavtion";
 
 export default function TeamCard({ data, isFullWidth = true }) {
   const { state } = useAuthContext();
   const navigation = useNavigation();
   const { title, description, users, id } = data;
-  const splitTitle = title.split(" ");
-  const abbrev =
-    splitTitle.length > 2
-      ? `${splitTitle[0].charAt(0)}${splitTitle[1].charAt(0)}`
-      : `${splitTitle[0].charAt(0)}${splitTitle[0].charAt(1)}`;
+
   return (
     <Pressable
       onPress={() => navigation.navigate("CampaignDetails", { campaignId: id })}
@@ -24,13 +21,7 @@ export default function TeamCard({ data, isFullWidth = true }) {
     >
       <View style={tw`bg-white`}>
         <View style={tw`flex gap-x-3 flex-row items-center`}>
-          <View
-            style={tw`w-14 h-14 rounded-full flex justify-center items-center bg-transparent bg-dark`}
-          >
-            <Text style={tw`text-2xl font-thick uppercase text-primaryLight`}>
-              {abbrev}
-            </Text>
-          </View>
+          <TextAbbrevavtion text={title} />
           <Text
             style={tw`text-xl font-bold text-mainColor flex flex-wrap flex-1`}
           >

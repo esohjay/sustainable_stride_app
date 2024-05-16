@@ -10,9 +10,14 @@ import AchievementStat from "../components/AchievementStat";
 import UpdateEmail from "../components/UpdateEmail";
 import UpdatePassword from "../components/UpdatePassword";
 import UpdateName from "../components/UpdateName";
+import TextAbbrevavtion from "../components/TextAbbrevavtion";
+import useGetActions from "../lib/useGetActions";
+import useOpenLink from "../lib/useOpenLink";
 
 export default function ProfileScreen({ navigation }) {
   const { state } = useAuthContext();
+  const handleOpenLink = useOpenLink();
+  const { actionSummary, pointDetails } = useGetActions();
   const snapPoints = useMemo(() => ["65%"], []);
   const nameSnapPoints = useMemo(() => ["35%"], []);
   const [isOpen, setIsOpen] = useState(false);
@@ -43,74 +48,109 @@ export default function ProfileScreen({ navigation }) {
       ),
     });
   }, [navigation]);
+  console.log(state?.profile?.fullName);
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="profile">
-      <View style={tw`p-5`}>
+      <View style={tw`p-5 flex gap-3`}>
         <View
           style={tw`flex flex-row items-start p-3 bg-white rounded-lg shadow gap-x-3`}
         >
-          <View style={tw`flex items-center gap-y-1  w-[25%]`}>
-            <View style={tw`w-24 h-24 rounded-full bg-transparent`}>
-              <Image
-                style={tw`w-full h-full rounded-full max-w-full max-h-full bg-transparent`}
-                resizeMode="cover"
-                source={require("../assets/avatar.png")}
-              />
-            </View>
-            <Button
-              text={"Change"}
-              variant="light"
-              textStyle={tw`text-[10px]`}
-              height="30"
-            />
+          <View style={tw`flex items-center gap-y-1  w-[20%]`}>
+            <TextAbbrevavtion text={state?.profile?.fullName} />
           </View>
-          <View style={tw`w-[65%]`}>
-            <Pressable
-              style={tw`flex items-center flex-row mb-1 gap-x-1`}
-              onPress={handlePresentNameModal}
-            >
-              <Text style={tw`text-lg text-mainColor font-bold `}>
-                Olusoji Daramola
-              </Text>
-              <Ionicons name={"create-outline"} size={20} color="#7d4f50" />
-            </Pressable>
+          <View style={tw`w-[70%] flex gap-1`}>
+            <Text style={tw`text-lg text-mainColor font-bold `}>
+              {state?.profile?.fullName}
+            </Text>
+
             <View style={tw`flex flex-row gap-x-2`}>
               <Ionicons name={"mail"} size={20} color="#7d4f50" />
               <Text style={tw`text-sm text-dark font-medium mb-1`}>
                 {state?.user?.email}
               </Text>
             </View>
-            <View style={tw`flex flex-row gap-x-2`}>
-              <Ionicons name={"location"} size={20} color="#7d4f50" />
-              <Text style={tw`text-sm text-dark font-medium mb-1`}>
-                Flat 6, 80 Bradford street. Bolton
-              </Text>
-            </View>
+            <Pressable
+              style={tw`flex items-center flex-row mb-1 gap-x-1`}
+              onPress={handlePresentNameModal}
+            >
+              <Ionicons name={"create-outline"} size={20} color="#7d4f50" />
+              <Text style={tw`text-sm text-dark font-medium`}>Change name</Text>
+            </Pressable>
           </View>
         </View>
         <View style={tw`bg-white shadow rounded-lg p-3 mt-4`}>
-          <View style={tw`flex flex-row justify-between mb-5 w-full`}>
-            <AchievementStat stat={0} type={"KgCO2e"} icon={"cloudy"} />
-            <AchievementStat stat={0} type={"Actions"} icon={"medal"} />
+          <View style={tw`flex flex-row gap-x-3 justify-between mb-5 w-full`}>
+            <AchievementStat
+              stat={actionSummary?.carbonSaved}
+              type={"KgCO2e saved"}
+              icon={"cloudy"}
+            />
+            <AchievementStat
+              stat={actionSummary?.actionTaken}
+              type={"Actions"}
+              icon={"medal"}
+            />
           </View>
-          <View style={tw`flex flex-row justify-between mb-5 w-full`}>
-            <AchievementStat stat={0} type={"Points"} icon={"aperture"} />
-            <AchievementStat stat={0} type={"Tracking"} icon={"speedometer"} />
+          <View style={tw`flex flex-row gap-x-3 justify-between mb-5 w-full`}>
+            <AchievementStat
+              stat={actionSummary.pointsEarned}
+              type={"Points"}
+              icon={"aperture"}
+            />
+            <AchievementStat
+              stat={pointDetails?.level}
+              type={"Level"}
+              icon={"diamond"}
+            />
           </View>
-          <Text style={tw`text-dark font-semibold mb-2 text-base`}>Badges</Text>
-          <View style={tw`flex flex-row items-center gap-x-6`}>
-            <View
-              style={tw`h-12 bg-transparent w-12 rounded-full border-2 border-secondaryAlt`}
-            >
-              <Image
-                style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
-                resizeMode="contain"
-                source={require("../assets/quality.png")}
-              />
-            </View>
-            <Text style={tw`text-dark font-normal w-3/4`}>
-              Keep using the app to unlock badges!
+        </View>
+        <View
+          style={tw`w-full h-40 relative flex flex-row justify-between bg-white rounded-lg shadow`}
+        >
+          <View
+            style={tw`absolute p-4 flex items-center gap-3 h-full bg-transparent top-0 left-0 w-full bg-white bg-opacity-30 z-10`}
+          >
+            <Text style={tw`text-sm font-medium text-center text-mainColor`}>
+              According to{" "}
+              <Text
+                onPress={() =>
+                  handleOpenLink(
+                    "https://www.eea.europa.eu/articles/forests-health-and-climate-change"
+                  )
+                }
+                style={tw`font-bold underline`}
+              >
+                EEA
+              </Text>
+              , a mature tree can absorb 22KgCO2 per year. Your saved emission
+              of{" "}
+              <Text style={tw`font-bold`}>
+                {actionSummary?.carbonSaved}KgCO2e
+              </Text>{" "}
+              would equate to
             </Text>
+
+            <Text style={tw`font-thick text-base text-green-800`}>
+              {actionSummary?.treeCount < 1
+                ? "Less than 1 tree"
+                : actionSummary?.treeCount === 1
+                ? "1 tree"
+                : `${actionSummary?.treeCount} trees`}
+            </Text>
+          </View>
+          <View style={tw`w-1/3 h-20 mb-3 bg-transparent self-end`}>
+            <Image
+              style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
+              resizeMode="contain"
+              source={require("../assets/left-tree.png")}
+            />
+          </View>
+          <View style={tw`w-1/3 h-20 mb-3 bg-transparent self-end`}>
+            <Image
+              style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
+              resizeMode="contain"
+              source={require("../assets/right-tree.png")}
+            />
           </View>
         </View>
         <View style={tw`py-4`}>

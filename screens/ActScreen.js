@@ -8,60 +8,15 @@ import { Button } from "../components/UI/Button";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import MyActionCard from "../components/MyActionCard";
 import ActionsList from "../components/ActionsList";
-import { onSnapshot, collection, orderBy, query } from "firebase/firestore";
-import { useAuthContext } from "../context/providers/AuthProvider";
-import { db } from "../lib/firebaseConfig";
-import { getPointTarget } from "../lib/helperFn";
+import useGetActions from "../lib/useGetActions";
 
 function ActScreen({ navigation }) {
-  const { state } = useAuthContext();
-  const [actions, setActions] = useState([]);
-  const [pointDetails, setPointDetails] = useState(null);
-  const [actionSummary, setActionSummary] = useState({
-    pointsEarned: 0,
-    carbonSaved: 0,
-    actionTaken: 0,
-  });
+  const { actionSummary, actions, pointDetails } = useGetActions();
   const snapPoints = useMemo(() => ["35%", "70%", "95%"], []);
   const bottomSheetRef = useRef(null);
   function handlePresentModal() {
     bottomSheetRef.current?.present();
   }
-  useEffect(() => {
-    const q = query(
-      collection(db, "profile", state.user.id, "action-log"),
-      orderBy("timestamp")
-    );
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const fetchedMessages = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setActions(fetchedMessages);
-    });
-    return () => unsubscribe();
-  }, []);
-  useEffect(() => {
-    if (actions) {
-      let carbonSaved = 0;
-      let pointsEarned = 0;
-      const actionTaken = actions.length;
-      for (let action of actions) {
-        pointsEarned += action.pointsEarned;
-        carbonSaved += action.carbonSaved;
-      }
-      setActionSummary({
-        carbonSaved,
-        pointsEarned,
-        actionTaken,
-      });
-    }
-  }, [actions]);
-  useEffect(() => {
-    if (actionSummary) {
-      setPointDetails(getPointTarget(actionSummary.pointsEarned));
-    }
-  }, [actionSummary]);
 
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="act">
@@ -135,9 +90,9 @@ function ActScreen({ navigation }) {
           ref={bottomSheetRef}
           snapPoints={snapPoints}
           backgroundStyle={{ borderRadius: 25 }}
-          style={tw`shadow-lg bg-white rounded-3xl`}
+          style={tw`shadow-lg bg-white rounded-3xl flex-1 flex`}
         >
-          <View style={tw`p-5`}>
+          <View style={tw`p-5 flex-1 flex`}>
             <FlatList
               data={actions.length && actions}
               // extraData={refresh}

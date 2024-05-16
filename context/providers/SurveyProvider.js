@@ -8,6 +8,8 @@ const initialState = {
   surveySaved: false,
   error: null,
   footprint: null,
+  survey: null,
+  fetchingSurvey: false,
 };
 
 const SurveyProvider = ({ children }) => {

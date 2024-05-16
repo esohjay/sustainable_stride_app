@@ -3,17 +3,20 @@ import { View, Text, Image, StyleSheet, Linking, Alert } from "react-native";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
-// import { CustomScrollView } from "../components/CustomScrollView";
 import tw from "../lib/tailwind";
 import { useAuthActions } from "../context/actions/auth_actions";
-import AchievementStat from "../components/AchievementStat";
 import ActionsList from "../components/ActionsList";
 import CampaignList from "../components/CampaignList";
 import { Button } from "../components/UI/Button";
-import { Foundation } from "@expo/vector-icons";
 import useShareHandler from "../lib/useShareHandler";
+import useOpenLink from "../lib/useOpenLink";
+import useGetSurvey from "../lib/useGetSurvey";
+import CampaignRoundSkeleton from "../components/skeletons/CampaignRound";
+import EstimateCard from "../components/skeletons/EstimateCard";
 
 function HomeScreen({ navigation }) {
+  const { survey, loadingState } = useGetSurvey();
+  const handleOpenLink = useOpenLink();
   const insets = useSafeAreaInsets();
   const onShare = useShareHandler();
   const { getProfile } = useAuthActions();
@@ -24,22 +27,6 @@ function HomeScreen({ navigation }) {
       getProfile();
     }
   }, [profile]);
-  const handleOpenLink = useCallback(async () => {
-    // Checking if the link is supported for links with custom URL scheme.
-    const supported = await Linking.canOpenURL(
-      "https://greenspace-explorer.vercel.app/"
-    );
-
-    if (supported) {
-      // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-      // by some browser in the mobile
-      await Linking.openURL("https://greenspace-explorer.vercel.app/");
-    } else {
-      Alert.alert(
-        `Don't know how to open this URL: https://greenspace-explorer.vercel.app/`
-      );
-    }
-  }, []);
 
   return (
     <CustomScrollView
@@ -47,7 +34,18 @@ function HomeScreen({ navigation }) {
       screen="home"
     >
       <View style={tw`py-3`}>
-        {profile && profile.totalEmission ? (
+        {/* {loadingState && (
+          <View style={tw`w-full h-44 rounded-lg relative bg-white shadow`}>
+            <View>
+              <View
+                style={tw`h-5 w-10 bg-slate-200 rounded-md animate-pulse`}
+              ></View>
+            </View>
+          </View>
+        )} */}
+
+        {loadingState && <EstimateCard loadingState={loadingState} />}
+        {survey && survey.totalEmission ? (
           <View style={tw`mb-7`}>
             <View style={tw`w-full h-44 rounded-lg relative bg-white shadow`}>
               <Image
@@ -61,7 +59,7 @@ function HomeScreen({ navigation }) {
                 style={tw`h-full w-full flex items-center p-3 rounded-lg bg-black bg-opacity-60`}
               >
                 <Text style={tw`text-primaryLight font-bold text-2xl  `}>
-                  {(profile.totalEmission / 1000).toFixed(2)} tonnes
+                  {(survey.totalEmission / 1000).toFixed(2)} tonnes
                 </Text>
                 <Text style={tw`text-primaryLight font-bold text-sm mb-3 `}>
                   (Estimated footprint)
@@ -208,7 +206,9 @@ function HomeScreen({ navigation }) {
               text={"Explore"}
               icon={"rocket"}
               variant="light"
-              onPress={handleOpenLink}
+              onPress={() =>
+                handleOpenLink("https://greenspace-explorer.vercel.app/")
+              }
             />
           </View>
         </View>

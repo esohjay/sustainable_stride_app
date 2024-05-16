@@ -8,14 +8,16 @@ import { Button } from "../components/UI/Button";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { useAuthActions } from "../context/actions/auth_actions";
 import { calculatePercentageDifference } from "../lib/footprintPercentDiff";
+import useGetSurvey from "../lib/useGetSurvey";
 
 function EstimateScreen({ navigation }) {
-  const { getProfile } = useAuthActions();
+  const { survey, loadingState } = useGetSurvey();
   const [surveyCategory, setSurveyCategory] = useState([]);
   const [percentageDifference, setPercentageDifference] = useState({
     uk: "",
     world: "",
   });
+  console.log(survey);
   const [colors, setColors] = useState([
     "#177AD5",
     "#136f63",
@@ -24,21 +26,15 @@ function EstimateScreen({ navigation }) {
   ]);
   const ukAverageEmission = 10;
   const worldAverageEmission = 4.76;
-  const { state } = useAuthContext();
-  const { profile } = state;
+
   useEffect(() => {
-    if (!profile) {
-      getProfile();
-    }
-  }, [profile]);
-  useEffect(() => {
-    if (profile) {
+    if (survey) {
       let categoryData = [];
       let index = 0;
       for (const [category, categoryValue] of Object.entries(
-        profile.emissionCategory
+        survey.emissionCategory
       )) {
-        const percent = ((categoryValue / profile.totalEmission) * 100).toFixed(
+        const percent = ((categoryValue / survey.totalEmission) * 100).toFixed(
           1
         );
         const value = (categoryValue / 1000).toFixed(2);
@@ -54,24 +50,16 @@ function EstimateScreen({ navigation }) {
       setPercentageDifference({
         uk: calculatePercentageDifference(
           ukAverageEmission,
-          profile.totalEmission / 1000
+          survey.totalEmission / 1000
         ),
         world: calculatePercentageDifference(
           worldAverageEmission,
-          profile.totalEmission / 1000
+          survey.totalEmission / 1000
         ),
       });
     }
-  }, [profile]);
-  console.log(surveyCategory);
-  const data = [
-    { value: 24, color: "#177AD5", text: "24%", name: "Home" },
-    { value: 30, color: "#136f63", text: "30%", name: "Travel" },
-    { value: 20, color: "#582f0e", text: "20%", name: "Shopping" },
-    { value: 26, color: "#ED6665", text: "26%", name: "Food & Drink" },
-  ];
-  const val = Math.random() * 100 + 1;
-  console.log(state);
+  }, [survey]);
+
   return (
     <CustomScrollView style={tw`bg-gray-50`} screen="estimate">
       <View style={tw`p-5 w-full flex items-center`}>
@@ -90,7 +78,7 @@ function EstimateScreen({ navigation }) {
             centerLabelComponent={() => {
               return (
                 <ChartCenter
-                  value={(profile?.totalEmission / 1000).toFixed(2)}
+                  value={(survey?.totalEmission / 1000).toFixed(2)}
                 />
               );
             }}
@@ -125,7 +113,9 @@ function EstimateScreen({ navigation }) {
                 key={i}
                 style={tw`shadow bg-[${colors[i]}] h-40 w-[47%] flex px-5 justify-end py-3 rounded-xl relative`}
               >
-                <Text style={tw`text-primaryLight font-extrabold text-lg`}>
+                <Text
+                  style={tw`text-primaryLight capitalize font-extrabold text-lg`}
+                >
                   {item.name}
                 </Text>
                 <Text style={tw`text-base font-bold text-primaryLight`}>

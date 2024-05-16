@@ -3,6 +3,9 @@ import {
   CREATE_SURVEY_REQUEST,
   CREATE_SURVEY_RESET,
   CREATE_SURVEY_SUCCESS,
+  GET_SURVEY_FAIL,
+  GET_SURVEY_REQUEST,
+  GET_SURVEY_SUCCESS,
 } from "../constants/survey_constant";
 
 export const SurveyReducer = (state, action) => {
@@ -20,6 +23,15 @@ export const SurveyReducer = (state, action) => {
       return { ...state, loading: false, error: action.payload };
     case CREATE_SURVEY_RESET:
       return { ...state, surveySaved: false };
+    case GET_SURVEY_REQUEST:
+      return { ...state, fetchingSurvey: true };
+    case GET_SURVEY_SUCCESS:
+      return {
+        ...state,
+        fetchingSurvey: false,
+        survey: action.payload,
+      };
+
     default:
       return state;
   }

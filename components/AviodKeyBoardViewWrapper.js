@@ -4,6 +4,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 
 function AviodKeyBoardViewWrapper({ children }) {
