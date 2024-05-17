@@ -28,7 +28,7 @@ function SettingsScreen({ navigation }) {
             >
               <View>
                 <Text style={tw`text-base text-mainColor font-bold mb-1`}>
-                  Olusoji Daramola
+                  {state?.profile?.fullName}
                 </Text>
                 <Text style={tw`text-sm text-dark font-medium mb-1`}>
                   {state?.user?.email}

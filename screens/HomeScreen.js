@@ -11,8 +11,8 @@ import { Button } from "../components/UI/Button";
 import useShareHandler from "../lib/useShareHandler";
 import useOpenLink from "../lib/useOpenLink";
 import useGetSurvey from "../lib/useGetSurvey";
-import CampaignRoundSkeleton from "../components/skeletons/CampaignRound";
 import EstimateCard from "../components/skeletons/EstimateCard";
+import ActionCardSkeleton from "../components/skeletons/ActionCardSkeleton";
 
 function HomeScreen({ navigation }) {
   const { survey, loadingState } = useGetSurvey();
@@ -121,56 +121,6 @@ function HomeScreen({ navigation }) {
           Start campaign
         </Text>
       </View>
-      {/* <View style={tw`relative py-3`}>
-        <Text style={tw`text-mainColor font-bold mb-5 text-xl`}>
-          My achievements{" "}
-        </Text>
-        <View style={tw`relative px-3 py-5 shadow bg-white rounded-lg`}>
-          <View
-            style={tw`h-20 mb-3 bg-transparent w-20 absolute right-0 top-0`}
-          >
-            <Image
-              style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
-              resizeMode="contain"
-              source={require("../assets/achievement.png")}
-            />
-          </View>
-          <Text style={tw`text-dark font-semibold mb-1 text-base`}>
-            My impact
-          </Text>
-          <View style={tw`h-1 w-2/5 bg-altColor mb-2`}></View>
-          <Text style={tw`w-3/4 font-normal mb-5`}>
-            Yo {state?.user?.name || profile?.firstName}! This is what you have
-            achieved 🏆 with CarbonLog so far.
-          </Text>
-          <Text style={tw`text-dark font-semibold mb-3 text-base`}>
-            Achievements
-          </Text>
-          <View style={tw`flex flex-row justify-between mb-5 w-full`}>
-            <AchievementStat stat={0} type={"KgCO2e"} icon={"cloudy"} />
-            <AchievementStat stat={0} type={"Actions"} icon={"medal"} />
-          </View>
-          <View style={tw`flex flex-row justify-between mb-5 w-full`}>
-            <AchievementStat stat={0} type={"Points"} icon={"aperture"} />
-            <AchievementStat stat={0} type={"Tracking"} icon={"speedometer"} />
-          </View>
-          <Text style={tw`text-dark font-semibold mb-2 text-base`}>Badges</Text>
-          <View style={tw`flex flex-row items-center gap-x-6`}>
-            <View
-              style={tw`h-12 bg-transparent w-12 rounded-full border-2 border-secondaryAlt`}
-            >
-              <Image
-                style={tw`w-full h-full max-w-full max-h-full bg-transparent`}
-                resizeMode="contain"
-                source={require("../assets/quality.png")}
-              />
-            </View>
-            <Text style={tw`text-dark font-normal w-3/4`}>
-              Keep using the app to unlock badges!
-            </Text>
-          </View>
-        </View>
-      </View> */}
       <View style={tw`py-2`}>
         <View
           style={tw`flex flex-row items-center justify-between mb-1 w-full`}

@@ -4,6 +4,7 @@ import ActionCard from "./ActionCard";
 import tw from "../lib/tailwind";
 import { useActionActions } from "../context/actions/action_actions";
 import { useActionContext } from "../context/providers/ActionProvider";
+import ActionCardSkeleton from "./skeletons/ActionCardSkeleton";
 
 export default function ActionsList() {
   const { getActions } = useActionActions();
@@ -15,20 +16,24 @@ export default function ActionsList() {
   }, [state.actionList]);
 
   return (
-    <View style={tw`flex items-center`}>
-      <FlatList
-        horizontal
-        data={state?.actionList?.slice(
-          state?.actionList?.length - 4,
-          state?.actionList?.length - 1
-        )}
-        ItemSeparatorComponent={() => (
-          <View style={{ height: 10, width: 8 }}></View>
-        )}
-        showsHorizontalScrollIndicator={false}
-        renderItem={({ item }) => <ActionCard data={item} />}
-        keyExtractor={(item) => item.id}
-      />
+    <View style={tw`flex my-4 items-center`}>
+      {state?.actionList ? (
+        <FlatList
+          horizontal
+          data={state?.actionList?.slice(
+            state?.actionList?.length - 4,
+            state?.actionList?.length - 1
+          )}
+          ItemSeparatorComponent={() => (
+            <View style={{ height: 10, width: 8 }}></View>
+          )}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => <ActionCard data={item} />}
+          keyExtractor={(item) => item.id}
+        />
+      ) : (
+        <ActionCardSkeleton />
+      )}
     </View>
   );
 }

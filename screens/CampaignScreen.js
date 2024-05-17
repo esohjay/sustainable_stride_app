@@ -8,6 +8,7 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import CampaignForm from "../components/CampaignForm";
 import { useCampaignActions } from "../context/actions/campaign_actions";
 import { useCampaignContext } from "../context/providers/CampaignProvider";
+import CampaignCardSkeleton from "../components/skeletons/CampaignCardSkeleton";
 
 function CampaignScreen({ navigation }) {
   const { getCampaigns, getJoinedCampaigns } = useCampaignActions();
@@ -44,12 +45,16 @@ function CampaignScreen({ navigation }) {
           <Text style={tw`text-xl text-mainColor font-bold mb-3`}>
             Your teams
           </Text>
-          <View style={tw`flex gap-y-3 `}>
-            {/* Change to flatlist */}
-            {state?.joinedCampaignList?.map((campaign) => (
-              <TeamCard key={campaign.id} data={campaign} />
-            ))}
-          </View>
+          {state?.joinedCampaignList?.length ? (
+            <View style={tw`flex gap-y-3 `}>
+              {/* Change to flatlist */}
+              {state?.joinedCampaignList?.map((campaign) => (
+                <TeamCard key={campaign.id} data={campaign} />
+              ))}
+            </View>
+          ) : (
+            <CampaignCardSkeleton />
+          )}
         </View>
         <View style={tw`py-5`}>
           <View
@@ -66,19 +71,23 @@ function CampaignScreen({ navigation }) {
             </Text>
           </View>
           <View style={tw`flex gap-y-3`}>
-            <FlatList
-              data={state?.campaignList}
-              // extraData={refresh}
-              horizontal
-              ItemSeparatorComponent={() => (
-                <View style={{ height: 10, width: 8 }}></View>
-              )}
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => {
-                return <TeamCard data={item} isFullWidth={false} />;
-              }}
-              keyExtractor={(item) => item.id}
-            />
+            {state?.campaignList?.length ? (
+              <FlatList
+                data={state?.campaignList}
+                // extraData={refresh}
+                horizontal
+                ItemSeparatorComponent={() => (
+                  <View style={{ height: 10, width: 8 }}></View>
+                )}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  return <TeamCard data={item} isFullWidth={false} />;
+                }}
+                keyExtractor={(item) => item.id}
+              />
+            ) : (
+              <CampaignCardSkeleton />
+            )}
           </View>
         </View>
         <BottomSheetModal
