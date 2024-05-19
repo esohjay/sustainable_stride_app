@@ -13,6 +13,12 @@ import {
   GET_PROFILE_FAIL,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
+  UPDATE_PROFILE_FAIL,
+  UPDATE_PROFILE_REQUEST,
+  UPDATE_PROFILE_SUCCESS,
+  DELETE_PROFILE_FAIL,
+  DELETE_PROFILE_REQUEST,
+  DELETE_PROFILE_SUCCESS,
 } from "../constants/auth_constants";
 
 export const authReducer = (state, action) => {
@@ -65,6 +71,26 @@ export const authReducer = (state, action) => {
       };
     case GET_PROFILE_FAIL:
       return { ...state, loading: false, profileError: action.payload };
+    case UPDATE_PROFILE_REQUEST:
+      return { ...state, updating: true };
+    case UPDATE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        updated: true,
+        updating: false,
+      };
+    case UPDATE_PROFILE_FAIL:
+      return { ...state, updating: false, profileError: action.payload };
+    case DELETE_PROFILE_REQUEST:
+      return { ...state, deleting: true };
+    case DELETE_PROFILE_SUCCESS:
+      return {
+        ...state,
+        deleted: true,
+        deleting: false,
+      };
+    case DELETE_PROFILE_FAIL:
+      return { ...state, updating: false, profileError: action.payload };
     case SIGN_OUT:
       return {
         ...state,

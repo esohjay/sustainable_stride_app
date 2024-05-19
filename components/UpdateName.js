@@ -45,7 +45,50 @@ export default function UpdateName() {
           <Text style={tw`mt-1 text-sm text-red-500`}>Name is required</Text>
         )}
       </View>
-
+      <View>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <BottomSheetTextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              keyboardType="email-address"
+              style={tw`p-3 border rounded-lg mb-3`}
+              placeholder="New email address"
+            />
+          )}
+          name="email"
+        />
+        {errors.email && (
+          <Text style={tw`mt-1 text-sm text-red-500`}>Email is required</Text>
+        )}
+      </View>
+      <View>
+        <Controller
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <BottomSheetTextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              keyboardType="email-address"
+              style={tw`p-3 border rounded-lg mb-3`}
+              placeholder="Re-type new email address"
+            />
+          )}
+          name="confirmEmail"
+        />
+        {errors.email && (
+          <Text style={tw`mt-1 text-sm text-red-500`}>Email is required</Text>
+        )}
+      </View>
       <Button
         text={"Save"}
         textStyle={tw`px-10 py-4`}

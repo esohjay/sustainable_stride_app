@@ -21,6 +21,10 @@ const initialState = {
   profile: null,
   isAuthenticated: false,
   isSignOut: false,
+  updated: false,
+  updating: false,
+  deleted: false,
+  deleting: false,
 };
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
