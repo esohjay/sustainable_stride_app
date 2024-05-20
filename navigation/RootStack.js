@@ -27,6 +27,7 @@ import SurveyStack from "./SurveyStack";
 import AllActionsHeader from "../components/Headers/AllActionsHeader";
 import ActDetails from "../screens/ActDetails";
 import SearchAction from "../screens/SearchActionsScreen";
+import useGetProfile from "../lib/useGetProfile";
 // import * as SplashScreen from "expo-splash-screen";
 import {
   useFonts,
@@ -45,6 +46,7 @@ const Stack = createNativeStackNavigator();
 // SplashScreen.preventAutoHideAsync();
 function RootStack() {
   const [isLoading, setIsLoading] = useState(true);
+  const { profile } = useGetProfile();
   const { state } = useAuthContext();
   const { setUser, getProfile } = useAuthActions();
   let [fontsLoaded, fontError] = useFonts({
@@ -76,7 +78,7 @@ function RootStack() {
           name: user.displayName,
           phone: user.phoneNumber,
         });
-        getProfile();
+        // getProfile();
         // setIsLoading(false);
         // console.log(process.env.EXPO_PUBLIC_BACKEND_URL);
         // navigation.replace("HomeScreen");

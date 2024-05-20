@@ -11,6 +11,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { db } from "../lib/firebaseConfig";

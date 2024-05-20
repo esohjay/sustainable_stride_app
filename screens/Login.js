@@ -11,7 +11,7 @@ import { useAuthContext } from "../context/providers/AuthProvider";
 function Login({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
   const { state } = useAuthContext();
-  const { isAuthenticated } = state;
+  const { isAuthenticated, error } = state;
   const { signIn } = useAuthActions();
 
   const {
@@ -105,7 +105,13 @@ function Login({ navigation }) {
                 </Text>
               )}
             </View>
-
+            {error && (
+              <Text style={tw`mt-1 text-sm text-red-500`}>
+                {error.includes("invalid-credential")
+                  ? "Incorrect email or password"
+                  : error}
+              </Text>
+            )}
             <View style={tw`my-5`}>
               <Button
                 text={"Login"}

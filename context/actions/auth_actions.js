@@ -91,7 +91,7 @@ export const useAuthActions = () => {
       dispatch({ type: GET_PROFILE_FAIL, payload: message });
     }
   };
-  const updateProfile = async ({ userData }) => {
+  const updateProfile = async (userData) => {
     try {
       dispatch({ type: UPDATE_PROFILE_REQUEST });
       const token = await auth?.currentUser?.getIdToken();
@@ -114,7 +114,7 @@ export const useAuthActions = () => {
       dispatch({ type: UPDATE_PROFILE_FAIL, payload: message });
     }
   };
-  const updatePassword = async ({ password }) => {
+  const updatePassword = async (password) => {
     try {
       dispatch({ type: UPDATE_PROFILE_REQUEST });
       const token = await auth?.currentUser?.getIdToken();

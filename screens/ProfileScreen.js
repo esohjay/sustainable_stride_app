@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useEffect, useState } from "react";
-import { View, Text, Image, Pressable } from "react-native";
+import { View, Text, Image, Pressable, Alert } from "react-native";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import tw from "../lib/tailwind";
 import { CustomScrollView } from "../context/providers/ScrollContext";
@@ -18,8 +18,8 @@ export default function ProfileScreen({ navigation }) {
   const { state } = useAuthContext();
   const handleOpenLink = useOpenLink();
   const { actionSummary, pointDetails } = useGetActions();
-  const snapPoints = useMemo(() => ["65%"], []);
-  const nameSnapPoints = useMemo(() => ["35%"], []);
+  const snapPoints = useMemo(() => ["55%"], []);
+  const nameSnapPoints = useMemo(() => ["40%"], []);
   const [isOpen, setIsOpen] = useState(false);
   const bottomSheetRef = useRef(null);
   const bottomSheetNameRef = useRef(null);
@@ -31,11 +31,21 @@ export default function ProfileScreen({ navigation }) {
   }
   function handlePresentNameModal() {
     bottomSheetNameRef.current?.present();
-    // setTimeout(() => {
-    //   setIsOpen(true);
-    // }, 100);
   }
 
+  const createAlert = () =>
+    Alert.alert(
+      "Delete account?",
+      "All records will be deleted. This action is irreversible.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "Delete", onPress: () => console.log("OK Pressed") },
+      ]
+    );
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -48,7 +58,11 @@ export default function ProfileScreen({ navigation }) {
       ),
     });
   }, [navigation]);
-  console.log(state?.profile?.fullName);
+  useEffect(() => {
+    if (state?.deleted) {
+      navigation.navigate("Register");
+    }
+  }, [state?.deleted]);
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="profile">
       <View style={tw`p-5 flex gap-3`}>
@@ -66,7 +80,7 @@ export default function ProfileScreen({ navigation }) {
             <View style={tw`flex flex-row gap-x-2`}>
               <Ionicons name={"mail"} size={20} color="#7d4f50" />
               <Text style={tw`text-sm text-dark font-medium mb-1`}>
-                {state?.user?.email}
+                {state?.profile?.email}
               </Text>
             </View>
             <Pressable
@@ -74,7 +88,9 @@ export default function ProfileScreen({ navigation }) {
               onPress={handlePresentNameModal}
             >
               <Ionicons name={"create-outline"} size={20} color="#7d4f50" />
-              <Text style={tw`text-sm text-dark font-medium`}>Change name</Text>
+              <Text style={tw`text-sm text-dark font-medium`}>
+                Update password
+              </Text>
             </Pressable>
           </View>
         </View>
@@ -154,7 +170,11 @@ export default function ProfileScreen({ navigation }) {
           </View>
         </View>
         <View style={tw`py-4`}>
-          <Button text={"Delete account"} />
+          <Button
+            text={"Delete account"}
+            isLoading={state?.deleting}
+            onPress={createAlert}
+          />
         </View>
         <BottomSheetModal
           ref={bottomSheetRef}
@@ -166,10 +186,8 @@ export default function ProfileScreen({ navigation }) {
         >
           <View style={tw`px-5`}>
             {/* email */}
-            <UpdateEmail />
-
-            {/* password */}
-            <UpdatePassword />
+            {/* <UpdateEmail /> */}
+            <UpdateName />
           </View>
         </BottomSheetModal>
         <BottomSheetModal
@@ -181,7 +199,8 @@ export default function ProfileScreen({ navigation }) {
           style={tw`shadow-lg bg-white rounded-3xl`}
         >
           <View style={tw`px-5`}>
-            <UpdateName />
+            {/* password */}
+            <UpdatePassword />
           </View>
         </BottomSheetModal>
       </View>

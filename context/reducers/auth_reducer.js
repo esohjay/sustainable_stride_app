@@ -19,6 +19,7 @@ import {
   DELETE_PROFILE_FAIL,
   DELETE_PROFILE_REQUEST,
   DELETE_PROFILE_SUCCESS,
+  UPDATE_PROFILE_RESET,
 } from "../constants/auth_constants";
 
 export const authReducer = (state, action) => {
@@ -77,6 +78,12 @@ export const authReducer = (state, action) => {
       return {
         ...state,
         updated: true,
+        updating: false,
+      };
+    case UPDATE_PROFILE_RESET:
+      return {
+        ...state,
+        updated: false,
         updating: false,
       };
     case UPDATE_PROFILE_FAIL:

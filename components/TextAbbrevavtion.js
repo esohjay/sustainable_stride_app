@@ -9,7 +9,7 @@ export default function TextAbbrevavtion({ text, size, textSize }) {
       ? `${splitTitle[0].charAt(0)}${splitTitle[1].charAt(0)}`
       : `${splitTitle[0].charAt(0)}${splitTitle[0].charAt(1)}`;
   const badgeSize = size || tw`w-14 h-14`;
-  const badgeText = size || tw`text-2xl`;
+  const badgeText = textSize || tw`text-2xl`;
   return (
     <View
       style={[

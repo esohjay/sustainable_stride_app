@@ -153,7 +153,7 @@ function HomeScreen({ navigation }) {
               Regular visits to greenspaces improves your mental health.
             </Text>
             <Button
-              text={"Explore"}
+              text={"Explore greenspaces"}
               icon={"rocket"}
               variant="light"
               onPress={() =>
