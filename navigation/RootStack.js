@@ -24,7 +24,7 @@ import AllActionsScreen from "../screens/AllActionsScreen";
 import SurveyScreen from "../screens/SurveryScreen";
 import SurveyHeader from "../components/Headers/SurveyHeader";
 import SurveyStack from "./SurveyStack";
-import AllActionsHeader from "../components/Headers/AllActionsHeader";
+import About from "../screens/AboutScreen";
 import ActDetails from "../screens/ActDetails";
 import SearchAction from "../screens/SearchActionsScreen";
 import useGetProfile from "../lib/useGetProfile";
@@ -162,6 +162,11 @@ function RootStack() {
                 },
                 headerLeft: () => <BackButton />,
               }}
+            />
+            <Stack.Screen
+              name="About"
+              component={About}
+              options={{ headerShown: false }}
             />
             <Stack.Screen
               name="ActionDetails"

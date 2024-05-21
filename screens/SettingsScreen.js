@@ -7,9 +7,15 @@ import { Button } from "../components/UI/Button";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { Ionicons } from "@expo/vector-icons";
 import SupportList from "../components/SupportList";
+import useOpenLink from "../lib/useOpenLink";
+import useShareHandler from "../lib/useShareHandler";
+import { useAuthActions } from "../context/actions/auth_actions";
 
 function SettingsScreen({ navigation }) {
   const { state } = useAuthContext();
+  const { logOut } = useAuthActions();
+  const handleOpenLink = useOpenLink();
+  const onShare = useShareHandler();
   const [switchState, setSwitchState] = useState(false);
   const onSwitchChange = () => {
     setSwitchState(!switchState);
@@ -45,7 +51,7 @@ function SettingsScreen({ navigation }) {
           <Text style={tw`text-xs font-medium text-mainColor mb-3`}>
             Set your preferences
           </Text>
-          <Pressable onPress={() => console.log(state)}>
+          {/* <Pressable onPress={() => console.log(state)}>
             <View
               style={tw`flex flex-row justify-between items-center p-3 bg-white shadow rounded-lg`}
             >
@@ -54,7 +60,7 @@ function SettingsScreen({ navigation }) {
               </Text>
               <Ionicons name={"chevron-forward"} size={30} color="#7d4f50" />
             </View>
-          </Pressable>
+          </Pressable> */}
 
           <View
             style={tw`flex flex-row justify-between items-center mt-3 p-3 bg-white shadow rounded-lg`}
@@ -71,11 +77,25 @@ function SettingsScreen({ navigation }) {
           </View>
         </View>
         <View style={tw`p-5 mt-4 bg-white rounded-lg shadow flex gap-y-6`}>
-          <SupportList text={"About"} icon={"information-circle"} />
-          <SupportList text={"Share with friend"} icon={"people"} />
-          <SupportList text={"Send us feedback"} icon={"chatbox-ellipses"} />
-          <SupportList text={"Help"} icon={"help-circle"} />
-          <SupportList text={"Logout"} icon={"log-out"} />
+          <SupportList
+            text={"About"}
+            icon={"information-circle"}
+            onPress={() => navigation.navigate("About")}
+          />
+          <SupportList
+            text={"Share with friend"}
+            icon={"people"}
+            onPress={onShare}
+          />
+          <SupportList
+            text={"Send us feedback"}
+            icon={"chatbox-ellipses"}
+            onPress={() =>
+              handleOpenLink("https://forms.gle/qzbWXjcn74JyVctYA")
+            }
+          />
+          {/* <SupportList text={"Help"} icon={"help-circle"} /> */}
+          <SupportList text={"Logout"} icon={"log-out"} onPress={logOut} />
         </View>
       </View>
     </CustomScrollView>
