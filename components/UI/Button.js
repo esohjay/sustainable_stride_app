@@ -94,7 +94,7 @@ export const Button = ({
           {isLoading && (
             <ActivityIndicator
               animating={isLoading}
-              color="#FFFFFF"
+              color={`${variant === "light" ? "#7d4f50" : "#eae0d5"}`}
               size="small"
               // style={styles.activityIndicator}
             />

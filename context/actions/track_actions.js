@@ -5,6 +5,9 @@ import {
   GET_ACTIVITY_FAIL,
   GET_ACTIVITY_REQUEST,
   GET_ACTIVITY_SUCCESS,
+  DELETE_ACTIVITY_FAIL,
+  DELETE_ACTIVITY_REQUEST,
+  DELETE_ACTIVITY_SUCCESS,
 } from "../constants/track_constants";
 
 import { useTrackContext } from "../providers/TrackProvider";
@@ -92,9 +95,33 @@ export const useTrackActions = () => {
       dispatch({ type: GET_ACTIVITY_FAIL, payload: message });
     }
   };
+  const deleteActivity = async (activityData) => {
+    try {
+      dispatch({ type: DELETE_ACTIVITY_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/track`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(activityData),
+        }
+      );
+      // const data = await response.json();
+      dispatch({ type: DELETE_ACTIVITY_SUCCESS });
+    } catch (error) {
+      const message = handleError(error);
+      dispatch({ type: DELETE_ACTIVITY_FAIL, payload: message });
+    }
+  };
   return {
     addActivity,
     addTravelActivity,
     getActivity,
+    deleteActivity,
   };
 };

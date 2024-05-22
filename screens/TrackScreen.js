@@ -17,16 +17,19 @@ import {
 import TrackForm from "../components/TrackForm";
 import TrackTravel from "../components/TrackTravel";
 import ActivityList from "../components/ActivityList";
+import { DELETE_ACTIVITY_RESET } from "../context/constants/track_constants";
 
 function TrackScreen() {
-  const { state } = useTrackContext();
+  const { state, toBeDelete, dispatch, setToBeDeleted } = useTrackContext();
   const {
     activityList,
     fetchingActivity,
     activityFetched,
     activityAdded,
     activity,
+    activityDeleted,
   } = state;
+
   const [totalEmission, setTotalEmission] = useState(0);
   const [categories, setCategories] = useState({
     home: { sum: 0, data: [] },
@@ -86,6 +89,7 @@ function TrackScreen() {
     }
   }, [activityFetched]);
 
+  //when new activity is added
   useEffect(() => {
     if (activityAdded && activity) {
       const { category } = activity.data;
@@ -99,6 +103,25 @@ function TrackScreen() {
       });
     }
   }, [activityAdded, activity]);
+
+  //when activity is deleted
+  useEffect(() => {
+    if (activityDeleted) {
+      const { category } = toBeDelete;
+      const newArray = categories[category].data.filter(
+        (activity) => activity.id !== toBeDelete.id
+      );
+      setCategories({
+        ...categories,
+        [category]: {
+          data: newArray,
+          sum: Number(sumEmission(newArray).toFixed(2)),
+        },
+      });
+      setToBeDeleted(null);
+      dispatch({ type: DELETE_ACTIVITY_RESET });
+    }
+  }, [activityDeleted]);
   // update total emission
   useEffect(() => {
     setTotalEmission(
@@ -108,7 +131,6 @@ function TrackScreen() {
         categories.travel.sum
     );
   }, [categories]);
-  console.log(activity);
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="track">
       <View style={tw`p-5`}>
@@ -238,6 +260,7 @@ function TrackScreen() {
             sliderData={categories.home.data}
             heading={"Home activities"}
             total={categories.home.sum}
+            category={"home"}
           />
         </TrackModal>
         <TrackModal
@@ -250,6 +273,7 @@ function TrackScreen() {
             sliderData={categories.shopping.data}
             heading={"Shopping activities"}
             total={categories.shopping.sum}
+            category={"shopping"}
           />
         </TrackModal>
         <TrackModal
@@ -262,6 +286,7 @@ function TrackScreen() {
             sliderData={categories.travel.data}
             heading={"Travel activities"}
             total={categories.travel.sum}
+            category={"travel"}
           />
         </TrackModal>
         <TrackModal
@@ -274,6 +299,7 @@ function TrackScreen() {
             sliderData={categories.foodAndDrink.data}
             heading={"Activities related to food and drinks"}
             total={categories.foodAndDrink.sum}
+            category={"foodAndDrink"}
           />
         </TrackModal>
       </View>

@@ -6,6 +6,10 @@ import {
   GET_ACTIVITY_REQUEST,
   GET_ACTIVITY_SUCCESS,
   RESET_ACTIVITY,
+  DELETE_ACTIVITY_FAIL,
+  DELETE_ACTIVITY_REQUEST,
+  DELETE_ACTIVITY_RESET,
+  DELETE_ACTIVITY_SUCCESS,
 } from "../constants/track_constants";
 
 export const TrackReducer = (state, action) => {
@@ -21,6 +25,22 @@ export const TrackReducer = (state, action) => {
       };
     case ADD_ACTIVITY_FAIL:
       return { ...state, addingActivity: false, activityError: action.payload };
+    case DELETE_ACTIVITY_REQUEST:
+      return { ...state, deletingActivity: true };
+    case DELETE_ACTIVITY_SUCCESS:
+      return {
+        ...state,
+        deletingActivity: false,
+        activityDeleted: true,
+      };
+    case DELETE_ACTIVITY_FAIL:
+      return {
+        ...state,
+        deletingActivity: false,
+        activityError: action.payload,
+      };
+    case DELETE_ACTIVITY_RESET:
+      return { ...state, deletingActivity: false, activityDeleted: false };
     case GET_ACTIVITY_REQUEST:
       return { ...state, fetchingActivity: true };
     case GET_ACTIVITY_SUCCESS:

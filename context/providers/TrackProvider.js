@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, createContext } from "react";
+import React, { useContext, useReducer, createContext, useState } from "react";
 
 import { TrackReducer } from "../reducers/track_reducer";
 
@@ -12,14 +12,19 @@ const initialState = {
   activityError: null,
   addingActivity: false,
   fetchingActivity: false,
+  activityDeleted: false,
+  deletingActivity: false,
 };
 const TrackProvider = ({ children }) => {
   const [state, dispatch] = useReducer(TrackReducer, initialState);
+  const [toBeDelete, setToBeDeleted] = useState(null);
   return (
     <TrackContext.Provider
       value={{
         state,
         dispatch,
+        toBeDelete,
+        setToBeDeleted,
       }}
     >
       {children}

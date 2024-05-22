@@ -13,10 +13,12 @@ import UpdateName from "../components/UpdateName";
 import TextAbbrevavtion from "../components/TextAbbrevavtion";
 import useGetActions from "../lib/useGetActions";
 import useOpenLink from "../lib/useOpenLink";
+import { useAuthActions } from "../context/actions/auth_actions";
 
 export default function ProfileScreen({ navigation }) {
   const { state } = useAuthContext();
   const handleOpenLink = useOpenLink();
+  const { delteProfile } = useAuthActions();
   const { actionSummary, pointDetails } = useGetActions();
   const snapPoints = useMemo(() => ["55%"], []);
   const nameSnapPoints = useMemo(() => ["40%"], []);
@@ -43,7 +45,7 @@ export default function ProfileScreen({ navigation }) {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "Delete", onPress: () => console.log("OK Pressed") },
+        { text: "Delete", onPress: delteProfile },
       ]
     );
   useEffect(() => {
