@@ -9,20 +9,22 @@ import CampaignForm from "../components/CampaignForm";
 import { useCampaignActions } from "../context/actions/campaign_actions";
 import { useCampaignContext } from "../context/providers/CampaignProvider";
 import CampaignCardSkeleton from "../components/skeletons/CampaignCardSkeleton";
+import useGetCampaigns from "../lib/useGetCampaigns";
 
 function CampaignScreen({ navigation }) {
   const { getCampaigns, getJoinedCampaigns } = useCampaignActions();
+  const {} = useGetCampaigns();
   const { state } = useCampaignContext();
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ["65%"], []);
   function handlePresentNameModal() {
     bottomSheetRef.current?.present();
   }
-  useEffect(() => {
-    if (!state.campaignList) {
-      getCampaigns();
-    }
-  }, [state.campaignList]);
+  // useEffect(() => {
+  //   if (!state.campaignList) {
+  //     getCampaigns();
+  //   }
+  // }, [state.campaignList]);
   useEffect(() => {
     if (!state.joinedCampaignList) {
       getJoinedCampaigns();

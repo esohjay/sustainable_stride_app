@@ -6,10 +6,10 @@ import { Button } from "./UI/Button";
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import { useCampaignActions } from "../context/actions/campaign_actions";
 import { useCampaignContext } from "../context/providers/CampaignProvider";
-import { CREATE_CAMPAIGN_RESET } from "../context/constants/campaign_constant";
+import { UPDATE_CAMPAIGN_RESET } from "../context/constants/campaign_constant";
 
-export default function CampaignForm({ campaignData }) {
-  const { createCampaign, getCampaigns } = useCampaignActions();
+export default function EditCampaignForm({ closeForm }) {
+  const { updateCampaign } = useCampaignActions();
   const { state, dispatch } = useCampaignContext();
   const {
     control,
@@ -18,28 +18,29 @@ export default function CampaignForm({ campaignData }) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      title: "",
-      description: "",
+      title: state?.campaign?.title || "",
+      description: state?.campaign?.description || "",
     },
   });
   const onSubmit = (data) => {
-    createCampaign(data);
+    updateCampaign({ ...data, id: state?.campaign?.id });
   };
   useEffect(() => {
-    if (state.campaignAdded) {
-      // getCampaigns();
+    if (state.updated) {
+      //   getCampaigns();
       const timeoutId = setTimeout(() => {
-        dispatch({ type: CREATE_CAMPAIGN_RESET });
+        closeForm();
+        dispatch({ type: UPDATE_CAMPAIGN_RESET });
         reset();
       }, 2000);
 
       return () => clearTimeout(timeoutId);
     }
-  }, [state.campaignAdded]);
+  }, [state.updated]);
   return (
     <View style={tw``}>
       <Text style={tw`font-semibold text-base mb-2 text-mainColor`}>
-        Start a campaign
+        Edit campaign
       </Text>
       <View>
         <Controller
@@ -92,20 +93,18 @@ export default function CampaignForm({ campaignData }) {
           name="description"
         />
         {errors.description && (
-          <Text style={tw`mt-1 text-sm text-red-500`}>
-            Description is required
-          </Text>
+          <Text style={tw`mt-1 text-sm text-red-500`}>Title is required</Text>
         )}
       </View>
 
       <Button
-        text={"Create campaign"}
+        text={"Update campaign"}
         textStyle={tw`px-10 py-4`}
-        isLoading={state.addingCampaign}
+        isLoading={state.updating}
         onPress={handleSubmit(onSubmit)}
       />
-      {state.campaignAdded && (
-        <Text style={tw`mt-1 text-sm text-green-500`}>Campaign added!</Text>
+      {state.updated && (
+        <Text style={tw`mt-1 text-sm text-green-500`}>Campaign updated!</Text>
       )}
     </View>
   );

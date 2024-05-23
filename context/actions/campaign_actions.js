@@ -20,6 +20,14 @@ import {
   SEND_MESSAGE_FAIL,
   SEND_MESSAGE_REQUEST,
   SEND_MESSAGE_SUCCESS,
+  UPDATE_CAMPAIGN_FAIL,
+  UPDATE_CAMPAIGN_REQUEST,
+  UPDATE_CAMPAIGN_RESET,
+  UPDATE_CAMPAIGN_SUCCESS,
+  DELETE_CAMPAIGN_FAIL,
+  DELETE_CAMPAIGN_REQUEST,
+  DELETE_CAMPAIGN_RESET,
+  DELETE_CAMPAIGN_SUCCESS,
 } from "../constants/campaign_constant";
 
 import { useCampaignContext } from "../providers/CampaignProvider";
@@ -115,7 +123,7 @@ export const useCampaignActions = () => {
       dispatch({ type: LEAVE_CAMPAIGN_REQUEST });
       const token = await auth?.currentUser?.getIdToken();
       const response = await fetch(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaignId}/LEAVE`,
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaignId}/leave`,
         {
           method: "PUT",
           headers: {
@@ -133,6 +141,56 @@ export const useCampaignActions = () => {
       const message = handleError(error);
       console.log(error);
       dispatch({ type: LEAVE_CAMPAIGN_FAIL, payload: message });
+    }
+  };
+  const updateCampaign = async (campaign) => {
+    try {
+      dispatch({ type: UPDATE_CAMPAIGN_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaign.id}/edit`,
+        {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(campaign),
+        }
+      );
+      const data = await response.json();
+      // const data = await response;
+      dispatch({ type: UPDATE_CAMPAIGN_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      console.log(error);
+      dispatch({ type: UPDATE_CAMPAIGN_FAIL, payload: message });
+    }
+  };
+  const deleteCampaign = async (campaignId) => {
+    try {
+      dispatch({ type: DELETE_CAMPAIGN_REQUEST });
+      const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/campaign/${campaignId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ campaignId }),
+        }
+      );
+      const data = await response.json();
+      // const data = await response;
+      dispatch({ type: DELETE_CAMPAIGN_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      console.log(error);
+      dispatch({ type: DELETE_CAMPAIGN_FAIL, payload: message });
     }
   };
   const getCampaigns = async () => {
@@ -212,5 +270,7 @@ export const useCampaignActions = () => {
     getJoinedCampaigns,
     getCampaign,
     sendMessage,
+    deleteCampaign,
+    updateCampaign,
   };
 };

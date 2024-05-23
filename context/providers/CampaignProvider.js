@@ -22,6 +22,10 @@ const initialState = {
   message: null,
   sendingMessage: false,
   messageSent: false,
+  deleting: false,
+  deleted: false,
+  updating: false,
+  updated: false,
 };
 const CampaignProvider = ({ children }) => {
   const [state, dispatch] = useReducer(CampaignReducer, initialState);

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { ScrollView, View, Text } from "react-native";
+import React, { useEffect, useRef, useMemo } from "react";
+import { ScrollView, View, Text, Alert } from "react-native";
 import tw from "../lib/tailwind";
 import BackButton from "../components/BackButton";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -8,35 +8,73 @@ import { Button } from "../components/UI/Button";
 import {
   JOIN_CAMPAIGN_RESET,
   LEAVE_CAMPAIGN_RESET,
+  GET_CAMPAIGN_DETAILS_REQUEST,
+  GET_CAMPAIGN_DETAILS_SUCCESS,
+  DELETE_CAMPAIGN_RESET,
 } from "../context/constants/campaign_constant";
-import { useNavigation } from "@react-navigation/native";
 import { useCampaignActions } from "../context/actions/campaign_actions";
 import { useCampaignContext } from "../context/providers/CampaignProvider";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import CampaignDetailsSkeleton from "../components/skeletons/CampaignDetailsSkeleton";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import EditCampaignForm from "../components/EditCampaignForm";
+import { onSnapshot, doc } from "firebase/firestore";
+import { db } from "../lib/firebaseConfig";
 
 export default function CampaignDetails({ route, navigation }) {
   const { state: userState } = useAuthContext();
-  const navigate = useNavigation();
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ["65%"], []);
+  function handleShowForm() {
+    bottomSheetRef.current?.present();
+  }
+  function handleCloseForm() {
+    bottomSheetRef.current?.close();
+  }
   const insets = useSafeAreaInsets();
   const { campaignId } = route.params;
   //   const [campaign, setCampaign] = useState(null);
-  const { joinCampaign, leaveCampaign, getCampaign } = useCampaignActions();
+  const { joinCampaign, leaveCampaign, deleteCampaign } = useCampaignActions();
   const { state, dispatch } = useCampaignContext();
-  const { campaign, left, joined, fetchingCampaign } = state;
+  const { campaign, left, joined, fetchingCampaign, deleted } = state;
+  const createAlert = () =>
+    Alert.alert(
+      "Delete campaign?",
+      "This campaign will be deleted permanently.",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "Delete", onPress: () => deleteCampaign(campaignId) },
+      ]
+    );
+
   useEffect(() => {
-    getCampaign(campaignId);
-    // if (!campaign) {
-    //   getCampaign(campaignId);
-    // }
+    dispatch({ type: GET_CAMPAIGN_DETAILS_REQUEST });
+    const q = doc(db, "campaign", campaignId);
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      dispatch({
+        type: GET_CAMPAIGN_DETAILS_SUCCESS,
+        payload: querySnapshot.data(),
+      });
+    });
+    return () => unsubscribe();
   }, []);
+
+  // useEffect(() => {
+  //   getCampaign(campaignId);
+  //   // if (!campaign) {
+  //   //   getCampaign(campaignId);
+  //   // }
+  // }, []);
   useEffect(() => {
     if (left) {
       const timeoutId = setTimeout(() => {
         dispatch({ type: LEAVE_CAMPAIGN_RESET });
-        getCampaign(campaignId);
+        // getCampaign(campaignId);
       }, 2000);
-
       return () => clearTimeout(timeoutId);
     }
   }, [left]);
@@ -44,12 +82,17 @@ export default function CampaignDetails({ route, navigation }) {
     if (joined) {
       const timeoutId = setTimeout(() => {
         dispatch({ type: JOIN_CAMPAIGN_RESET });
-        getCampaign(campaignId);
+        // getCampaign(campaignId);
       }, 2000);
-
       return () => clearTimeout(timeoutId);
     }
   }, [joined]);
+  useEffect(() => {
+    if (deleted) {
+      dispatch({ type: DELETE_CAMPAIGN_RESET });
+      navigation.goBack();
+    }
+  }, [deleted]);
 
   return (
     <ScrollView style={tw`bg-gray-50  min-h-screen`}>
@@ -132,6 +175,27 @@ export default function CampaignDetails({ route, navigation }) {
                 </View>
               </View>
             </View>
+            {campaign?.createdBy === userState?.user?.id && (
+              <View style={tw`flex flex-row my-3 gap-x-4`}>
+                <Button
+                  style={tw`text-[9px] px-4`}
+                  height="38"
+                  text={"edit"}
+                  icon={"create"}
+                  // isLoading={state.leaving}
+                  onPress={handleShowForm}
+                />
+                <Button
+                  style={tw`text-[9px] px-4`}
+                  height="38"
+                  text={"delete"}
+                  icon={"trash"}
+                  isLoading={state.deleting}
+                  onPress={createAlert}
+                  variant="destructive"
+                />
+              </View>
+            )}
             {campaign?.users?.includes(userState?.user?.id) && (
               <View style={tw`w-full flex flex-row justify-end pt-4`}>
                 <View style={tw`max-w-2/3`}>
@@ -162,6 +226,18 @@ export default function CampaignDetails({ route, navigation }) {
           <CampaignDetailsSkeleton />
         </View>
       )}
+      <BottomSheetModal
+        ref={bottomSheetRef}
+        // index={1}
+
+        snapPoints={snapPoints}
+        backgroundStyle={{ borderRadius: 25 }}
+        style={tw`shadow-lg bg-white rounded-3xl`}
+      >
+        <View style={tw`px-5`}>
+          <EditCampaignForm closeForm={handleCloseForm} />
+        </View>
+      </BottomSheetModal>
     </ScrollView>
   );
 }

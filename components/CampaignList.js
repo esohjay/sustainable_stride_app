@@ -1,18 +1,12 @@
-import { useEffect } from "react";
 import { View, ScrollView } from "react-native";
 import tw from "../lib/tailwind";
 import CampignCard from "./CampignCard";
-import { useCampaignActions } from "../context/actions/campaign_actions";
 import { useCampaignContext } from "../context/providers/CampaignProvider";
 import CampaignRoundSkeleton from "./skeletons/CampaignRound";
+import useGetCampaigns from "../lib/useGetCampaigns";
 function CampaignList() {
-  const { getCampaigns } = useCampaignActions();
   const { state } = useCampaignContext();
-  useEffect(() => {
-    if (!state.campaignList) {
-      getCampaigns();
-    }
-  }, [state.campaignList]);
+  const {} = useGetCampaigns();
 
   return (
     <>

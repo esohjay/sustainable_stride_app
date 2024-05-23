@@ -24,6 +24,14 @@ import {
   SEND_MESSAGE_FAIL,
   SEND_MESSAGE_REQUEST,
   SEND_MESSAGE_SUCCESS,
+  UPDATE_CAMPAIGN_FAIL,
+  UPDATE_CAMPAIGN_REQUEST,
+  UPDATE_CAMPAIGN_RESET,
+  UPDATE_CAMPAIGN_SUCCESS,
+  DELETE_CAMPAIGN_FAIL,
+  DELETE_CAMPAIGN_REQUEST,
+  DELETE_CAMPAIGN_RESET,
+  DELETE_CAMPAIGN_SUCCESS,
 } from "../constants/campaign_constant";
 
 export const CampaignReducer = (state, action) => {
@@ -125,6 +133,44 @@ export const CampaignReducer = (state, action) => {
       return {
         ...state,
         leaving: false,
+        campaignError: action.payload,
+      };
+    case UPDATE_CAMPAIGN_REQUEST:
+      return { ...state, updating: true };
+    case UPDATE_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        updating: false,
+        updated: true,
+      };
+    case UPDATE_CAMPAIGN_RESET:
+      return {
+        ...state,
+        updated: false,
+      };
+    case UPDATE_CAMPAIGN_FAIL:
+      return {
+        ...state,
+        updating: false,
+        campaignError: action.payload,
+      };
+    case DELETE_CAMPAIGN_REQUEST:
+      return { ...state, deleting: true };
+    case DELETE_CAMPAIGN_SUCCESS:
+      return {
+        ...state,
+        deleting: false,
+        deleted: true,
+      };
+    case DELETE_CAMPAIGN_RESET:
+      return {
+        ...state,
+        deleted: false,
+      };
+    case DELETE_CAMPAIGN_FAIL:
+      return {
+        ...state,
+        deleting: false,
         campaignError: action.payload,
       };
     case SEND_MESSAGE_REQUEST:

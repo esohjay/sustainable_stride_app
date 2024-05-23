@@ -5,14 +5,14 @@ import tw from "../lib/tailwind";
 import SearchCampaign from "./SearchCampaignScreen";
 import { Ionicons } from "@expo/vector-icons";
 import TeamCard from "../components/TeamCard";
-import { useCampaignActions } from "../context/actions/campaign_actions";
 import { useCampaignContext } from "../context/providers/CampaignProvider";
+import useGetCampaigns from "../lib/useGetCampaigns";
 
 export default function AllCampaignsScreen({ navigation }) {
-  const { getCampaigns } = useCampaignActions();
   const { state } = useCampaignContext();
   const snapPoints = useMemo(() => ["90%"], []);
   const bottomSheetRef = useRef(null);
+  const {} = useGetCampaigns();
 
   useEffect(() => {
     navigation.setOptions({
@@ -23,12 +23,6 @@ export default function AllCampaignsScreen({ navigation }) {
       ),
     });
   }, [navigation]);
-
-  useEffect(() => {
-    if (!state.campaignList) {
-      getCampaigns();
-    }
-  }, [state.campaignList]);
 
   return (
     <View style={tw`flex bg-gray-50  p-5 flex-1`}>
