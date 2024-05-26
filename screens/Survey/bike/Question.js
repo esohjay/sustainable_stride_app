@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, Pressable } from "react-native";
 import tw from "../../../lib/tailwind";
 import { Button } from "../../../components/UI/Button";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
-import { TextInput } from "../../../components/UI/TextInput";
 import { Ionicons } from "@expo/vector-icons";
-import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapper";
-import { DropdownSelect } from "../../../components/Dropdown";
 import BikeQuestionForm from "../../../components/BikeQuestionForm";
+import { useSurveyActions } from "../../../context/actions/survey_actions";
+import { generateId } from "../../../lib/helperFn";
 
-export default function BikeQuestion() {
-  const [errMsg, setErrMsg] = useState("");
-  const { bikeDetail, bikeList, setBikeDetail, setBikeList, surveyData } =
-    useSurveyContext();
-  console.log(surveyData);
+export default function BikeQuestion({ errMsg, setErrMsg }) {
+  const { updateSurvey } = useSurveyActions();
+  const { bikeDetail, setBikeDetail, state } = useSurveyContext();
+  const { survey } = state;
+
   const setSize = (size) => {
     setBikeDetail({ ...bikeDetail, size });
   };
@@ -33,7 +32,9 @@ export default function BikeQuestion() {
       bikeDetail.value &&
       bikeDetail.unit
     ) {
-      setBikeList([...bikeList, bikeDetail]);
+      updateSurvey({
+        bike: [...survey.survey.bike, { id: generateId(), ...bikeDetail }],
+      });
       setBikeDetail({
         size: "",
         period: "",
@@ -46,26 +47,47 @@ export default function BikeQuestion() {
       return;
     }
   };
-  console.log(bikeDetail, bikeList);
+  const removeFromList = (id) => {
+    const bikeList = survey.survey.bike.filter((bike) => bike.id !== id);
+    updateSurvey({ bike: [...bikeList] });
+  };
+  // console.log(survey.survey.bike);
   return (
     <View>
       <Text style={tw`font-semibold text-lg mb-3 text-mainColor`}>
         Describe your motorbike yealy usage
       </Text>
       <View style={tw`flex gap-y-3 py-4 mb-3`}>
-        {bikeList.map((bike, i) => (
-          <View key={i} style={tw`flex gap-x-1 flex-row items-center pb-2`}>
-            <Ionicons
-              name="chevron-forward-outline"
-              size={16}
-              color="#7d4f50"
-            />
-
-            <Text style={tw`font-medium text-sm capitalize`}>
-              {bike.size} size motorbike - {bike.value}
-              {bike.unit} {bike.period}
-            </Text>
+        {survey.survey.bike.map((bike, i) => (
+          <View
+            key={i}
+            style={tw`flex gap-y-1 flex-row justify-between items-center gap-x-2   `}
+          >
+            <View>
+              <Text style={tw`font-semibold text-sm capitalize`}>
+                {bike.size} size bike
+              </Text>
+              <Text style={tw`font-medium text-xs`}>
+                {bike.value}
+                {bike.unit} {bike.period}
+              </Text>
+            </View>
+            <Pressable style={tw``} onPress={() => removeFromList(bike.id)}>
+              <Ionicons name="trash" size={12} color="red" />
+            </Pressable>
           </View>
+          // <View key={i} style={tw`flex gap-x-1 flex-row items-center pb-2`}>
+          //   <Ionicons
+          //     name="chevron-forward-outline"
+          //     size={16}
+          //     color="#7d4f50"
+          //   />
+
+          //   <Text style={tw`font-medium text-sm capitalize`}>
+          //     {bike.size} size motorbike - {bike.value}
+          //     {bike.unit} {bike.period}
+          //   </Text>
+          // </View>
         ))}
 
         <BikeQuestionForm

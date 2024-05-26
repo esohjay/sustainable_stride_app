@@ -9,18 +9,19 @@ import useSurveyNextPage from "../../../lib/useSurveyNextPage";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 
 export default function PublicTransport() {
-  const { surveyData } = useSurveyContext();
+  const { state } = useSurveyContext();
+  const { survey } = state;
   const [error, setError] = useState("");
   const nextScreen = useSurveyNextPage();
   const handleNextPage = () => {
-    for (const key in surveyData.publicTransport) {
+    for (const key in survey.survey.publicTransport) {
       if (
-        (surveyData.publicTransport[key].value &&
-          (!surveyData.publicTransport[key].unit ||
-            !surveyData.publicTransport[key].period)) ||
-        ((surveyData.publicTransport[key].unit ||
-          surveyData.publicTransport[key].period) &&
-          !surveyData.publicTransport[key].value)
+        (survey.survey.publicTransport[key].value &&
+          (!survey.survey.publicTransport[key].unit ||
+            !survey.survey.publicTransport[key].period)) ||
+        ((survey.survey.publicTransport[key].unit ||
+          survey.survey.publicTransport[key].period) &&
+          !survey.survey.publicTransport[key].value)
       ) {
         setError("Ensure distance, unit and period are filled.");
         return;

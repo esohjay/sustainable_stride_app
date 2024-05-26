@@ -1,3 +1,4 @@
+import { useState } from "react";
 import CarQuestion from "./Question";
 import QuestionLayout from "../../../components/QuestionLayout";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
@@ -5,16 +6,14 @@ import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapp
 import { CustomScrollView } from "../../../context/providers/ScrollContext";
 import tw from "../../../lib/tailwind";
 import useSurveyNextPage from "../../../lib/useSurveyNextPage";
+import { useSurveyActions } from "../../../context/actions/survey_actions";
+import { generateId } from "../../../lib/helperFn";
 
 export default function Car() {
-  const {
-    surveyData,
-    carDetail,
-    carList,
-    setCarDetail,
-
-    addAnswer,
-  } = useSurveyContext();
+  const { updateSurvey } = useSurveyActions();
+  const [errMsg, setErrMsg] = useState("");
+  const { carDetail, setCarDetail, state } = useSurveyContext();
+  const { survey } = state;
   const nextScreen = useSurveyNextPage();
   const submitCarQuestion = () => {
     if (
@@ -24,9 +23,8 @@ export default function Car() {
       carDetail.unit &&
       carDetail.period
     ) {
-      addAnswer({
-        ...surveyData,
-        car: [...carList, carDetail],
+      updateSurvey({
+        car: [...survey.survey.car, { ...carDetail, id: generateId() }],
       });
       setCarDetail({
         size: "",
@@ -35,13 +33,21 @@ export default function Car() {
         period: "",
         unit: "",
       });
+      setErrMsg("");
+      nextScreen("Bike");
+    } else if (
+      !carDetail.value &&
+      !carDetail.fuelType &&
+      !carDetail.size &&
+      !carDetail.unit &&
+      !carDetail.period
+    ) {
+      setErrMsg("");
+      nextScreen("Bike");
     } else {
-      addAnswer({
-        ...surveyData,
-        car: [...carList],
-      });
+      setErrMsg("All field must be filled");
+      return;
     }
-    nextScreen("Bike");
   };
   return (
     <CustomScrollView style={tw`bg-gray-50 `} screen="survey">
@@ -54,7 +60,7 @@ export default function Car() {
           nextScreen={submitCarQuestion}
           disabled={false}
         >
-          <CarQuestion />
+          <CarQuestion errMsg={errMsg} setErrMsg={setErrMsg} />
         </QuestionLayout>
       </AviodKeyBoardViewWrapper>
     </CustomScrollView>

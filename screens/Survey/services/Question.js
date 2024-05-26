@@ -3,26 +3,29 @@ import { View, Text } from "react-native";
 import tw from "../../../lib/tailwind";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 import QuestionField from "./QuestionField";
+import { useSurveyActions } from "../../../context/actions/survey_actions";
 
 export default function ServicesQuestion() {
-  const { addAnswer, surveyData } = useSurveyContext();
+  const { updateSurvey } = useSurveyActions();
+  const { addAnswer, surveyData, state } = useSurveyContext();
+  const { survey } = state;
   const setPeriod = (field, period) => {
-    addAnswer({
+    updateSurvey({
       servicesConsumption: {
-        ...surveyData.servicesConsumption,
+        ...survey.survey.servicesConsumption,
         [field]: {
-          ...surveyData.servicesConsumption[field],
+          ...survey.survey.servicesConsumption[field],
           period,
         },
       },
     });
   };
   const setValue = (field, value) => {
-    addAnswer({
+    updateSurvey({
       servicesConsumption: {
-        ...surveyData.servicesConsumption,
+        ...survey.survey.servicesConsumption,
         [field]: {
-          ...surveyData.servicesConsumption[field],
+          ...survey.survey.servicesConsumption[field],
           value,
         },
       },
@@ -43,7 +46,10 @@ export default function ServicesQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.servicesConsumption?.medicalServices?.period
+            survey.survey?.servicesConsumption?.medicalServices?.period
+          }
+          inputValue={
+            survey.survey?.servicesConsumption?.medicalServices?.value
           }
         />
         {/* education */}
@@ -52,7 +58,8 @@ export default function ServicesQuestion() {
           field={"education"}
           setPeriod={setPeriod}
           setValue={setValue}
-          dropdownValue={surveyData?.servicesConsumption?.education?.period}
+          dropdownValue={survey.survey?.servicesConsumption?.education?.period}
+          inputValue={survey.survey?.servicesConsumption?.education?.value}
         />
 
         {/* veterinaryServices */}
@@ -62,7 +69,10 @@ export default function ServicesQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.servicesConsumption?.veterinaryServices?.period
+            survey.survey?.servicesConsumption?.veterinaryServices?.period
+          }
+          inputValue={
+            survey.survey?.servicesConsumption?.veterinaryServices?.value
           }
         />
         {/* financialServices */}
@@ -72,7 +82,10 @@ export default function ServicesQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.servicesConsumption?.financialServices?.period
+            survey.survey?.servicesConsumption?.financialServices?.period
+          }
+          inputValue={
+            survey.survey?.servicesConsumption?.financialServices?.value
           }
         />
         {/* salonAndGrooming */}
@@ -82,7 +95,10 @@ export default function ServicesQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.servicesConsumption?.saloonAndGrooming?.period
+            survey.survey?.servicesConsumption?.salonAndGrooming?.period
+          }
+          inputValue={
+            survey.survey?.servicesConsumption?.salonAndGrooming?.value
           }
         />
       </View>

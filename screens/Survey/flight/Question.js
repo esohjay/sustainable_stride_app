@@ -1,17 +1,19 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import tw from "../../../lib/tailwind";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
-import QuestionField from "./QuestionField";
 import QuestionContainer from "./QuestionContainer";
+import { useSurveyActions } from "../../../context/actions/survey_actions";
 
 export default function FlightQuestion() {
-  const { addAnswer, surveyData } = useSurveyContext();
-  console.log(surveyData);
+  const { addAnswer, surveyData, state } = useSurveyContext();
+  const { survey } = state;
+  const { updateSurvey } = useSurveyActions();
+  console.log(state.survey.survey.flight, "here");
   const setValue = (field, value) => {
-    addAnswer({
+    updateSurvey({
       flight: {
-        ...surveyData.flight,
+        ...survey.survey.flight,
         [field]: value,
       },
     });
@@ -24,9 +26,9 @@ export default function FlightQuestion() {
       <QuestionContainer
         setValue={setValue}
         flight={{
-          domestic: surveyData?.flight?.domestic,
-          shortHaul: surveyData?.flight?.shortHaul,
-          longHaul: surveyData?.flight?.longHaul,
+          domestic: survey.survey?.flight?.domestic,
+          shortHaul: survey.survey?.flight?.shortHaul,
+          longHaul: survey.survey?.flight?.longHaul,
         }}
       />
     </View>

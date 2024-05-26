@@ -6,26 +6,29 @@ import { TextInput } from "../../../components/UI/TextInput";
 import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapper";
 import { DropdownSelect } from "../../../components/Dropdown";
 import QuestionField from "./QuestionField";
+import { useSurveyActions } from "../../../context/actions/survey_actions";
 
 export default function GoodsQuestion() {
-  const { addAnswer, surveyData } = useSurveyContext();
+  const { addAnswer, surveyData, state } = useSurveyContext();
+  const { survey } = state;
+  const { updateSurvey } = useSurveyActions();
   const setPeriod = (field, period) => {
-    addAnswer({
+    updateSurvey({
       goodsConsumption: {
-        ...surveyData.goodsConsumption,
+        ...survey.survey.goodsConsumption,
         [field]: {
-          ...surveyData.goodsConsumption[field],
+          ...survey.survey.goodsConsumption[field],
           period,
         },
       },
     });
   };
   const setValue = (field, value) => {
-    addAnswer({
+    updateSurvey({
       goodsConsumption: {
-        ...surveyData.goodsConsumption,
+        ...survey.survey.goodsConsumption,
         [field]: {
-          ...surveyData.goodsConsumption[field],
+          ...survey.survey.goodsConsumption[field],
           value,
         },
       },
@@ -46,8 +49,9 @@ export default function GoodsQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.goodsConsumption?.clothingMaterials?.period
+            survey.survey?.goodsConsumption?.clothingMaterials?.period
           }
+          inputValue={survey.survey?.goodsConsumption?.clothingMaterials?.value}
         />
         {/* shoesAndFootwear */}
         <QuestionField
@@ -55,7 +59,10 @@ export default function GoodsQuestion() {
           field={"shoesAndFootwear"}
           setPeriod={setPeriod}
           setValue={setValue}
-          dropdownValue={surveyData?.goodsConsumption?.shoesAndFootwear?.period}
+          dropdownValue={
+            survey.survey?.goodsConsumption?.shoesAndFootwear?.period
+          }
+          inputValue={survey.survey?.goodsConsumption?.shoesAndFootwear?.value}
         />
 
         {/* furniture */}
@@ -64,7 +71,8 @@ export default function GoodsQuestion() {
           field={"furniture"}
           setPeriod={setPeriod}
           setValue={setValue}
-          dropdownValue={surveyData?.goodsConsumption?.furniture?.period}
+          dropdownValue={survey.survey?.goodsConsumption?.furniture?.period}
+          inputValue={survey.survey?.goodsConsumption?.furniture?.value}
         />
         {/* Pharmacy */}
         <QuestionField
@@ -73,7 +81,10 @@ export default function GoodsQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.goodsConsumption?.pharmaceuticalProducts?.period
+            survey.survey?.goodsConsumption?.pharmaceuticalProducts?.period
+          }
+          inputValue={
+            survey.survey?.goodsConsumption?.pharmaceuticalProducts?.value
           }
         />
         {/* booksAndNewspapers */}
@@ -83,7 +94,10 @@ export default function GoodsQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.goodsConsumption?.booksAndNewspapers?.period
+            survey.survey?.goodsConsumption?.booksAndNewspapers?.period
+          }
+          inputValue={
+            survey.survey?.goodsConsumption?.booksAndNewspapers?.value
           }
         />
 
@@ -93,7 +107,8 @@ export default function GoodsQuestion() {
           field={"petFood"}
           setPeriod={setPeriod}
           setValue={setValue}
-          dropdownValue={surveyData?.goodsConsumption?.petFood?.period}
+          dropdownValue={survey.survey?.goodsConsumption?.petFood?.period}
+          inputValue={survey.survey?.goodsConsumption?.petFood?.value}
         />
         {/* Tobacco */}
         <QuestionField
@@ -101,7 +116,8 @@ export default function GoodsQuestion() {
           field={"tobacco"}
           setPeriod={setPeriod}
           setValue={setValue}
-          dropdownValue={surveyData?.goodsConsumption?.tobacco?.period}
+          dropdownValue={survey.survey?.goodsConsumption?.tobacco?.period}
+          inputValue={survey.survey?.goodsConsumption?.tobacco?.value}
         />
         {/* alcohol */}
         <QuestionField
@@ -109,7 +125,8 @@ export default function GoodsQuestion() {
           field={"alcohol"}
           setPeriod={setPeriod}
           setValue={setValue}
-          dropdownValue={surveyData?.goodsConsumption?.alcohol?.period}
+          dropdownValue={survey.survey?.goodsConsumption?.alcohol?.period}
+          inputValue={survey.survey?.goodsConsumption?.alcohol?.value}
         />
         {/* games */}
         <QuestionField
@@ -118,7 +135,10 @@ export default function GoodsQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.goodsConsumption?.gamesOrToyOrHobbies?.period
+            survey.survey?.goodsConsumption?.gamesOrToyOrHobbies?.period
+          }
+          inputValue={
+            survey.survey?.goodsConsumption?.gamesOrToyOrHobbies?.value
           }
         />
         {/* games */}
@@ -128,7 +148,10 @@ export default function GoodsQuestion() {
           setPeriod={setPeriod}
           setValue={setValue}
           dropdownValue={
-            surveyData?.goodsConsumption?.householdAppliances?.period
+            survey.survey?.goodsConsumption?.householdAppliances?.period
+          }
+          inputValue={
+            survey.survey?.goodsConsumption?.householdAppliances?.value
           }
         />
       </View>

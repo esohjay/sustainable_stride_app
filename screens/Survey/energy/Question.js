@@ -3,26 +3,29 @@ import { View, Text, Pressable } from "react-native";
 import tw from "../../../lib/tailwind";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 import QuestionField from "./QuestionField";
+import { useSurveyActions } from "../../../context/actions/survey_actions";
 
 export default function EnergyQuestion() {
-  const { addAnswer, surveyData } = useSurveyContext();
+  const { state } = useSurveyContext();
+  const { survey } = state;
+  const { updateSurvey } = useSurveyActions();
   const setUnit = (field, unit) => {
-    addAnswer({
+    updateSurvey({
       energy: {
-        ...surveyData.energy,
+        ...survey.survey.energy,
         [field]: {
-          ...surveyData.energy[field],
+          ...survey.survey.energy[field],
           unit,
         },
       },
     });
   };
   const setValue = (field, value) => {
-    addAnswer({
+    updateSurvey({
       energy: {
-        ...surveyData.energy,
+        ...survey.survey.energy,
         [field]: {
-          ...surveyData.energy[field],
+          ...survey.survey.energy[field],
           value,
         },
       },
@@ -42,7 +45,8 @@ export default function EnergyQuestion() {
           setUnit={setUnit}
           setValue={setValue}
           dropdownOptions={[{ label: "kWh", value: "kWh" }]}
-          dropdownValue={surveyData?.energy?.electricity?.unit}
+          dropdownValue={survey.survey?.energy?.electricity?.unit}
+          inputValue={survey.survey?.energy?.electricity?.value}
         />
 
         {/* Gas */}
@@ -56,7 +60,8 @@ export default function EnergyQuestion() {
             { label: "Cubic meter", value: "cubicMeter" },
             { label: "Tonne", value: "tonne" },
           ]}
-          dropdownValue={surveyData?.energy?.gas?.unit}
+          dropdownValue={survey.survey?.energy?.gas?.unit}
+          inputValue={survey.survey?.energy?.gas?.value}
         />
 
         {/* Coal */}
@@ -69,7 +74,8 @@ export default function EnergyQuestion() {
             { label: "kWh", value: "kWh" },
             { label: "Tonne", value: "tonne" },
           ]}
-          dropdownValue={surveyData?.energy?.coal?.unit}
+          dropdownValue={survey.survey?.energy?.coal?.unit}
+          inputValue={survey.survey?.energy?.coal?.value}
         />
 
         {/* Lpg */}
@@ -82,7 +88,8 @@ export default function EnergyQuestion() {
             { label: "Litre", value: "litre" },
             { label: "Tonne", value: "tonne" },
           ]}
-          dropdownValue={surveyData?.energy?.lpg?.unit}
+          dropdownValue={survey.survey?.energy?.lpg?.unit}
+          inputValue={survey.survey?.energy?.lpg?.value}
         />
 
         {/* Propane */}
@@ -96,7 +103,8 @@ export default function EnergyQuestion() {
             { label: "Tonne", value: "tonne" },
             { label: "kWh", value: "kWh" },
           ]}
-          dropdownValue={surveyData?.energy?.propane?.unit}
+          dropdownValue={survey.survey?.energy?.propane?.unit}
+          inputValue={survey.survey?.energy?.propane?.value}
         />
 
         {/* Wood */}
@@ -109,7 +117,8 @@ export default function EnergyQuestion() {
             { label: "Tonne", value: "tonne" },
             { label: "kWh", value: "kWh" },
           ]}
-          dropdownValue={surveyData?.energy?.wood?.unit}
+          dropdownValue={survey.survey?.energy?.wood?.unit}
+          inputValue={survey.survey?.energy?.wood?.value}
         />
       </View>
     </View>

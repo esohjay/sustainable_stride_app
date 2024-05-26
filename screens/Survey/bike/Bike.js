@@ -1,3 +1,4 @@
+import { useState } from "react";
 import BikeQuestion from "./Question";
 import QuestionLayout from "../../../components/QuestionLayout";
 import { useSurveyContext } from "../../../context/providers/SurveyProvider";
@@ -5,10 +6,14 @@ import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapp
 import { CustomScrollView } from "../../../context/providers/ScrollContext";
 import tw from "../../../lib/tailwind";
 import useSurveyNextPage from "../../../lib/useSurveyNextPage";
+import { useSurveyActions } from "../../../context/actions/survey_actions";
+import { generateId } from "../../../lib/helperFn";
 
 export default function Bike() {
-  const { surveyData, bikeDetail, bikeList, setBikeDetail, addAnswer } =
-    useSurveyContext();
+  const { updateSurvey } = useSurveyActions();
+  const [errMsg, setErrMsg] = useState("");
+  const { bikeDetail, setBikeDetail, state } = useSurveyContext();
+  const { survey } = state;
   const nextScreen = useSurveyNextPage();
   const submitBikeQuestion = () => {
     if (
@@ -17,9 +22,8 @@ export default function Bike() {
       bikeDetail.size &&
       bikeDetail.unit
     ) {
-      addAnswer({
-        ...surveyData,
-        bike: [...bikeList, bikeDetail],
+      updateSurvey({
+        bike: [...survey.survey.bike, { id: generateId(), ...bikeDetail }],
       });
       setBikeDetail({
         size: "",
@@ -27,13 +31,20 @@ export default function Bike() {
         period: "",
         unit: "",
       });
+      setErrMsg("");
+      nextScreen("PublicTransport");
+    } else if (
+      !bikeDetail.period &&
+      !bikeDetail.value &&
+      !bikeDetail.size &&
+      !bikeDetail.unit
+    ) {
+      setErrMsg("");
+      nextScreen("PublicTransport");
     } else {
-      addAnswer({
-        ...surveyData,
-        bike: [...bikeList],
-      });
+      setErrMsg("All field must be filled");
+      return;
     }
-    nextScreen("PublicTransport");
   };
   return (
     <CustomScrollView style={tw`bg-gray-50`} screen="survey">
@@ -46,7 +57,7 @@ export default function Bike() {
           nextScreen={submitBikeQuestion}
           disabled={false}
         >
-          <BikeQuestion />
+          <BikeQuestion errMsg={errMsg} setErrMsg={setErrMsg} />
         </QuestionLayout>
       </AviodKeyBoardViewWrapper>
     </CustomScrollView>

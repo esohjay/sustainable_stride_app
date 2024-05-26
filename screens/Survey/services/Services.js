@@ -7,19 +7,22 @@ import AviodKeyBoardViewWrapper from "../../../components/AviodKeyBoardViewWrapp
 import useSurveyNextPage from "../../../lib/useSurveyNextPage";
 import { useSurveyActions } from "../../../context/actions/survey_actions";
 import tw from "../../../lib/tailwind";
+import { CustomScrollView } from "../../../context/providers/ScrollContext";
+import { CREATE_SURVEY_RESET } from "../../../context/constants/survey_constant";
 
 export default function Services() {
-  const { surveyData, state } = useSurveyContext();
+  const { state, dispatch } = useSurveyContext();
+  const { survey, surveySaved, loading } = state;
   const [error, setError] = useState("");
   const { createSurvey } = useSurveyActions();
   const nextScreen = useSurveyNextPage();
   const handleNextPage = () => {
-    for (const key in surveyData.servicesConsumption) {
+    for (const key in survey.survey.servicesConsumption) {
       if (
-        (surveyData.servicesConsumption[key].value &&
-          !surveyData.servicesConsumption[key].period) ||
-        (!surveyData.servicesConsumption[key].value &&
-          surveyData.servicesConsumption[key].period)
+        (survey.survey.servicesConsumption[key].value &&
+          !survey.survey.servicesConsumption[key].period) ||
+        (!survey.survey.servicesConsumption[key].value &&
+          survey.survey.servicesConsumption[key].period)
       ) {
         setError("Ensure amount and period are filled.");
         return;
@@ -27,27 +30,30 @@ export default function Services() {
         setError("");
       }
     }
-    createSurvey(surveyData);
+    createSurvey(survey.survey);
   };
   useEffect(() => {
-    if (state.surveySaved) {
+    if (surveySaved) {
+      dispatch({ type: CREATE_SURVEY_RESET });
       nextScreen("Estimate");
     }
-  }, [state.surveySaved]);
+  }, [surveySaved]);
   return (
-    <AviodKeyBoardViewWrapper>
-      <QuestionLayout
-        color={"bg-green-500"}
-        section={"Services"}
-        iconName={"business-outline"}
-        percentage={100}
-        nextScreen={handleNextPage}
-        disabled={false}
-        btnText={state.loading ? "Submitting" : "Submit survey"}
-      >
-        <Question />
-        <Text style={tw`text-red-500 py-2`}>{error}</Text>
-      </QuestionLayout>
-    </AviodKeyBoardViewWrapper>
+    <CustomScrollView style={tw`bg-gray-50`} screen="survey">
+      <AviodKeyBoardViewWrapper>
+        <QuestionLayout
+          color={"bg-green-500"}
+          section={"Services"}
+          iconName={"business-outline"}
+          percentage={100}
+          nextScreen={handleNextPage}
+          disabled={false}
+          btnText={loading ? "Submitting" : "Submit survey"}
+        >
+          <Question />
+          <Text style={tw`text-red-500 py-2`}>{error}</Text>
+        </QuestionLayout>
+      </AviodKeyBoardViewWrapper>
+    </CustomScrollView>
   );
 }

@@ -17,7 +17,6 @@ function EstimateScreen({ navigation }) {
     uk: "",
     world: "",
   });
-  console.log(survey);
   const [colors, setColors] = useState([
     "#177AD5",
     "#136f63",

@@ -10,13 +10,14 @@ import { CustomScrollView } from "../../../context/providers/ScrollContext";
 
 export default function Energy() {
   const [error, setError] = useState("");
-  const { surveyData } = useSurveyContext();
+  const { surveyData, state } = useSurveyContext();
+  const { survey } = state;
   const nextScreen = useSurveyNextPage();
   const handleNextPage = () => {
     for (const key in surveyData.energy) {
       if (
-        (surveyData.energy[key].value && !surveyData.energy[key].unit) ||
-        (!surveyData.energy[key].value && surveyData.energy[key].unit)
+        (survey.survey.energy[key].value && !survey.survey.energy[key].unit) ||
+        (!survey.survey.energy[key].value && survey.survey.energy[key].unit)
       ) {
         setError("Ensure both value and unit are filled.");
         return;

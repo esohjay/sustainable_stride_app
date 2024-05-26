@@ -7,7 +7,8 @@ import { CustomScrollView } from "../../../context/providers/ScrollContext";
 import tw from "../../../lib/tailwind";
 
 export default function Diet() {
-  const { surveyData } = useSurveyContext();
+  const { state } = useSurveyContext();
+  const { survey } = state;
   const nextScreen = useSurveyNextPage();
   return (
     <CustomScrollView style={tw`bg-gray-50`} screen="survey">
@@ -18,7 +19,7 @@ export default function Diet() {
           iconName={"fast-food-outline"}
           percentage={77.77}
           nextScreen={() => nextScreen("Goods")}
-          disabled={surveyData && surveyData.diet === ""}
+          disabled={survey.survey.diet === ""}
         >
           <Question />
         </QuestionLayout>

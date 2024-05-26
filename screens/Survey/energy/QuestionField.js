@@ -10,6 +10,7 @@ export default function QuestionField({
   setUnit,
   dropdownValue,
   dropdownOptions,
+  inputValue,
 }) {
   return (
     <View style={tw`flex flex-row items-end gap-x-3`}>
@@ -20,6 +21,7 @@ export default function QuestionField({
           placeholder="0"
           label={label}
           border={true}
+          value={inputValue}
         />
       </View>
 

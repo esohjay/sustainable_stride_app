@@ -3,6 +3,7 @@ import {
   CREATE_SURVEY_REQUEST,
   CREATE_SURVEY_RESET,
   CREATE_SURVEY_SUCCESS,
+  UPDATE_SURVEY_SUCCESS,
 } from "../constants/survey_constant";
 
 import { useSurveyContext } from "../providers/SurveyProvider";
@@ -43,7 +44,11 @@ export const useSurveyActions = () => {
       dispatch({ type: CREATE_SURVEY_FAIL, payload: message });
     }
   };
+  const updateSurvey = async (surveyData) => {
+    dispatch({ type: UPDATE_SURVEY_SUCCESS, payload: surveyData });
+  };
   return {
     createSurvey,
+    updateSurvey,
   };
 };
