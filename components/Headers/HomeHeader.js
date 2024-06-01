@@ -9,11 +9,13 @@ import TextAbbrevavtion from "../TextAbbrevavtion";
 function HomeHeader() {
   const { logOut } = useAuthActions();
   const { state } = useAuthContext();
+  console.log(state);
   const navigation = useNavigation();
   return (
     <View style={tw` flex flex-row justify-between items-center py-2`}>
       <Text style={tw`font-extrabold text-2xl text-mainColor `}>
-        Hello {state && state.user.name ? state.user.name : "👋"}
+        Hello{" "}
+        {state && state.profile?.firstName ? state.profile?.firstName : "👋"}
       </Text>
 
       <Pressable
@@ -27,11 +29,13 @@ function HomeHeader() {
             source={require("../../assets/avatar.png")}
           />
         </View> */}
-        <TextAbbrevavtion
-          text={state?.profile?.fullName}
-          size={tw`h-11 w-11`}
-          textSize={tw`text-xl`}
-        />
+        {state?.profile?.fullName && (
+          <TextAbbrevavtion
+            text={state?.profile?.fullName}
+            size={tw`h-11 w-11`}
+            textSize={tw`text-xl`}
+          />
+        )}
       </Pressable>
     </View>
   );

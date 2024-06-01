@@ -7,7 +7,7 @@ import { useSurveyActions } from "../../../context/actions/survey_actions";
 
 export default function ServicesQuestion() {
   const { updateSurvey } = useSurveyActions();
-  const { addAnswer, surveyData, state } = useSurveyContext();
+  const { state } = useSurveyContext();
   const { survey } = state;
   const setPeriod = (field, period) => {
     updateSurvey({

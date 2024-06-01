@@ -46,6 +46,7 @@ export default function Chat({ navigation, route }) {
     },
   });
   const onSubmit = (data) => {
+    console.log(data);
     sendMessage({ ...data, id: campaignId });
     reset();
   };

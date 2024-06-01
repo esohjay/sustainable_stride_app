@@ -3,9 +3,9 @@ import tw from "../lib/tailwind";
 import { View, Text } from "react-native";
 
 export default function TextAbbrevavtion({ text, size, textSize }) {
-  const splitTitle = text.trim().split(" ");
+  const splitTitle = text?.trim().split(" ");
   const abbrev =
-    splitTitle.length > 1
+    splitTitle?.length > 1
       ? `${splitTitle[0].charAt(0)}${splitTitle[1].charAt(0)}`
       : `${splitTitle[0].charAt(0)}${splitTitle[0].charAt(1)}`;
   const badgeSize = size || tw`w-14 h-14`;

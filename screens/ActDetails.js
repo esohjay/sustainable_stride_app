@@ -63,7 +63,7 @@ export default function ActDetails({ route, navigation }) {
             </View>
           </View>
         </View>
-        <View style={tw`py-5 flex gap-5 items-center`}>
+        <View style={tw`py-5 flex gap-5 items-center mb-2`}>
           <Text
             style={tw`font-thick capitalize text-mainColor text-center text-lg`}
           >
