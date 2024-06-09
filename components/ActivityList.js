@@ -5,7 +5,7 @@ import tw from "../lib/tailwind";
 
 export default function ActivityList({ sliderData, heading, total, category }) {
   return (
-    <View style={tw`p-5 flex flex-1`}>
+    <View style={tw`p-5 flex flex-1 gap`}>
       <Text style={tw`font-semibold text-lg text-mainColor `}>{heading}</Text>
 
       <Text style={tw`font-semibold text-sm text-dark mb-5`}>

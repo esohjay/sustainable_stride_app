@@ -44,7 +44,7 @@ export const useSurveyActions = () => {
       dispatch({ type: CREATE_SURVEY_FAIL, payload: message });
     }
   };
-  const updateSurvey = async (surveyData) => {
+  const updateSurvey = (surveyData) => {
     dispatch({ type: UPDATE_SURVEY_SUCCESS, payload: surveyData });
   };
   return {

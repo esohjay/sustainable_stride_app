@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sustainable_stride_app",
-    "slug": "sustainable_stride_app",
+    "name": "Carbon log",
+    "slug": "carbonlog",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -17,12 +17,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/foreground.png",
+        "backgroundColor": "#eae0d5"
+      },
+      "package": "com.carbon_log"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.ico"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3693e7cd-be34-40a2-a510-a7cbc692d290"
+      }
     }
   }
 }

@@ -31,6 +31,7 @@ export const SurveyReducer = (state, action) => {
     case UPDATE_SURVEY_SUCCESS:
       return {
         ...state,
+        surveyUpdated: true,
         // loading: false,
         survey: {
           ...state.survey,

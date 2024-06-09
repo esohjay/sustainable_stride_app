@@ -4,7 +4,8 @@ import { useSurveyContext } from "../../../context/providers/SurveyProvider";
 import useSurveyNextPage from "../../../lib/useSurveyNextPage";
 
 export default function Household() {
-  const { surveyData } = useSurveyContext();
+  const { state } = useSurveyContext();
+  const { survey } = state;
   const nextScreen = useSurveyNextPage();
   return (
     <QuestionLayout
@@ -13,7 +14,7 @@ export default function Household() {
       iconName={"home-outline"}
       percentage={11.11}
       nextScreen={() => nextScreen("Energy")}
-      disabled={surveyData && surveyData.householdSize === ""}
+      // disabled={survey && survey.survey.householdSize === 0}
     >
       <Question />
     </QuestionLayout>

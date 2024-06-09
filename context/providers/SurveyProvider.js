@@ -2,77 +2,86 @@ import React, { useContext, createContext, useState, useReducer } from "react";
 import { SurveyReducer } from "../reducers/survey_reducer";
 
 const SurveyContext = createContext();
-const survey = {
-  householdSize: 0,
-  energy: {
-    electricity: {
-      value: "",
-      unit: "",
-    },
-    gas: {
-      value: "",
-      unit: "",
-    },
-    coal: {
-      value: "",
-      unit: "",
-    },
-    lpg: {
-      value: "",
-      unit: "",
-    },
-    propane: {
-      value: "",
-      unit: "",
-    },
-    wood: {
-      value: "",
-      unit: "",
-    },
+export const surveyInitialData = {
+  totalEmission: 0,
+  emissionCategory: {
+    home: 0,
+    shopping: 0,
+    diet: 0,
+    travel: 0,
   },
-  flight: {
-    domestic: "",
-    shortHaul: "",
-    longHaul: "",
-  },
-  car: [],
-  bike: [],
-  publicTransport: {
-    bus: {
-      value: "",
-      unit: "",
-      period: "",
+  survey: {
+    householdSize: 0,
+    energy: {
+      electricity: {
+        value: "",
+        unit: "",
+      },
+      gas: {
+        value: "",
+        unit: "",
+      },
+      coal: {
+        value: "",
+        unit: "",
+      },
+      lpg: {
+        value: "",
+        unit: "",
+      },
+      propane: {
+        value: "",
+        unit: "",
+      },
+      wood: {
+        value: "",
+        unit: "",
+      },
     },
-    train: {
-      value: "",
-      unit: "",
-      period: "",
+    flight: {
+      domestic: "",
+      shortHaul: "",
+      longHaul: "",
     },
-    coach: {
-      value: "",
-      unit: "",
-      period: "",
+    car: [],
+    bike: [],
+    publicTransport: {
+      bus: {
+        value: "",
+        unit: "",
+        period: "",
+      },
+      train: {
+        value: "",
+        unit: "",
+        period: "",
+      },
+      coach: {
+        value: "",
+        unit: "",
+        period: "",
+      },
     },
-  },
-  diet: "",
-  goodsConsumption: {
-    clothingMaterials: { value: "", period: "" },
-    shoesAndFootwear: { value: "", period: "" },
-    furniture: { value: "", period: "" },
-    pharmaceuticalProducts: { value: "", period: "" },
-    booksAndNewspapers: { value: "", period: "" },
-    petFood: { value: "", period: "" },
-    tobacco: { value: "", period: "" },
-    alcohol: { value: "", period: "" },
-    gamesOrToyOrHobbies: { value: "", period: "" },
-    householdAppliances: { value: "", period: "" },
-  },
-  servicesConsumption: {
-    medicalServices: { value: "", period: "" },
-    education: { value: "", period: "" },
-    veterinaryServices: { value: "", period: "" },
-    financialServices: { value: "", period: "" },
-    saloonAndGrooming: { value: "", period: "" },
+    diet: "",
+    goodsConsumption: {
+      clothingMaterials: { value: "", period: "" },
+      shoesAndFootwear: { value: "", period: "" },
+      furniture: { value: "", period: "" },
+      pharmaceuticalProducts: { value: "", period: "" },
+      booksAndNewspapers: { value: "", period: "" },
+      petFood: { value: "", period: "" },
+      tobacco: { value: "", period: "" },
+      alcohol: { value: "", period: "" },
+      gamesOrToyOrHobbies: { value: "", period: "" },
+      householdAppliances: { value: "", period: "" },
+    },
+    servicesConsumption: {
+      medicalServices: { value: "", period: "" },
+      education: { value: "", period: "" },
+      veterinaryServices: { value: "", period: "" },
+      financialServices: { value: "", period: "" },
+      saloonAndGrooming: { value: "", period: "" },
+    },
   },
 };
 const initialState = {
@@ -81,16 +90,8 @@ const initialState = {
   surveySaved: false,
   error: null,
   footprint: null,
-  survey: {
-    totalEmission: 0,
-    emissionCategory: {
-      home: 0,
-      shopping: 0,
-      diet: 0,
-      travel: 0,
-    },
-    survey,
-  },
+  surveyUpdated: false,
+  survey: surveyInitialData,
   fetchingSurvey: false,
 };
 
