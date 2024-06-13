@@ -3,6 +3,9 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CustomScrollView } from "../context/providers/ScrollContext";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import tw from "../lib/tailwind";
+import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import relativeTime from "dayjs/plugin/relativeTime";
 import {
   View,
   Text,
@@ -21,6 +24,8 @@ import { TextInput } from "../components/UI/TextInput";
 import { Button } from "../components/UI/Button";
 import { useForm, Controller } from "react-hook-form";
 import AviodKeyBoardViewWrapper from "../components/AviodKeyBoardViewWrapper";
+dayjs.extend(localizedFormat);
+// dayjs.extend(relativeTime);
 
 export default function Chat({ navigation, route }) {
   const insets = useSafeAreaInsets();
@@ -79,7 +84,6 @@ export default function Chat({ navigation, route }) {
     });
     return () => unsubscribe();
   }, []);
-  console.log(messages);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -97,6 +101,12 @@ export default function Chat({ navigation, route }) {
               )}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => {
+                // console.log(dayjs(item.timestamp.seconds * 1000).fromNow());
+                // console.log(
+                //   dayjs(item.timestamp.seconds * 1000).format(
+                //     "ddd, MMM D, YYYY h:mm A"
+                //   )
+                // );
                 return (
                   <View
                     style={tw`flex flex-row  ${
@@ -107,20 +117,36 @@ export default function Chat({ navigation, route }) {
                     `}
                   >
                     <View
-                      style={tw`rounded-full px-3  py-2 ${
-                        item.sender.id !== userState?.user?.id
+                      style={tw`rounded-xl px-3 flex gap-1  py-2 ${
+                        item.sender.id === userState?.user?.id
                           ? "bg-mainColor text-primaryLight"
-                          : "text-mainColor bg-white"
+                          : "text-mainColor bg-altColor"
                       }`}
                     >
+                      {item.sender.id !== userState?.user?.id && (
+                        <Text style={tw`text-green-600 font-normal text-xs`}>
+                          {item.sender?.name}
+                        </Text>
+                      )}
                       <Text
                         style={tw`rounded-full font-medium  ${
-                          item.sender.id !== userState?.user?.id
+                          item.sender.id === userState?.user?.id
                             ? " text-primaryLight"
                             : "text-mainColor "
                         } `}
                       >
                         {item.message}
+                      </Text>
+                      <Text
+                        style={tw`${
+                          item.sender.id === userState?.user?.id
+                            ? " text-primaryLight"
+                            : "text-mainColor "
+                        } font-normal text-[10px] self-end`}
+                      >
+                        {dayjs(item.timestamp.seconds * 1000).format(
+                          "ddd, MMM D, YYYY h:mm A"
+                        )}
                       </Text>
                     </View>
                   </View>

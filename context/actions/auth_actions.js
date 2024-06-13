@@ -43,32 +43,7 @@ export const useAuthActions = () => {
         : error.message;
     return message;
   };
-  const createProfile = async (fullName) => {
-    console.log(fullName);
-    try {
-      dispatch({ type: CREATE_PROFILE_REQUEST });
-      const token = await auth?.currentUser?.getIdToken();
-      const response = await fetch(
-        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/user`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(fullName),
-        }
-      );
-      const data = await response.json();
-      // const data = await response;
-      dispatch({ type: CREATE_PROFILE_SUCCESS, payload: data });
-    } catch (error) {
-      const message = handleError(error);
-      console.log(error);
-      dispatch({ type: CREATE_PROFILE_FAIL, payload: message });
-    }
-  };
+
   const getProfile = async () => {
     try {
       dispatch({ type: GET_PROFILE_REQUEST });
@@ -213,6 +188,32 @@ export const useAuthActions = () => {
         dispatch({ type: SIGN_IN_FAIL, payload: errorMessage });
         // ..
       });
+  };
+  const createProfile = async ({ email, password, fullName }) => {
+    try {
+      dispatch({ type: CREATE_PROFILE_REQUEST });
+      // const token = await auth?.currentUser?.getIdToken();
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/user`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ email, password, fullName }),
+        }
+      );
+      const data = await response.json();
+      if (data) {
+        await signIn({ email, password });
+      }
+      // dispatch({ type: CREATE_PROFILE_SUCCESS, payload: data });
+    } catch (error) {
+      const message = handleError(error);
+      dispatch({ type: CREATE_PROFILE_FAIL, payload: message });
+    }
   };
   const logOut = () => {
     signOut(auth)

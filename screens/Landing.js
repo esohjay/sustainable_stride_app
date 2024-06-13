@@ -2,19 +2,10 @@ import { View, Text, Image } from "react-native";
 import tw from "../lib/tailwind";
 import LandingCardList from "../components/LandingCardList";
 import { Button } from "../components/UI/Button";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../lib/firebaseConfig";
-import { useAuthContext } from "../context/providers/AuthProvider";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 function Landing({ navigation }) {
   const insets = useSafeAreaInsets();
-  const { state } = useAuthContext();
-  console.log(state);
-  // const auth = getAuth();
-
-  // console.log(auth.currentUser);
-  // console.log(auth.currentUser);
   return (
     <View
       style={tw`pt-[${insets.top}] pb-[${insets.bottom}] bg-gray-50 h-full`}

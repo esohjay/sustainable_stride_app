@@ -18,7 +18,7 @@ import { useAuthActions } from "../context/actions/auth_actions";
 export default function ProfileScreen({ navigation }) {
   const { state } = useAuthContext();
   const handleOpenLink = useOpenLink();
-  const { delteProfile } = useAuthActions();
+  const { delteProfile, logOut } = useAuthActions();
   const { actionSummary, pointDetails } = useGetActions();
   const snapPoints = useMemo(() => ["55%"], []);
   const nameSnapPoints = useMemo(() => ["40%"], []);
@@ -34,7 +34,10 @@ export default function ProfileScreen({ navigation }) {
   function handlePresentNameModal() {
     bottomSheetNameRef.current?.present();
   }
-
+  const handleProfileDelete = () => {
+    logOut();
+    delteProfile();
+  };
   const createAlert = () =>
     Alert.alert(
       "Delete account?",
@@ -45,7 +48,7 @@ export default function ProfileScreen({ navigation }) {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "Delete", onPress: delteProfile },
+        { text: "Delete", onPress: handleProfileDelete },
       ]
     );
   useEffect(() => {

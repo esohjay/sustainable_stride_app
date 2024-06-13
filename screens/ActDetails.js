@@ -46,7 +46,7 @@ export default function ActDetails({ route, navigation }) {
   }, [state.actionAdded]);
 
   return (
-    <ScrollView style={tw`bg-gray-50  min-h-screen`}>
+    <ScrollView style={tw`bg-gray-50 py-3 min-h-screen`}>
       <View
         style={tw`relative pt-[${insets.top}] pb-[${insets.bottom}] px-5 bg-white rounded-b-3xl shadow-md`}
       >
@@ -63,20 +63,20 @@ export default function ActDetails({ route, navigation }) {
             </View>
           </View>
         </View>
-        <View style={tw`py-5 flex gap-5 items-center mb-2`}>
+        <View style={tw`pt-5 pb-8 flex gap-5 items-center mb-2`}>
           <Text
             style={tw`font-thick capitalize text-mainColor text-center text-lg`}
           >
             {action?.title}
-          </Text>
-          <Text style={tw`font-medium text-justify text-dark text-sm mb-2`}>
-            {action?.description}
           </Text>
           <Badge
             text={action?.category}
             variant="success"
             textStyle={tw`capitalize`}
           />
+          <Text style={tw`font-medium text-justify text-dark text-sm mb-2`}>
+            {action?.description}
+          </Text>
         </View>
       </View>
       <View style={tw`px-5 mt-16`}>

@@ -5,14 +5,17 @@ import tw from "../lib/tailwind";
 
 export default function ActivityList({ sliderData, heading, total, category }) {
   return (
-    <View style={tw`p-5 flex flex-1 gap`}>
+    <View style={tw`p-5 flex flex-1`}>
       <Text style={tw`font-semibold text-lg text-mainColor `}>{heading}</Text>
 
       <Text style={tw`font-semibold text-sm text-dark mb-5`}>
+        Total of {total} kg of C02e
+      </Text>
+      {/* <Text style={tw`font-semibold text-sm text-dark mb-5`}>
         Total of {total}
         kg <Text style={tw`text-sm `}>of C0</Text>
         <Text style={tw`text-xs leading-3`}>2e</Text>
-      </Text>
+      </Text> */}
 
       <FlatList
         // horizontal

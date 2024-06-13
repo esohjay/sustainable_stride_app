@@ -57,7 +57,7 @@ export default function CampaignDetails({ route, navigation }) {
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       dispatch({
         type: GET_CAMPAIGN_DETAILS_SUCCESS,
-        payload: querySnapshot.data(),
+        payload: { ...querySnapshot.data(), id: querySnapshot.id },
       });
     });
     return () => unsubscribe();

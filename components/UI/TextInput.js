@@ -29,20 +29,22 @@ export const TextInput = ({
 
   return (
     <View style={tw`flex w-full shrink`}>
-      {label && <Text style={tw`mb-2 text-dark font-semibold`}>{label}</Text>}
+      {label ? (
+        <Text style={tw`mb-2 text-dark font-semibold`}>{label}</Text>
+      ) : null}
       <View
         style={tw`flex flex-row items-center ${
-          border && "border"
+          border ? "border" : "border-0"
         } border-gray-200 bg-white rounded-md pr-2 `}
       >
         <View
           style={tw`flex items-center  flex-row gap-x-2 bg-white  rounded-md h-12 px-3 shrink`}
         >
-          {icon && (
+          {icon ? (
             <View style={tw`w-[8%]`}>
               <Ionicons name={icon} size={24} color="#7d4f50" />
             </View>
-          )}
+          ) : null}
           <DefaultTextInput
             {...props}
             onFocus={handleFocus}
@@ -58,7 +60,7 @@ export const TextInput = ({
             }
           />
         </View>
-        {isPassowrd && (
+        {isPassowrd ? (
           <Ionicons
             name={showPassword ? "eye-off" : "eye"}
             size={24}
@@ -66,7 +68,7 @@ export const TextInput = ({
             onPress={() => setShowPassword(!showPassword)}
             style={tw``}
           />
-        )}
+        ) : null}
       </View>
     </View>
   );

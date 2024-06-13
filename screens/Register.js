@@ -8,13 +8,15 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useForm, Controller } from "react-hook-form";
 import { useAuthActions } from "../context/actions/auth_actions";
 import { useAuthContext } from "../context/providers/AuthProvider";
-
+import { formatError } from "../lib/firebaseError";
 import { Button } from "../components/UI/Button";
 
 function Register({ navigation }) {
   const { state } = useAuthContext();
-  const { isAuthenticated } = state;
-  const { signUp } = useAuthActions();
+  const { error } = state;
+  const [errorMsg, setErrorMsg] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
+  const { signUp, createProfile } = useAuthActions();
   //   const auth = getAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -22,6 +24,8 @@ function Register({ navigation }) {
     control,
     handleSubmit,
     setError,
+    reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -30,19 +34,24 @@ function Register({ navigation }) {
       password: "",
       confirmPassword: "",
     },
+    reValidateMode: "onChange",
   });
   const onSubmit = (data) => {
+    console.log(data);
     if (data.password !== data.confirmPassword) {
-      setError("passwordMatch", { type: "required" });
-      return;
+      return setPasswordErr("password do not match");
+      // return setError("passwordMatch", { type: "manual" });
+      // reset({ confirmPassword: "", password: "" }, { keepDirtyValues: true });
     }
-    signUp(data);
+    setPasswordErr("");
+    createProfile(data);
   };
-  //   useEffect(() => {
-  //     if (isAuthenticated) {
-  //       navigation.replace("HomeScreen");
-  //     }
-  //   }, [isAuthenticated]);
+  useEffect(() => {
+    if (error) {
+      const formattedError = formatError(error);
+      setErrorMsg(formattedError);
+    }
+  }, [error]);
   return (
     <AviodKeyBoardViewWrapper>
       <View style={tw`bg-gray-100 h-full`}>
@@ -160,7 +169,7 @@ function Register({ navigation }) {
                 />
                 {errors.confirmPassword && (
                   <Text style={tw`mt-1 text-sm text-red-500`}>
-                    Confirm assword is required
+                    Confirm password is required
                   </Text>
                 )}
                 {errors.passwordMatch && (
@@ -169,12 +178,18 @@ function Register({ navigation }) {
                   </Text>
                 )}
               </View>
-
+              {passwordErr && (
+                <Text style={tw`mt-1 text-sm text-red-500`}>{passwordErr}</Text>
+              )}
+              {error && (
+                <Text style={tw`mt-1 text-sm text-red-500`}>{errorMsg}</Text>
+              )}
               <View style={tw`my-5`}>
                 <Button
                   text={"Sign up"}
                   textStyle={tw`px-10 py-4`}
                   isLoading={state.loading}
+                  // onPress={() => reset()}
                   onPress={handleSubmit(onSubmit)}
                 />
                 <Text

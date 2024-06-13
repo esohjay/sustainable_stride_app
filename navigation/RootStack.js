@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
+import { Text, Platform } from "react-native";
 import tw from "../lib/tailwind";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
@@ -191,12 +191,14 @@ function RootStack() {
                 headerTitleStyle: {
                   fontWeight: "800",
                 },
-                headerLeft: () => <BackButton />,
+                headerLeft: () =>
+                  Platform.OS === "ios" ? <BackButton /> : null,
                 headerTitle: () => (
                   <Text style={tw`font-extrabold text-xl text-mainColor `}>
                     All actions
                   </Text>
                 ),
+                headerTitleAlign: "center",
               }}
             />
             <Stack.Screen
@@ -223,12 +225,14 @@ function RootStack() {
                 headerTitleStyle: {
                   fontWeight: "800",
                 },
-                headerLeft: () => <BackButton />,
+                headerLeft: () =>
+                  Platform.OS === "ios" ? <BackButton /> : null,
                 headerTitle: () => (
                   <Text style={tw`font-extrabold text-xl text-mainColor `}>
                     All campaigns
                   </Text>
                 ),
+                headerTitleAlign: "center",
               }}
             />
           </Stack.Group>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, Image } from "react-native";
 import tw from "../lib/tailwind";
 import { TextInput } from "../components/UI/TextInput";
@@ -7,13 +7,21 @@ import AviodKeyBoardViewWrapper from "../components/AviodKeyBoardViewWrapper";
 import { useForm, Controller } from "react-hook-form";
 import { useAuthActions } from "../context/actions/auth_actions";
 import { useAuthContext } from "../context/providers/AuthProvider";
+import { formatError } from "../lib/firebaseError";
 
 function Login({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const { state } = useAuthContext();
-  const { isAuthenticated, error } = state;
+  const { error } = state;
   const { signIn } = useAuthActions();
 
+  useEffect(() => {
+    if (error) {
+      const formattedError = formatError(error);
+      setErrorMsg(formattedError);
+    }
+  }, [error]);
   const {
     control,
     handleSubmit,
@@ -106,11 +114,7 @@ function Login({ navigation }) {
               )}
             </View>
             {error && (
-              <Text style={tw`mt-1 text-sm text-red-500`}>
-                {error.includes("invalid-credential")
-                  ? "Incorrect email or password"
-                  : error}
-              </Text>
+              <Text style={tw`mt-1 text-sm text-red-500`}>{errorMsg}</Text>
             )}
             <View style={tw`my-5`}>
               <Button

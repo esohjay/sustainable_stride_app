@@ -10,26 +10,51 @@ import { useCampaignActions } from "../context/actions/campaign_actions";
 import { useCampaignContext } from "../context/providers/CampaignProvider";
 import CampaignCardSkeleton from "../components/skeletons/CampaignCardSkeleton";
 import useGetCampaigns from "../lib/useGetCampaigns";
+import {
+  onSnapshot,
+  collection,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
+import {
+  GET_JOINED_CAMPAIGN_REQUEST,
+  GET_JOINED_CAMPAIGN_SUCCESS,
+} from "../context/constants/campaign_constant";
+import { db } from "../lib/firebaseConfig";
+import { useAuthContext } from "../context/providers/AuthProvider";
 
 function CampaignScreen({ navigation }) {
   const { getCampaigns, getJoinedCampaigns } = useCampaignActions();
+  const { state: userState } = useAuthContext();
   const {} = useGetCampaigns();
-  const { state } = useCampaignContext();
+  const { state, dispatch } = useCampaignContext();
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ["65%"], []);
   function handlePresentNameModal() {
     bottomSheetRef.current?.present();
   }
-  // useEffect(() => {
-  //   if (!state.campaignList) {
-  //     getCampaigns();
-  //   }
-  // }, [state.campaignList]);
   useEffect(() => {
-    if (!state.joinedCampaignList) {
-      getJoinedCampaigns();
-    }
-  }, [state.joinedCampaignList]);
+    dispatch({ type: GET_JOINED_CAMPAIGN_REQUEST });
+    const q = query(
+      collection(db, "campaign"),
+      where("users", "array-contains", userState.user.id)
+    );
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const result = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      dispatch({ type: GET_JOINED_CAMPAIGN_SUCCESS, payload: result });
+    });
+
+    return () => unsubscribe();
+  }, []);
+  // useEffect(() => {
+  //   if (!state.joinedCampaignList) {
+  //     getJoinedCampaigns();
+  //   }
+  // }, [state.joinedCampaignList]);
   return (
     <CustomScrollView style={tw`bg-gray-50  `} screen="campaign">
       <View style={tw`p-5`}>
@@ -47,16 +72,21 @@ function CampaignScreen({ navigation }) {
           <Text style={tw`text-xl text-mainColor font-bold mb-3`}>
             Your teams
           </Text>
-          {state?.joinedCampaignList?.length ? (
+          {state?.joinedCampaignList && state?.joinedCampaignList?.length ? (
             <View style={tw`flex gap-y-3 `}>
               {/* Change to flatlist */}
               {state?.joinedCampaignList?.map((campaign) => (
                 <TeamCard key={campaign.id} data={campaign} />
               ))}
             </View>
-          ) : (
+          ) : state?.joinedCampaignList &&
+            !state?.joinedCampaignList?.length ? (
+            <Text style={tw`font-medium text-base`}>
+              You have not joined any campaign yet.
+            </Text>
+          ) : !state?.joinedCampaignList && state.fetchingJoinedCampaign ? (
             <CampaignCardSkeleton />
-          )}
+          ) : null}
         </View>
         <View style={tw`py-5`}>
           <View
