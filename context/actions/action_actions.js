@@ -43,7 +43,6 @@ export const useActionActions = () => {
       dispatch({ type: ADD_ACTION_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
       dispatch({ type: ADD_ACTION_FAIL, payload: message });
     }
   };
@@ -67,7 +66,6 @@ export const useActionActions = () => {
       dispatch({ type: GET_ALL_ACTION_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
       dispatch({ type: GET_ALL_ACTION_FAIL, payload: message });
     }
   };
@@ -90,7 +88,6 @@ export const useActionActions = () => {
       dispatch({ type: GET_LOGGED_ACTION_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
       dispatch({ type: GET_LOGGED_ACTION_FAIL, payload: message });
     }
   };

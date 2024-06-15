@@ -12,7 +12,6 @@ import { auth } from "../../lib/firebaseConfig";
 export const useSurveyActions = () => {
   const { dispatch } = useSurveyContext();
   const handleError = (error) => {
-    console.log(error);
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
@@ -40,7 +39,7 @@ export const useSurveyActions = () => {
       dispatch({ type: CREATE_SURVEY_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: CREATE_SURVEY_FAIL, payload: message });
     }
   };

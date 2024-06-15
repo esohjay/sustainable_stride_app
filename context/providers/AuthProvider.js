@@ -25,6 +25,7 @@ const initialState = {
   updating: false,
   deleted: false,
   deleting: false,
+  resetSent: false,
 };
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(authReducer, initialState);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { View, Text, Image } from "react-native";
 import tw from "../lib/tailwind";
 import { TextInput } from "../components/UI/TextInput";
@@ -8,6 +8,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useAuthActions } from "../context/actions/auth_actions";
 import { useAuthContext } from "../context/providers/AuthProvider";
 import { formatError } from "../lib/firebaseError";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import ResetPassword from "../components/ResetPaswordForm";
 
 function Login({ navigation }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +18,14 @@ function Login({ navigation }) {
   const { error } = state;
   const { signIn } = useAuthActions();
 
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ["65%"], []);
+  function handlePresentNameModal() {
+    bottomSheetRef.current?.present();
+  }
+  function handleCloseForm() {
+    bottomSheetRef.current?.close();
+  }
   useEffect(() => {
     if (error) {
       const formattedError = formatError(error);
@@ -107,6 +117,14 @@ function Login({ navigation }) {
                 )}
                 name="password"
               />
+              <View style={tw`flex items-end py-2`}>
+                <Text
+                  onPress={handlePresentNameModal}
+                  style={tw`text-sm underline font-semibold text-dark`}
+                >
+                  Forgot password?
+                </Text>
+              </View>
               {errors.password && (
                 <Text style={tw`mt-1 text-sm text-red-500`}>
                   Password is required
@@ -132,6 +150,17 @@ function Login({ navigation }) {
             </View>
           </View>
         </View>
+        <BottomSheetModal
+          ref={bottomSheetRef}
+          // index={1}
+          snapPoints={snapPoints}
+          backgroundStyle={{ borderRadius: 25 }}
+          style={tw`shadow-lg bg-white rounded-3xl`}
+        >
+          <View style={tw`px-5`}>
+            <ResetPassword closeForm={handleCloseForm} />
+          </View>
+        </BottomSheetModal>
       </View>
     </AviodKeyBoardViewWrapper>
   );

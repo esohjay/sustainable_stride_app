@@ -19,11 +19,15 @@ import {
   DELETE_PROFILE_FAIL,
   DELETE_PROFILE_REQUEST,
   DELETE_PROFILE_SUCCESS,
+  RESET_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_SUCCESS,
 } from "../constants/auth_constants";
 
 import { useAuthContext } from "../providers/AuthProvider";
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -36,7 +40,6 @@ export const useAuthActions = () => {
   };
 
   const handleError = (error) => {
-    console.log(error);
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
@@ -114,7 +117,7 @@ export const useAuthActions = () => {
   };
   const delteProfile = async () => {
     try {
-      dispatch({ type: UPDATE_PROFILE_REQUEST });
+      dispatch({ type: DELETE_PROFILE_REQUEST });
       const token = await auth?.currentUser?.getIdToken();
       const response = await fetch(
         `${process.env.EXPO_PUBLIC_BACKEND_URL}/api/v1/user`,
@@ -129,10 +132,10 @@ export const useAuthActions = () => {
         }
       );
       const data = await response.json();
-      dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: data });
+      dispatch({ type: DELETE_PROFILE_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      dispatch({ type: UPDATE_PROFILE_FAIL, payload: message });
+      dispatch({ type: DELETE_PROFILE_FAIL, payload: message });
     }
   };
 
@@ -159,9 +162,20 @@ export const useAuthActions = () => {
       await createProfile({ fullName });
     } catch (error) {
       const errorCode = error.code;
-      console.log(errorCode);
       const errorMessage = handleError(error);
       dispatch({ type: SIGN_UP_FAIL, payload: errorMessage });
+    }
+  };
+  const resetPassword = async (email) => {
+    dispatch({ type: RESET_PASSWORD_REQUEST });
+    try {
+      await sendPasswordResetEmail(auth, email);
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+      });
+    } catch (error) {
+      const errorMessage = handleError(error);
+      dispatch({ type: RESET_PASSWORD_FAIL, payload: errorMessage });
     }
   };
 
@@ -237,5 +251,6 @@ export const useAuthActions = () => {
     delteProfile,
     updatePassword,
     updateProfile,
+    resetPassword,
   };
 };

@@ -58,7 +58,6 @@ export default function CarQuestion({ errMsg, setErrMsg }) {
       return;
     }
   };
-  // console.log(carDetail, carList);
   return (
     <AviodKeyBoardViewWrapper>
       <View>

@@ -51,16 +51,6 @@ function SettingsScreen({ navigation }) {
           <Text style={tw`text-xs font-medium text-mainColor mb-3`}>
             Set your preferences
           </Text>
-          {/* <Pressable onPress={() => console.log(state)}>
-            <View
-              style={tw`flex flex-row justify-between items-center p-3 bg-white shadow rounded-lg`}
-            >
-              <Text style={tw`text-base text-mainColor font-bold`}>
-                Location
-              </Text>
-              <Ionicons name={"chevron-forward"} size={30} color="#7d4f50" />
-            </View>
-          </Pressable> */}
 
           <View
             style={tw`flex flex-row justify-between items-center mt-3 p-3 bg-white shadow rounded-lg`}

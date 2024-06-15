@@ -36,7 +36,6 @@ import { auth } from "../../lib/firebaseConfig";
 export const useCampaignActions = () => {
   const { dispatch } = useCampaignContext();
   const handleError = (error) => {
-    console.log(error);
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
@@ -64,7 +63,7 @@ export const useCampaignActions = () => {
       dispatch({ type: CREATE_CAMPAIGN_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: CREATE_CAMPAIGN_FAIL, payload: message });
     }
   };
@@ -89,7 +88,7 @@ export const useCampaignActions = () => {
       dispatch({ type: SEND_MESSAGE_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: SEND_MESSAGE_FAIL, payload: message });
     }
   };
@@ -114,7 +113,7 @@ export const useCampaignActions = () => {
       dispatch({ type: JOIN_CAMPAIGN_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: JOIN_CAMPAIGN_FAIL, payload: message });
     }
   };
@@ -139,7 +138,7 @@ export const useCampaignActions = () => {
       dispatch({ type: LEAVE_CAMPAIGN_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: LEAVE_CAMPAIGN_FAIL, payload: message });
     }
   };
@@ -164,7 +163,7 @@ export const useCampaignActions = () => {
       dispatch({ type: UPDATE_CAMPAIGN_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: UPDATE_CAMPAIGN_FAIL, payload: message });
     }
   };
@@ -189,7 +188,7 @@ export const useCampaignActions = () => {
       dispatch({ type: DELETE_CAMPAIGN_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: DELETE_CAMPAIGN_FAIL, payload: message });
     }
   };
@@ -212,7 +211,7 @@ export const useCampaignActions = () => {
       dispatch({ type: GET_CAMPAIGN_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: GET_CAMPAIGN_FAIL, payload: message });
     }
   };
@@ -235,7 +234,7 @@ export const useCampaignActions = () => {
       dispatch({ type: GET_CAMPAIGN_DETAILS_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: GET_CAMPAIGN_DETAILS_FAIL, payload: message });
     }
   };
@@ -258,7 +257,7 @@ export const useCampaignActions = () => {
       dispatch({ type: GET_JOINED_CAMPAIGN_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
+
       dispatch({ type: GET_JOINED_CAMPAIGN_FAIL, payload: message });
     }
   };

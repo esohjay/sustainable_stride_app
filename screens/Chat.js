@@ -51,7 +51,6 @@ export default function Chat({ navigation, route }) {
     },
   });
   const onSubmit = (data) => {
-    console.log(data);
     sendMessage({ ...data, id: campaignId });
     reset();
   };
@@ -101,12 +100,6 @@ export default function Chat({ navigation, route }) {
               )}
               showsVerticalScrollIndicator={false}
               renderItem={({ item }) => {
-                // console.log(dayjs(item.timestamp.seconds * 1000).fromNow());
-                // console.log(
-                //   dayjs(item.timestamp.seconds * 1000).format(
-                //     "ddd, MMM D, YYYY h:mm A"
-                //   )
-                // );
                 return (
                   <View
                     style={tw`flex flex-row  ${

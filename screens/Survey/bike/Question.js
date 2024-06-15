@@ -51,7 +51,6 @@ export default function BikeQuestion({ errMsg, setErrMsg }) {
     const bikeList = survey.survey.bike.filter((bike) => bike.id !== id);
     updateSurvey({ bike: [...bikeList] });
   };
-  // console.log(survey.survey.bike);
   return (
     <View>
       <Text style={tw`font-semibold text-lg mb-3 text-mainColor`}>

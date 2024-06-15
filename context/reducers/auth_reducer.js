@@ -20,6 +20,10 @@ import {
   DELETE_PROFILE_REQUEST,
   DELETE_PROFILE_SUCCESS,
   UPDATE_PROFILE_RESET,
+  RESET_PASSWORD_FAIL,
+  RESET_PASSWORD_REQUEST,
+  RESET_PASSWORD_RESET,
+  RESET_PASSWORD_SUCCESS,
 } from "../constants/auth_constants";
 
 export const authReducer = (state, action) => {
@@ -72,6 +76,18 @@ export const authReducer = (state, action) => {
       };
     case GET_PROFILE_FAIL:
       return { ...state, loading: false, profileError: action.payload };
+    case RESET_PASSWORD_REQUEST:
+      return { ...state, loading: true };
+    case RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        resetSent: true,
+        loading: false,
+      };
+    case RESET_PASSWORD_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case RESET_PASSWORD_RESET:
+      return { ...state, resetSent: false };
     case UPDATE_PROFILE_REQUEST:
       return { ...state, updating: true };
     case UPDATE_PROFILE_SUCCESS:

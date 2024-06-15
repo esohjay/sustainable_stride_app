@@ -17,7 +17,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/foreground.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#eae0d5"
       },
       "package": "com.carbon_log"

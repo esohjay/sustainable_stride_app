@@ -12,7 +12,6 @@ export default function Goods() {
   const [error, setError] = useState("");
   const { state } = useSurveyContext();
   const { survey } = state;
-  console.log(survey.survey.goodsConsumption);
   const nextScreen = useSurveyNextPage();
   const handleNextPage = () => {
     for (const key in survey.survey.goodsConsumption) {

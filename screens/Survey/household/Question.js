@@ -8,9 +8,6 @@ import { useSurveyActions } from "../../../context/actions/survey_actions";
 export default function QuestionOne() {
   const { state } = useSurveyContext();
   const { survey } = state;
-  console.log(survey);
-  console.log("#####");
-  // console.log(state);
   const { updateSurvey } = useSurveyActions();
   return (
     <View>

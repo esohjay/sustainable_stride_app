@@ -37,11 +37,8 @@ function Register({ navigation }) {
     reValidateMode: "onChange",
   });
   const onSubmit = (data) => {
-    console.log(data);
     if (data.password !== data.confirmPassword) {
       return setPasswordErr("password do not match");
-      // return setError("passwordMatch", { type: "manual" });
-      // reset({ confirmPassword: "", password: "" }, { keepDirtyValues: true });
     }
     setPasswordErr("");
     createProfile(data);

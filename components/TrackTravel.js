@@ -37,7 +37,6 @@ export default function TrackTravel() {
     unit: "",
     period: "monthly",
   });
-  console.log(detail, flight, publicTransport, mode);
   const setSize = (size) => {
     setDetail({ ...detail, size });
   };

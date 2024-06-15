@@ -43,7 +43,6 @@ export const useTrackActions = () => {
       dispatch({ type: ADD_ACTIVITY_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
       dispatch({ type: ADD_ACTIVITY_FAIL, payload: message });
     }
   };
@@ -68,7 +67,6 @@ export const useTrackActions = () => {
       dispatch({ type: ADD_ACTIVITY_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
       dispatch({ type: ADD_ACTIVITY_FAIL, payload: message });
     }
   };
@@ -91,7 +89,6 @@ export const useTrackActions = () => {
       dispatch({ type: GET_ACTIVITY_SUCCESS, payload: data });
     } catch (error) {
       const message = handleError(error);
-      console.log(error);
       dispatch({ type: GET_ACTIVITY_FAIL, payload: message });
     }
   };

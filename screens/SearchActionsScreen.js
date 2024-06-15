@@ -33,7 +33,6 @@ export default function SearchAction() {
   };
 
   const findAction = (query) => {
-    console.log(query);
     if (!query) return setFilteredActions([]);
 
     const result = state?.actionList?.filter((action) => {
@@ -56,8 +55,6 @@ export default function SearchAction() {
     };
   };
   const optimizedFn = useCallback(debounce(findAction), []);
-  // console.log(filteredActions);
-  // console.log(state?.actionList);
   useEffect(() => {
     if (!state.actionList) {
       getActions();

@@ -78,10 +78,6 @@ function RootStack() {
           name: user.displayName,
           phone: user.phoneNumber,
         });
-        // getProfile();
-        // setIsLoading(false);
-        // console.log(process.env.EXPO_PUBLIC_BACKEND_URL);
-        // navigation.replace("HomeScreen");
       } else {
         setIsLoading(false);
       }

@@ -22,7 +22,7 @@ export default function EditCampaignForm({ closeForm }) {
       description: state?.campaign?.description || "",
     },
   });
-  console.log(state?.campaign);
+
   const onSubmit = (data) => {
     updateCampaign({ ...data, id: state?.campaign?.id });
   };

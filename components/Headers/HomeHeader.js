@@ -1,15 +1,12 @@
 import React from "react";
-import { View, Pressable, Text, Image } from "react-native";
+import { View, Pressable, Text } from "react-native";
 import tw from "../../lib/tailwind";
-import { useAuthActions } from "../../context/actions/auth_actions";
 import { useAuthContext } from "../../context/providers/AuthProvider";
 import { useNavigation } from "@react-navigation/native";
 import TextAbbrevavtion from "../TextAbbrevavtion";
 
 function HomeHeader() {
-  const { logOut } = useAuthActions();
   const { state } = useAuthContext();
-  console.log(state);
   const navigation = useNavigation();
   return (
     <View style={tw` flex flex-row justify-between items-center py-2`}>

@@ -9,7 +9,6 @@ export default function FlightQuestion() {
   const { addAnswer, surveyData, state } = useSurveyContext();
   const { survey } = state;
   const { updateSurvey } = useSurveyActions();
-  console.log(state.survey.survey.flight, "here");
   const setValue = (field, value) => {
     updateSurvey({
       flight: {
