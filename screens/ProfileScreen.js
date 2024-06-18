@@ -102,7 +102,7 @@ export default function ProfileScreen({ navigation }) {
         <View style={tw`bg-white shadow rounded-lg p-3 mt-4`}>
           <View style={tw`flex flex-row gap-x-3 justify-between mb-5 w-full`}>
             <AchievementStat
-              stat={actionSummary?.carbonSaved}
+              stat={actionSummary?.carbonSaved?.toFixed(2)}
               type={"KgCO2e saved"}
               icon={"cloudy"}
             />

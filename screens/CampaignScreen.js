@@ -31,8 +31,11 @@ function CampaignScreen({ navigation }) {
   const { state, dispatch } = useCampaignContext();
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ["65%"], []);
-  function handlePresentNameModal() {
+  function handleOpenCampaignModal() {
     bottomSheetRef.current?.present();
+  }
+  function handleCloseForm() {
+    bottomSheetRef.current?.close();
   }
   useEffect(() => {
     dispatch({ type: GET_JOINED_CAMPAIGN_REQUEST });
@@ -65,7 +68,7 @@ function CampaignScreen({ navigation }) {
           <Button
             text={"Start a Campaign"}
             icon={"add-circle"}
-            onPress={handlePresentNameModal}
+            onPress={handleOpenCampaignModal}
           />
         </View>
         <View style={tw`py-5`}>
@@ -130,7 +133,7 @@ function CampaignScreen({ navigation }) {
           style={tw`shadow-lg bg-white rounded-3xl`}
         >
           <View style={tw`px-5`}>
-            <CampaignForm />
+            <CampaignForm closeForm={handleCloseForm} />
           </View>
         </BottomSheetModal>
       </View>

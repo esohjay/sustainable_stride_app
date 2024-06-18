@@ -13,7 +13,7 @@ export default function AllActions({
   setCurrentCategory,
 }) {
   return (
-    <View style={tw`flex  `}>
+    <View style={tw`flex  flex-1`}>
       <ActionCategoryBtn
         categories={categories}
         currentCategory={currentCategory}

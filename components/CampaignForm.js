@@ -8,7 +8,7 @@ import { useCampaignActions } from "../context/actions/campaign_actions";
 import { useCampaignContext } from "../context/providers/CampaignProvider";
 import { CREATE_CAMPAIGN_RESET } from "../context/constants/campaign_constant";
 
-export default function CampaignForm({ campaignData }) {
+export default function CampaignForm({ closeForm }) {
   const { createCampaign, getCampaigns } = useCampaignActions();
   const { state, dispatch } = useCampaignContext();
   const {
@@ -29,9 +29,10 @@ export default function CampaignForm({ campaignData }) {
     if (state.campaignAdded) {
       // getCampaigns();
       const timeoutId = setTimeout(() => {
+        closeForm();
         dispatch({ type: CREATE_CAMPAIGN_RESET });
         reset();
-      }, 2000);
+      }, 1000);
 
       return () => clearTimeout(timeoutId);
     }

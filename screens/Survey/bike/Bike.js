@@ -47,19 +47,17 @@ export default function Bike() {
     }
   };
   return (
-    <CustomScrollView style={tw`bg-gray-50`} screen="survey">
-      <AviodKeyBoardViewWrapper>
-        <QuestionLayout
-          color={"bg-violet-500"}
-          section={"motorbike"}
-          iconName={"bicycle-outline"}
-          percentage={55.55}
-          nextScreen={submitBikeQuestion}
-          disabled={false}
-        >
-          <BikeQuestion errMsg={errMsg} setErrMsg={setErrMsg} />
-        </QuestionLayout>
-      </AviodKeyBoardViewWrapper>
-    </CustomScrollView>
+    <AviodKeyBoardViewWrapper>
+      <QuestionLayout
+        color={"bg-violet-500"}
+        section={"motorbike"}
+        iconName={"bicycle-outline"}
+        percentage={55.55}
+        nextScreen={submitBikeQuestion}
+        disabled={false}
+      >
+        <BikeQuestion errMsg={errMsg} setErrMsg={setErrMsg} />
+      </QuestionLayout>
+    </AviodKeyBoardViewWrapper>
   );
 }

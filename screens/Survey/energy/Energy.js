@@ -28,20 +28,18 @@ export default function Energy() {
     nextScreen("Flight");
   };
   return (
-    <CustomScrollView style={tw`bg-gray-50 `} screen="survey">
-      <AviodKeyBoardViewWrapper>
-        <QuestionLayout
-          color={"bg-yellow-500"}
-          section={"energy"}
-          iconName={"flash-outline"}
-          percentage={22.22}
-          nextScreen={handleNextPage}
-          disabled={false}
-        >
-          <EnergyQuestion />
-          <Text style={tw`text-red-500 py-2`}>{error}</Text>
-        </QuestionLayout>
-      </AviodKeyBoardViewWrapper>
-    </CustomScrollView>
+    <AviodKeyBoardViewWrapper>
+      <QuestionLayout
+        color={"bg-yellow-500"}
+        section={"energy"}
+        iconName={"flash-outline"}
+        percentage={22.22}
+        nextScreen={handleNextPage}
+        disabled={false}
+      >
+        <EnergyQuestion />
+        <Text style={tw`text-red-500 py-2`}>{error}</Text>
+      </QuestionLayout>
+    </AviodKeyBoardViewWrapper>
   );
 }

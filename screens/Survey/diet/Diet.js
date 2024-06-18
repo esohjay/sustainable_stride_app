@@ -11,19 +11,17 @@ export default function Diet() {
   const { survey } = state;
   const nextScreen = useSurveyNextPage();
   return (
-    <CustomScrollView style={tw`bg-gray-50`} screen="survey">
-      <AviodKeyBoardViewWrapper>
-        <QuestionLayout
-          color={"bg-fuchsia-500"}
-          section={"diet"}
-          iconName={"fast-food-outline"}
-          percentage={77.77}
-          nextScreen={() => nextScreen("Goods")}
-          disabled={survey.survey.diet === ""}
-        >
-          <Question />
-        </QuestionLayout>
-      </AviodKeyBoardViewWrapper>
-    </CustomScrollView>
+    <AviodKeyBoardViewWrapper>
+      <QuestionLayout
+        color={"bg-fuchsia-500"}
+        section={"diet"}
+        iconName={"fast-food-outline"}
+        percentage={77.77}
+        nextScreen={() => nextScreen("Goods")}
+        disabled={survey.survey.diet === ""}
+      >
+        <Question />
+      </QuestionLayout>
+    </AviodKeyBoardViewWrapper>
   );
 }

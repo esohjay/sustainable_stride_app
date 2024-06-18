@@ -50,19 +50,17 @@ export default function Car() {
     }
   };
   return (
-    <CustomScrollView style={tw`bg-gray-50 `} screen="survey">
-      <AviodKeyBoardViewWrapper>
-        <QuestionLayout
-          color={"bg-cyan-500"}
-          section={"car"}
-          iconName={"car-sport-outline"}
-          percentage={44.44}
-          nextScreen={submitCarQuestion}
-          disabled={false}
-        >
-          <CarQuestion errMsg={errMsg} setErrMsg={setErrMsg} />
-        </QuestionLayout>
-      </AviodKeyBoardViewWrapper>
-    </CustomScrollView>
+    <AviodKeyBoardViewWrapper>
+      <QuestionLayout
+        color={"bg-cyan-500"}
+        section={"car"}
+        iconName={"car-sport-outline"}
+        percentage={44.44}
+        nextScreen={submitCarQuestion}
+        disabled={false}
+      >
+        <CarQuestion errMsg={errMsg} setErrMsg={setErrMsg} />
+      </QuestionLayout>
+    </AviodKeyBoardViewWrapper>
   );
 }

@@ -15,7 +15,7 @@ function ActionCard({ data, isFullWidth = false }) {
       }`}
     >
       <Text style={tw`font-semibold text-lg mb-2 text-dark`}>{title}</Text>
-      <View style={tw`flex flex-row justify-start gap-x-2 mb-3`}>
+      <View style={tw`flex flex-row justify-start gap-2 mb-3 flex-wrap`}>
         <Badge text={category} variant="success" textStyle={tw`capitalize`} />
         <View style={tw`flex gap-x-1 flex-row items-center `}>
           {sdg.map((goal, i) => {

@@ -126,7 +126,10 @@ function HomeScreen({ navigation }) {
           style={tw`flex flex-row items-center justify-between mb-1 w-full`}
         >
           <Text style={tw`text-mainColor font-bold text-xl`}>Actions</Text>
-          <Text style={[tw`text-secondaryAlt text-base font-normal`]}>
+          <Text
+            style={[tw`text-secondaryAlt text-base font-normal`]}
+            onPress={() => navigation.navigate("Act")}
+          >
             See all
           </Text>
         </View>
